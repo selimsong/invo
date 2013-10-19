@@ -1,0 +1,277 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.htm
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Get detail Invoice information</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<link href="css/drag_drop.css" rel="stylesheet" type="text/css" />
+<link href="css/date_selector.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="js/drag_drop.js"></script>
+<script language="javascript" src="js/date_selector.js"></script>
+<script language="VBScript">
+dim hkey_root,hkey_path,hkey_key
+hkey_root="HKEY_CURRENT_USER"
+hkey_path="\Software\Microsoft\Internet Explorer\PageSetup"
+//设置网页打印的页眉页脚为空
+function pagesetup_null()
+on error resume next
+Set RegWsh = CreateObject("WScript.Shell")
+hkey_key="\header" 
+RegWsh.RegWrite hkey_root+hkey_path+hkey_key,""
+hkey_key="\footer"
+RegWsh.RegWrite hkey_root+hkey_path+hkey_key,""
+end function
+//设置网页打印的页眉页脚为默认值
+function pagesetup_default()
+on error resume next
+Set RegWsh = CreateObject("WScript.Shell")
+hkey_key="\header" 
+RegWsh.RegWrite hkey_root+hkey_path+hkey_key,"&w&b页码，&p/&P"
+hkey_key="\footer"
+RegWsh.RegWrite hkey_root+hkey_path+hkey_key,"&u&b&d"
+end function
+</script>
+<script  language="JavaScript">
+function printsetup(){
+　　wb.execwb(8,1);
+}
+function printpreview(){    　　　　
+　　wb.execwb(7,1);
+}
+
+function printit(){
+　　if (confirm('Are you sure to print？')) {
+　　	wb.execwb(6,6)
+　　}
+}
+///////////////////////////////////////////////////
+var HKEY_Root,HKEY_Path,HKEY_Key;
+HKEY_Root="HKEY_CURRENT_USER";
+HKEY_Path="\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
+//设置网页打印的页眉页脚为空
+function PageSetup_Null()
+{
+ try
+ {
+  var Wsh=new ActiveXObject("WScript.Shell");
+  HKEY_Key="header";
+  Wsh.RegWrite(HKEY_Root+HKEY_Path+HKEY_Key,"");
+  HKEY_Key="footer";
+  Wsh.RegWrite(HKEY_Root+HKEY_Path+HKEY_Key,"");
+ }
+ catch(e){}
+}
+//设置网页打印的页眉页脚为默认值
+function  PageSetup_Default()
+{
+ try
+ {
+  var Wsh=new ActiveXObject("WScript.Shell");
+  HKEY_Key="header";
+  Wsh.RegWrite(HKEY_Root+HKEY_Path+HKEY_Key,"&w&b页码，&p/&P");
+  HKEY_Key="footer";
+  Wsh.RegWrite(HKEY_Root+HKEY_Path+HKEY_Key,"&u&b&d");
+ }
+ catch(e){}
+}
+
+function initialPrint(){
+	PageSetup_Null();
+//if(confirm("Are your sure to print this page?")){
+//		window.print();
+//		window.close();
+//	}
+//	window.print();
+//	window.close();
+}
+function getInput(){
+	window.open('./html/input.htm', 'input', 'height=220, width=400,left=200,top=200,toolbar=no,scrollbars=no');
+}
+</script>
+<style type="text/css">
+
+td{word-break: break-all; word-wrap:break-word;}
+.moneyList{
+	padding-left:10px;
+	font-size:8px;
+}
+.STYLE1 {
+	color: #999999;
+	font-style: italic;
+}
+.noneBorderInput
+{
+	margin-bottom:.0001pt;
+	overflow:hidden;
+	margin-left:8px;
+	border-bottom: none;
+	border-left-style: none;
+	border-right-style: none;
+	border-top-style: none;
+}
+</style>
+</head>
+<body onload="initialPrint()">
+<center>
+		<table width="630" height="800" border="0" cellpadding="0" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <td valign="middle">
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<h1 align="center">INVOICE</h1>
+	<table border="1" bordercolor="#000000" style="border-collapse:collapse">
+	<tr><td>
+      <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="80" align="left" valign="middle"><p align="left"><strong>Company:</strong></p>            
+          <p align="left">&nbsp;</p></td>
+          <td width="330" valign="top"><p><{$idArray.Invoice_to}></p>            </td>
+          </tr>
+        
+        <tr>
+          <td width="80" align="left" valign="middle"><p align="left"><strong>Address:</strong></p>            
+          <p align="left">&nbsp;</p>            <p align="left">&nbsp;</p></td>
+          <td width="330" valign="top">
+		  		<{$idArray.Address}><br>
+		  		<{$idArray.Invoice_to_address2}><br>
+				<{$idArray.Invoice_to_zipcode}><br>
+				<{$idArray.Invoice_to_city}><br>
+				<{$idArray.Invoice_to_province}><br>
+				<{$idArray.Invoice_to_country}></td>
+          </tr>
+        
+        <tr>
+          <td width="80" align="left" valign="middle"><p align="left"><strong>Attention:</strong></p></td>
+          <td width="330" valign="top"><p><{$idArray.Contact_person}></p>            </td>
+          </tr>
+      </table>
+	 </td>
+	 <td><table border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="107" valign="top"><p align="left"><strong>Date:</strong></p>                  
+                <p align="left">&nbsp;</p></td>
+                <td width="162" valign="top"><input type="text" class="noneBorderInput" style="height:16px; width:150px;" value="<{$idArray.Invoice_date}>" /></td>
+              </tr>
+              
+              <tr>
+                <td width="107" valign="top"><p align="left"><strong>Invoice No.:</strong></p></td>
+                <td width="162" valign="top"><{$idArray.Invoice_No}></td>
+              </tr>
+              
+              <tr>
+                <td width="107" valign="top"><p align="left"><strong>Project Name:</strong></p></td>
+                <td width="162" valign="top">
+					<textarea name="textarea" rows="3" class="noneBorderInput" style="height:80px; width:120px;"><{$idArray.Property_Project_Name}></textarea>
+					
+				</td>
+              </tr>
+              
+              
+              
+              
+              
+              
+
+          </table>	 </td></tr>
+	 </table>
+	 <div>&nbsp;</div>
+	 <table border="1"  bordercolor="#000000" style="border-collapse:collapse">
+        <tr>
+          <td width="465" valign="top"><p><strong>Description</strong></p></td>
+          <td width="100" valign="top"><p align="center"><strong>Currency</strong></p></td>
+          <td width="100" valign="top"><p align="center"><strong>Amount</strong></p></td>
+        </tr>
+        <tr>
+          <td width="465" valign="top" height="200"><strong>Re:<br>
+            
+          </strong>
+		  <table width="380" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+			<td width="380"><textarea name="textarea" cols="60" rows="10" class="noneBorderInput" style="height:200px;">Management fee of Operating Stage,period:January 2009
+Reference:Property Management Consulting Agreement No:
+PRM/101/MGT/XI/2007</textarea></td>
+		  </tr>
+		</table></td>
+          <td width="100" valign="top"><p align="center"><{$idArray.curr_code}></p>            </td>
+          <td width="100" valign="top"><p align="right"><{$idArray.Invoice_Amount}></p>            </td>
+        </tr>
+        
+        <tr>
+          <td width="465" valign="top">&nbsp;</td>
+          <td width="100" valign="top"><div align="center">SUB TOTAL </div></td>
+          <td width="100" valign="top"><div align="right"><{$idArray.Invoice_Amount}></div></td>
+        </tr>
+        <tr>
+          <td width="465" valign="top" >&nbsp;</td>
+          <td width="100" valign="top"><div align="center">VAT</div></td>
+          <td width="100" valign="top"><div align="right"><{$idArray.VAT}></div></td>
+        </tr>
+        <tr>
+          <td width="465" valign="top">&nbsp;</td>
+          <td width="100" valign="top"><div align="center">TOTAL</div></td>
+          <td width="100" valign="top"><div align="right"><{$idArray.VAT_total}></div></td>
+        </tr>
+      </table>
+      <p>  <br />
+        <table width="458" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="124">PAYMENT DUE DATE </td>
+    <td width="334">:&nbsp;
+		<input type="text" class="noneBorderInput" value="<{$idArray.Payment_date1}>" style="height:16px;width:150px"/>
+	</td>
+  </tr>
+  <tr>
+    <td>BANK TRANSFER</td>
+    <td>: PT.CUSHMAN &amp; WAKEFIELD INDONESIA </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;&nbsp;BANK CENTRAL ASIA-BURSA EFEK INDONESIA   </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;&nbsp;<input type="text" class="noneBorderInput" style="height:10px; width:150px;" value="ACC IDR NO :458.3011199" /></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;&nbsp;<input type="text" class="noneBorderInput" style="height:10px; width:150px;" value="ACC SGD NO :458.3707771" /></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;&nbsp;<input type="text" class="noneBorderInput" style="height:10px; width:150px;" value="ACC USD NO:458.3700971" /></td>
+  </tr>
+  <tr>
+    <td height="20" colspan="2">PLEASE REFER TO OUR INVOICE NUMBER ON BANK TRANSFER </td>
+    </tr>
+</table>
+
+        <p align="right">PT.CUSHMAN & WAKEFIELD INDONESIA</p>
+		<p align="right">&nbsp;</p>
+		<p align="right">&nbsp;</p>
+		<p align="right">&nbsp;</p>
+	  <p align="right">___________________________</p>
+		<p align="right">
+		<textarea name="textarea" cols="60" rows="2" class="noneBorderInput" style="height:25px; width:135px;">(name of signer)</textarea></p>
+
+<!-- The contend of the print page -->    </td>
+  </tr>
+  <tr>
+    <td valign="middle">&nbsp;</td>
+  </tr>
+</table>
+</center>
+</body>
+</html>

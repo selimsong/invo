@@ -1,0 +1,219 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.htm
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Get detail Invoice information</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<link href="css/drag_drop.css" rel="stylesheet" type="text/css" />
+<link href="css/date_selector.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="js/drag_drop.js"></script>
+<script language="javascript" src="js/date_selector.js"></script>
+<script language="VBScript">
+dim hkey_root,hkey_path,hkey_key
+hkey_root="HKEY_CURRENT_USER"
+hkey_path="\Software\Microsoft\Internet Explorer\PageSetup"
+//设置网页打印的页眉页脚为空
+function pagesetup_null()
+on error resume next
+Set RegWsh = CreateObject("WScript.Shell")
+hkey_key="\header" 
+RegWsh.RegWrite hkey_root+hkey_path+hkey_key,""
+hkey_key="\footer"
+RegWsh.RegWrite hkey_root+hkey_path+hkey_key,""
+end function
+//设置网页打印的页眉页脚为默认值
+function pagesetup_default()
+on error resume next
+Set RegWsh = CreateObject("WScript.Shell")
+hkey_key="\header" 
+RegWsh.RegWrite hkey_root+hkey_path+hkey_key,"&w&b页码，&p/&P"
+hkey_key="\footer"
+RegWsh.RegWrite hkey_root+hkey_path+hkey_key,"&u&b&d"
+end function
+</script>
+<script  language="JavaScript">
+function printsetup(){
+　　wb.execwb(8,1);
+}
+function printpreview(){    　　　　
+　　wb.execwb(7,1);
+}
+
+function printit(){
+　　if (confirm('Are you sure to print？')) {
+　　	wb.execwb(6,6)
+　　}
+}
+///////////////////////////////////////////////////
+var HKEY_Root,HKEY_Path,HKEY_Key;
+HKEY_Root="HKEY_CURRENT_USER";
+HKEY_Path="\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
+//设置网页打印的页眉页脚为空
+function PageSetup_Null()
+{
+ try
+ {
+  var Wsh=new ActiveXObject("WScript.Shell");
+  HKEY_Key="header";
+  Wsh.RegWrite(HKEY_Root+HKEY_Path+HKEY_Key,"");
+  HKEY_Key="footer";
+  Wsh.RegWrite(HKEY_Root+HKEY_Path+HKEY_Key,"");
+ }
+ catch(e){}
+}
+//设置网页打印的页眉页脚为默认值
+function  PageSetup_Default()
+{
+ try
+ {
+  var Wsh=new ActiveXObject("WScript.Shell");
+  HKEY_Key="header";
+  Wsh.RegWrite(HKEY_Root+HKEY_Path+HKEY_Key,"&w&b页码，&p/&P");
+  HKEY_Key="footer";
+  Wsh.RegWrite(HKEY_Root+HKEY_Path+HKEY_Key,"&u&b&d");
+ }
+ catch(e){}
+}
+
+function initialPrint(){
+	PageSetup_Null();
+//if(confirm("Are your sure to print this page?")){
+//		window.print();
+//		window.close();
+//	}
+//	window.print();
+//	window.close();
+}
+function getInput(){
+	window.open('./html/input.htm', 'input', 'height=220, width=400,left=200,top=200,toolbar=no,scrollbars=no');
+}
+</script>
+<style type="text/css">
+
+td{word-break: break-all; word-wrap:break-word;}
+.moneyList{
+	padding-left:10px;
+	font-size:8px;
+}
+.STYLE1 {
+	color: #999999;
+	font-style: italic;
+}
+
+</style>
+</head>
+<body onload="initialPrint()">
+<center>
+<{section name=perRow loop=$idArray}>
+		<table width="630" height="800" border="0" cellpadding="0" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <td valign="middle">
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<h1 align="center">INVOICE</h1>
+	<table border="1" bordercolor="#000000" style="border-collapse:collapse">
+	<tr><td>
+      <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="80" align="left" valign="middle"><p align="left"><strong>Company:</strong></p>            
+          <p align="left">&nbsp;</p></td>
+          <td width="330" valign="top"><p><{$idArray[perRow].Invoice_to}></p>            </td>
+          </tr>
+        
+        <tr>
+          <td width="80" align="left" valign="middle"><p align="left"><strong>Address:</strong></p>            
+          <p align="left">&nbsp;</p>            <p align="left">&nbsp;</p></td>
+          <td width="330" valign="top"><p><{$idArray[perRow].Address}></p>            </td>
+          </tr>
+        
+        <tr>
+          <td width="80" align="left" valign="middle"><p align="left"><strong>Attention:</strong></p></td>
+          <td width="330" valign="top"><p><{$idArray[perRow].Contact_person}></p>            </td>
+          </tr>
+      </table>
+	 </td>
+	 <td><table border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="107" valign="top"><p align="left"><strong>Date:</strong></p>                  
+                <p align="left">&nbsp;</p></td>
+                <td width="162" valign="top"><{$idArray[perRow].Invoice_date}></td>
+              </tr>
+              
+              <tr>
+                <td width="107" valign="top"><p align="left"><strong>Invoice No.:</strong></p>                  
+                <p align="left">&nbsp;</p>                  <p align="left">&nbsp;</p></td>
+                <td width="162" valign="top"><{$idArray[perRow].Invoice_No}></td>
+              </tr>
+              
+              <tr>
+                <td width="107" valign="top"><p align="left"><strong>Our Contact:</strong></p></td>
+                <td width="162" valign="top"><{$idArray[perRow].Create_by}></td>
+              </tr>
+              
+              
+              
+              
+              
+              
+
+          </table>	 </td></tr>
+	 </table>
+	 <div>&nbsp;</div>
+	 <table border="1"  bordercolor="#000000" style="border-collapse:collapse">
+        <tr>
+          <td width="465" valign="top"><p><strong>Description</strong></p></td>
+          <td width="100" valign="top"><p align="center"><strong>Currency</strong></p></td>
+          <td width="100" valign="top"><p align="center"><strong>Amount</strong></p></td>
+        </tr>
+        <tr>
+          <td width="465" valign="top" height="200"><strong>Re:<br>
+            
+          </strong>
+		  <table width="380" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+			<td width="380"><div id="inputArea" style="margin:20px; width:380px;" ondblclick="getInput()"><div class="STYLE1">(Please double click here for input)</div></div></td>
+		  </tr>
+		</table>
+
+</td>
+          <td width="100" valign="top"><p align="center">&nbsp;</p>            </td>
+          <td width="100" valign="top"><p align="right">&nbsp;</p>            </td>
+        </tr>
+        
+        <tr>
+          <td width="465" valign="top">TOTAL:&nbsp;&nbsp;</td>
+          <td width="100" valign="top"><{$idArray[perRow].curr_code}></td>
+          <td width="100" valign="top"><{$idArray[perRow].Invoice_Amount}></td>
+        </tr>
+      </table>
+      <p>  <br />
+        <br />
+  Cushman &amp;  Wakefield <{$idArray[perRow].City}>  Co., Ltd.</p>
+      <p>&nbsp;</p>
+      <p>                                                                                 This invoice is due for payment on <strong><{$idArray[perRow].Payment_date1}>
+	  </strong><br />
+                                                                                         All relevant bank charges are borne by the  payer.</p>
+      <p><strong>_______________________________________</strong><br clear="all" /></p>
+      <p>Please advise  this invoice number to our Finance Dept. upon payment for official receipt  purposes.<br />
+        In case of  queries, please contact our local service </p>
+
+<!-- The contend of the print page -->    </td>
+  </tr>
+</table>
+<{/section}>
+</center>
+</body>
+</html>

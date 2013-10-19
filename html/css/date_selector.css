@@ -1,0 +1,71 @@
+/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.php
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */
+#basis {
+     display:inline;
+     position:relative;
+     }
+#calender {
+	  margin-top:0px !important; margin-top:-1px;
+     position:absolute;
+     top:30px;
+	  left:-120px;
+     width:240px;
+     background-color: #fff;
+     border:3px solid #ccc;
+     padding:10px;
+     z-index:2000;
+     }
+#control {
+     text-align:center;
+     margin:0 0 5px 0;
+     }
+#control select {
+     font-family:"Lucida sans unicode", sans-serif;
+     font-size:11px;
+     margin:0 5px;
+     vertical-align:middle;
+     }
+#calender .controlPlus {
+     padding:0 5px;
+     text-decoration:none;
+     color:#333;
+     }
+#calender table {
+     empty-cells: show;
+     width:100%;
+     font-size:11px;
+     table-layout:fixed;
+     }
+#calender .weekdays td{
+     text-align:right;
+     padding:1px 5px 1px 1px;
+     color:#333;
+     }
+#calender .week td {
+     text-align:right;
+     cursor:pointer;
+     border:1px solid #fff;
+     padding:1px 4px 1px 0;
+     }
+#calender .week .today { 
+     background-color:#ccf;
+     border-color:#ccf;
+     }
+#calender .week .holiday {
+     font-weight: bold;
+     }
+#calender .week .hoverEle {
+     border-color:#666;
+     background-color:#99f;
+     color:#000;
+     }

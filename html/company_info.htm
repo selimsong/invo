@@ -1,0 +1,170 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：index.html
+ * 
+ * @summery：index
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Parent Client</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+input,select { width:150px;}
+table,tr,td { border-width:1px; border-bottom-color: #FFFFFF;}
+th{ text-align:right;}
+</style>
+</head>
+<body style=" margin:5px;">
+<div style="float:right"> <img src="img/cushman_logo.JPG"; /></div>
+<div id="headDiv" style="height:45px;">
+  <H3>INVOICE REQUISITION FORM</H3>
+</div>
+<h5>Edit Company</h5>
+<div class="tableContainer">
+<table style="">
+<tr>
+  <td colspan="2"><h6>Basic Details</h6></td>
+</tr>
+<tr>
+  <td>Status</td>
+  <td><select name="select">
+      <option>Active</option>
+      <option>Inactive</option>
+      <option>Disabled</option>
+    </select>
+    </td>
+</tr>
+<tr>
+  <td>Legal Name:<span class="red">*</span></td>
+<td>IBM Shanghai PTE LTD</td>
+  </tr>
+<tr>
+  <td>Trading Name: <span class="red">*</span></td>
+  <td>IBM</td>
+  </tr>
+<tr>
+  <td>Parent Group:</td>
+  <td>IBM</td>
+  </tr>
+<tr>
+  <td>Global Headquarters:<span class="red">*</span> </td>
+  <td>&nbsp;</td>
+  </tr>
+<tr>
+  <td valign="top">APAC Headquarters:</td>
+  <td><select name="select2">
+    <option selected="selected">Please select</option>
+    <option value="China">China</option>
+  </select>
+  	<select name="select3">
+    <option selected="selected">Please select</option>
+    <option value="China">Shanghai</option>
+  </select>
+  <div class="list_item">
+  	<div class="list_item_1">Country</div>
+	<div class="list_item_2">City</div>
+  </div>  </td>
+  </tr>
+<tr>
+  <td>Client  Type:<span class="red">*</span></td>
+  <td><select name="select4">
+    <option selected="selected">Please select</option>
+    <option value="Occupier">Occupier</option>
+    <option value="Investor or Developer">Investor or Developer</option>
+      </select></td>
+  </tr>
+<tr>
+  <td valign="top">Industry Segment:<span class="red">*</span></td>
+  <td><select name="select5">
+    <option>Please select</option>
+  </select>
+    <select name="select6">
+      <option>Please select</option>
+    </select>
+	  <div class="list_item">
+  	<div class="list_item_1">Primary</div>
+	<div class="list_item_2">Secondary</div>
+  </div>	</td>
+  </tr>
+</table>
+</div>
+<div class="tableContainer">
+<div class="list_block">
+<table width="90%">
+  <tr>
+    <td colspan="5"><h6>Address &amp; Contact Details </h6></td>
+    </tr>
+  <tr>
+    <td width="20%"><h6>Country</h6></td>
+    <td width="20%"><h6>City</h6></td>
+    <td width="20%"><h6>Business Contact</h6> </td>
+    <td width="20%"><h6>Invoice Contact </h6></td>
+    <td width="20%"><h6>Options</h6></td>
+  </tr>
+  <tr>
+    <td>Australia</td>
+    <td>Sydney</td>
+    <td>John Smith </td>
+    <td>Jane Jones </td>
+    <td><a href="#">Edit</a> | <a href="#">Deactivate</a></td>
+  </tr>
+  <tr>
+    <td>China</td>
+    <td>Beijing</td>
+    <td>Samantha Foo </td>
+    <td>Sarah Chen </td>
+    <td><a href="#">Edit</a> | <a href="#">Deactivate</a></td>
+  </tr>
+  <tr>
+    <td>China</td>
+    <td>Hong Kong </td>
+    <td>Samantha Foo </td>
+    <td>Sarah Chen </td>
+    <td><a href="#">Edit</a> | <a href="#">Deactivate</a></td>
+  </tr>
+  <tr>
+    <td>India </td>
+    <td>Bangalore</td>
+    <td>Richard Buckingham </td>
+    <td>Trent Hewitt </td>
+    <td><a href="#">Edit</a> | <a href="#">Deactivate</a></td>
+  </tr>
+  <tr>
+    <td>India</td>
+    <td>Mumbai</td>
+    <td>Richard Buckingham </td>
+    <td>Trent Hewitt </td>
+    <td><a href="#">Edit</a> | <a href="#">Deactivate</a></td>
+  </tr>
+  <tr>
+    <td>Indonesia</td>
+    <td>Jakarta</td>
+    <td>peter Pan </td>
+    <td>Peter Pan </td>
+    <td><a href="#">Edit</a> | <a href="#">Deactivate</a></td>
+  </tr>
+  <tr>
+    <td>Japan</td>
+    <td>Tokyo</td>
+    <td>Tracy Morgan </td>
+    <td>Tracy Morgan </td>
+    <td><a href="#">Edit</a> | <a href="#">Deactivate</a></td>
+  </tr>
+</table>
+<a href="#" >Add New Address & Contacts</a>
+</div>
+</div>
+
+
+</div>
+<input type="button" class="button_en" value="Save" /> <input type="button" class="button_en" value="Cancel"  />
+</body>
+</html>

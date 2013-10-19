@@ -1,0 +1,1323 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.htm
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>fill_form</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<link href="css/drag_drop.css" rel="stylesheet" type="text/css" />
+<link href="css/date_selector.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+<!--
+.STYLE3 {font-size: 10px; font-style: italic; }
+.STYLE5 {color: #000000}
+.STYLE6 {color: #FF0000}
+-->
+</style>
+<{$fill_form_ajax}>
+<script language="javascript" src="js/drag_drop.js"></script>
+<script language="javascript" src="js/date_selector.js"></script>
+<script language="JavaScript" type="text/javascript" src="js/func.js"></script>
+<script language="javascript">
+var submit_f = new Array();
+
+function whileWait(){
+	document.getElementById('todayCurrencySpan').innerHTML = "Please wait ...";
+}
+function changeCountry(){
+	if((document.getElementById('selCountry').value) == "")
+	{
+		alert ('Please select the country first!');
+	}
+	else{
+		whileWait();
+		xajax_selectCountry(document.getElementById('selCountry').value,document.getElementById('date6').value);
+	}
+	document.getElementById('InvAmount').value = 0;
+}
+function changeSqft(value){
+	document.getElementById('todayCountry').value = value;
+	document.getElementById('todayCountrySpan').innerHTML = value;
+	switch(value){
+		case "Hong Kong":
+			document.getElementById('default_sqft').innerHTML = "sq ft";
+			document.getElementById('sqft_local_name').value = "sq ft";
+			document.getElementById('sqft_rate_span').value = "1";
+			break;
+		case "Japan":
+			document.getElementById('default_sqft').innerHTML = "Tsubo";
+			document.getElementById('sqft_local_name').value = "Tsubo";
+			document.getElementById('sqft_rate_span').value = "35.6" ;
+			break;
+		//India	
+		case "India":
+			document.getElementById('default_sqft').innerHTML = "sq ft";
+			document.getElementById('sqft_local_name').value = "sq ft";
+			document.getElementById('sqft_rate_span').value = "1";
+			break;
+		case "Singapore":
+			document.getElementById('default_sqft').innerHTML = "sq ft";
+			document.getElementById('sqft_local_name').value = "sq ft";
+			document.getElementById('sqft_rate_span').value = "1";
+			break;
+		default:
+			document.getElementById('default_sqft').innerHTML = "S.M.";
+			document.getElementById('sqft_local_name').value = "S.M.";
+			document.getElementById('sqft_rate_span').value = "10.76";
+			break;		
+	}
+	xajax_selectCity(value);
+			
+}
+
+
+function getMAGroup(value){
+	xajax_change_client(value);
+	//hideDiv('hintDiv');
+	//document.getElementById('MAGroup').innerHTML = "WPP.corp";
+}
+function netFeeChange(){
+	var InvAmount;
+	var thirdAmount;
+	var thirdAmount2;
+	var reAmount;
+	var CSOfficeFee;
+	var cost_of_sales;
+	var currency;
+	var total;
+	var total_us;
+	currency = (document.getElementById('todayCurrency').value)?(document.getElementById('todayCurrency').value):false;
+	if(!currency) window.alert('For currency is not selected,\nPlease select the Currency first!');
+	else{
+		if(document.getElementById('InvAmount').value)
+		{	
+			InvAmount = numRemoveComma(document.getElementById('InvAmount').value);
+			document.getElementById('InvAmountUs').innerHTML = numAddComma(parseFloat(InvAmount * currency));
+			document.getElementById('InvAmountUsHidden').value = parseFloat(InvAmount * currency);
+		}else InvAmount = 0;
+		
+		if(document.getElementById('cost_of_sales').value)
+		{	
+			cost_of_sales = numRemoveComma(document.getElementById('cost_of_sales').value);
+			document.getElementById('cost_of_sales_span_us').innerHTML = numAddComma(parseFloat(cost_of_sales * currency));
+			document.getElementById('cost_of_sales_us').value = parseFloat(cost_of_sales * currency);
+		}else cost_of_sales = 0;
+
+		if(document.getElementById('thirdAmount').value)
+		{	
+			thirdAmount = numRemoveComma(document.getElementById('thirdAmount').value);
+			document.getElementById('thirdAmountUs').innerHTML = numAddComma(parseFloat(thirdAmount * currency));
+			document.getElementById('thirdAmountUsHidden').value = parseFloat(thirdAmount * currency);
+		} else thirdAmount = 0;
+		if(document.getElementById('thirdAmount2').value)
+		{	
+			thirdAmount2 = numRemoveComma(document.getElementById('thirdAmount2').value);
+			document.getElementById('thirdAmountUs2').innerHTML = numAddComma(parseFloat(thirdAmount2 * currency));
+			document.getElementById('thirdAmountUsHidden2').value = parseFloat(thirdAmount2 * currency);
+		} else thirdAmount2 = 0;
+		if(document.getElementById('reAmount').value)
+		{
+			reAmount = numRemoveComma(document.getElementById('reAmount').value);
+			document.getElementById('reAmountUs').innerHTML = numAddComma(parseFloat(reAmount * currency));
+			document.getElementById('reAmountUsHidden').value = parseFloat(reAmount * currency);
+		} else reAmount = 0;
+		if(document.getElementById('reAmount2').value)
+		{
+			reAmount2 = numRemoveComma(document.getElementById('reAmount2').value);
+			document.getElementById('reAmountUs2').innerHTML = numAddComma(parseFloat(reAmount2 * currency));
+			document.getElementById('reAmountUsHidden2').value = parseFloat(reAmount2 * currency);
+		} else reAmount2 = 0;
+		if(document.getElementById('reAmount3').value)
+		{
+			reAmount3 = numRemoveComma(document.getElementById('reAmount3').value);
+			document.getElementById('reAmountUs3').innerHTML = numAddComma(parseFloat(reAmount3 * currency));
+			document.getElementById('reAmountUsHidden3').value = parseFloat(reAmount3 * currency);
+		} else reAmount3 = 0;
+		if(document.getElementById('CSOfficeFee').value)
+		{
+			CSOfficeFee = numRemoveComma(document.getElementById('CSOfficeFee').value);
+			document.getElementById('CSOfficeFeeUs').innerHTML = numAddComma(parseFloat(CSOfficeFee * currency));
+			document.getElementById('CSOfficeFeeUsHidden').value = parseFloat(CSOfficeFee * currency);
+		} else CSOfficeFee = 0;
+		
+		total = parseFloat(InvAmount - cost_of_sales - thirdAmount - thirdAmount2 - reAmount2 - reAmount3 - reAmount - CSOfficeFee);
+		document.getElementById('netFeeAmountSpan').innerHTML = numAddComma(total);
+		document.getElementById('netFeeAmount').value = numAddComma(total);
+		document.getElementById('netFeeUsHiddlen').value = numAddComma(parseFloat(total * currency));
+		document.getElementById('netFeeUs').innerHTML = numAddComma(parseFloat(total * currency));
+		
+	}
+}
+function set_us_tx_directly(){
+	var Transaction_Value;
+	currency = (document.getElementById('todayCurrency').value)?(document.getElementById('todayCurrency').value):false;
+	if(document.getElementById('VofTRX').value) Transaction_Value = numRemoveComma(document.getElementById('VofTRX').value);else Transaction_Value = 0;
+	
+	document.getElementById('VofTRX_US').innerHTML = numAddComma(parseFloat(Transaction_Value * currency));
+	document.getElementById('VofTRX_US_hidden').value = numAddComma(parseFloat(Transaction_Value * currency));
+}
+function valueOfTransactionChange(){
+	var sqft;
+	var termOfLease;
+	var oneMonthRent;
+	var currency;
+	
+	currency = (document.getElementById('todayCurrency').value)?(document.getElementById('todayCurrency').value):false;
+	if(!currency) window.alert('For currency is not selected,\nPlease select the Currency first!');
+	else{
+		if(document.getElementById('sqft').value) sqft = numRemoveComma(document.getElementById('sqft').value);else sqft = 0;
+		if(document.getElementById('termOfLease').value) termOfLease = document.getElementById('termOfLease').value; else termOfLease = 0;
+		if(document.getElementById('oneMonthRent').value) oneMonthRent = numRemoveComma(document.getElementById('oneMonthRent').value);else oneMonthRent = 0;
+		if(document.getElementById('VofTRX').value != 0){
+			set_us_tx_directly();
+		}
+		else{
+			document.getElementById('VofTRX').value = numAddComma(parseFloat(oneMonthRent * termOfLease));
+			document.getElementById('VofTRX_US_hidden').value = numAddComma(parseFloat(oneMonthRent * termOfLease * currency));
+			document.getElementById('VofTRX_US').innerHTML = numAddComma(parseFloat(oneMonthRent * termOfLease * currency));
+		}
+		document.getElementById('default_sqft_us').value = numAddComma(parseFloat(sqft * document.getElementById('sqft_rate_span').value));
+		document.getElementById('default_sqft_us_span').innerHTML = numAddComma(parseFloat(sqft * document.getElementById('sqft_rate_span').value));
+	}
+	
+}
+
+
+function fee_share(){
+	var feeAmount;
+	var fee;
+	var totalPercent;
+	var TotalRevenue;
+	var Revenue;
+	var fname;
+	feeAmount = (document.getElementById('netFeeAmount').value)?numRemoveComma(document.getElementById('netFeeAmount').value):0;
+	fee = new Array();
+	Revenue = new Array();
+	totalPercent = 0;
+	TotalRevenue = 0;
+	for(i=1;i<=10;i++){
+		fname = "Fee_sharing_p"+i+"_percent";
+		feeName = "Fee_sharing_p"+i+"_fee";
+		
+		if(document.getElementById(feeName).value != ""){
+			Revenue[i] = numRemoveComma(document.getElementById(feeName).value);
+		}
+		else {Revenue[i] = 0;}
+		
+		if(document.getElementById(fname).value != ""){
+			fee[i] = numRemoveComma(document.getElementById(fname).value);
+		}
+		else {fee[i] = 0;}
+
+		totalPercent = totalPercent + parseFloat(fee[i]);
+		TotalRevenue = TotalRevenue + parseFloat(Revenue[i]);
+		
+		//alert(TotalRevenue+'='+TotalRevenue+'+'+Revenue[i]);
+	}
+	if(totalPercent != 100){
+		document.getElementById('totalPercent').innerHTML = '<font color=red><b>' + totalPercent + '</b>%&nbsp;&nbsp;(should be 100 percentage)</font>';
+		submit_f["Revenue"] = false;
+	}
+	else{
+		document.getElementById('totalPercent').innerHTML = '100%';
+		submit_f["Revenue"] = true;
+	}
+	if(TotalRevenue != feeAmount){
+		document.getElementById('totalRevenue').innerHTML = '<font color=red><b>' + TotalRevenue + '</b>/'+feeAmount+'</font>';
+		submit_f["Revenue"] = false;
+	}
+	else{
+		document.getElementById('totalRevenue').innerHTML = feeAmount;
+		submit_f["Revenue"] = true;
+	}
+	 
+}
+function fee_share_percent(i){
+	var t;
+	var s;
+	if(document.getElementById('netFeeAmount').value != "")
+	{
+		s = document.getElementById('netFeeAmount').value;
+	}
+	else
+	{
+		alert("Please fill up the Net Fee fields first!");
+		exit();
+	}
+	var totalRevenue = numRemoveComma(s);
+	 
+	t = parseFloat(numRemoveComma(document.getElementById("Fee_sharing_p"+i+"_percent").value) * totalRevenue/100 );
+	t = Math.round(t*100)/100;
+	document.getElementById("Fee_sharing_p"+i+"_fee").value = numAddComma(t);
+	fee_share();
+}
+
+function fee_share_fee(i){
+	var s;
+	if(document.getElementById('netFeeAmount').value != "")
+	{
+		s = document.getElementById('netFeeAmount').value;
+	}
+	else
+	{
+		alert("Please fill up the Net Fee fields first!");
+		document.getElementById("Fee_sharing_p"+i+"_percent").value = "";
+		exit();
+	}
+
+
+	var totalRevenue = numRemoveComma(s);
+	document.getElementById("Fee_sharing_p"+i+"_percent").value = numAddComma(
+								parseFloat((numRemoveComma(document.getElementById("Fee_sharing_p"+i+"_fee").value) / totalRevenue) * 100)
+								);
+	fee_share();	
+}
+
+
+
+function get_cw_ref(){
+	var ref_percent;
+	var ref_percent2;
+	var ref_percent3;
+	ref_percent = (document.getElementById('refPercent').value)?((document.getElementById('refPercent').value)/100):0;
+	ref_percent2 = (document.getElementById('refPercent2').value)?((document.getElementById('refPercent2').value)/100):0;
+	ref_percent3 = (document.getElementById('refPercent3').value)?((document.getElementById('refPercent3').value)/100):0;
+	currency = (document.getElementById('todayCurrency').value)?(document.getElementById('todayCurrency').value):false;
+	if(document.getElementById('InvAmount').value)
+	{	
+		InvAmount = numRemoveComma(document.getElementById('InvAmount').value);
+	}else InvAmount = 0;
+	if(!currency) window.alert('For currency is not selected,\nPlease select the Currency first!');
+	document.getElementById('reAmount').value = numAddComma(parseFloat(ref_percent * InvAmount));
+	document.getElementById('reAmount2').value = numAddComma(parseFloat(ref_percent2 * InvAmount));
+	document.getElementById('reAmount3').value = numAddComma(parseFloat(ref_percent3 * InvAmount));
+	netFeeChange();
+}
+function get_cs_ref(){
+	var CSrefPercent;
+	CSrefPercent = (document.getElementById('CSrefPercent').value)?((document.getElementById('CSrefPercent').value)/100):0;
+	currency = (document.getElementById('todayCurrency').value)?(document.getElementById('todayCurrency').value):false;
+	if(document.getElementById('InvAmount').value)
+	{	
+		InvAmount = numRemoveComma(document.getElementById('InvAmount').value);
+	}else InvAmount = 0;
+	if(!currency) window.alert('For currency is not selected,\nPlease select the Currency first!');
+	document.getElementById('CSOfficeFee').value = numAddComma(parseFloat(CSrefPercent * InvAmount));
+	netFeeChange();
+}
+
+
+
+function refreshAllCurrency(){
+	netFeeChange();
+	valueOfTransactionChange();
+}
+function whileEndSelectDate(){
+	changeCountry();
+}
+function reShowCalender(newOBJ){
+	showCalender(newOBJ);
+}
+function submit_form(){
+	var allow_submit = true;
+	if(document.getElementById('selsqft').value == "") {
+		allow_submit = false;
+		alert('Please select the country first');
+	}
+	else if(document.getElementById('selCountry').value == "") {
+		allow_submit = false;
+		alert('Please select the currency first');
+	}
+	else if(document.getElementById('Client').value == "") {
+		allow_submit = false;
+		alert('Please select the client first');
+	}
+	else if(document.getElementById('netFeeAmount').value == "") {
+		allow_submit = false;
+		alert('Please finish the net fee column');
+	}
+	else if(document.getElementById('Dept_info').value == "") {
+		allow_submit = false;
+		alert('Please select the local department!');
+	}else if(document.getElementById('key_client').value == ""){
+		allow_submit = false;
+		alert('Please select the key client!');
+	}
+	else if(submit_f["Revenue"] == false) {
+		//allow_submit = false;
+		//alert("Revenue do not equal to the Net Fee!");
+		//exit();
+	}
+	if(!getLength(document.invoiceForm,255)){
+		alert("The fields in pink has exceeded 255 words");
+		allow_submit = false;
+	}
+	
+	if(allow_submit)document.invoiceForm.submit();	
+}
+// for fee sharing names list;
+var userList_div_id="";
+function show_list_div(div_id){
+	userList_div_id = div_id;
+	if(document.getElementById('user_list_div').style.display == ""){
+		document.getElementById('user_list_div').style.display = "none";
+	}
+	else{
+		document.getElementById('user_list_div').style.display = "";
+	}
+}
+//function hide_list_div(){
+//	document.getElementById('user_list_div').style.display = "none";
+//}
+function setUserThis(user_name){
+	
+	document.getElementById(userList_div_id).value = user_name;
+	//document.getElementById(userList_div_id).focus();
+	document.getElementById('user_list_div').style.display = "none";
+}
+function heighLightThis(obj){
+	document.getElementById(obj.id).className="buttonColorHeight";
+}
+function unHeighLightThis(obj){
+	document.getElementById(obj.id).className="";
+}
+function getTransNo(){
+	if(document.getElementById('City') != null){
+		var city = (document.getElementById('City').value)?(document.getElementById('City').value):false;
+		var head = (document.getElementById('Transaction_No').value)?(document.getElementById('Transaction_No').value):false;
+		if(head){
+			xajax_get_trans_number(head,city);
+		}
+		else alert("Please input the Transaction No. head first!\n eg. \"HKGO\" , \"HKGV\" , etc.");
+	}
+	else alert("Please select the 'City' first");
+}
+function getDocNo(){
+	if(document.getElementById('City') != null){
+		var city = (document.getElementById('City').value)?(document.getElementById('City').value):false;
+		var doc_type = document.getElementById('doc_type').value;
+		var head = document.getElementById('doc_type_num').value; 
+		if(city){
+			if(doc_type == 1 && head == ""){
+				alert("Please input the Invoice No. head first!\n eg. \"HKGO\" , \"HKGV\" , etc.");
+			}
+			else
+			xajax_get_Doc_No(city,doc_type,head);
+		}
+		else alert("Please select the 'City' first");
+	}
+	else alert("Please select the 'City' first");
+	
+}
+function cf_check(){
+	if(document.getElementById('confidential_agreement').checked == false){
+		document.getElementById('confidential_agreement').checked = true;
+		document.getElementById('cf_div').className="confidential_agreement";
+	}
+	else{
+		document.getElementById('confidential_agreement').checked = false;
+		document.getElementById('cf_div').className="confidential_agreement_unchecked";
+	}
+}
+function dept2_select(dept){
+	var country ;
+	country = document.getElementById('selsqft').value;
+	xajax_dept2_select(country,dept);			
+}
+function show_acc(){
+	if(document.getElementById('div_acc').style.display=='none'){
+		document.getElementById('div_acc').style.display='';
+	}
+	else{
+		document.getElementById('div_acc').style.display='none';
+	}
+	
+}
+function get_client(str){
+	xajax_get_client(str);	
+}
+function s_client(str){
+	set_v(str);
+	xajax_change_client(document.getElementById('Client').value);
+}
+</script>
+</head>
+<body onload="check_timeout();">
+<div id="user_list_div" style="
+		display:none;
+		position:fixed !important;
+		position: absolute;
+		top:expression(eval(document.body.scrollTop)+50);
+		top:50px;
+		right:30px!important;
+		right:30px;
+		margin-top:0px !important; 
+		margin-top:-1px;
+
+
+		width:900px;
+		height:500px;
+		background-color: #fff;
+		border:3px solid #ccc;
+		padding:10px;
+		z-index:2000;">
+<span style="float:right; color:#FF0000; cursor:pointer;" onclick="document.getElementById('user_list_div').style.display = 'none';">Cancel</span><strong>Users of <{$sArray.priority_country}></strong>
+<hr />
+<table width="874" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  <{section name=user loop=$userListArray}>
+    <td width="180" height="20"><div align="left"><{$smarty.section.user.index+1}>.<span id="hiddenDiv<{$smarty.section.user.index}>" onmouseover="highLightThis(this)" onmouseout="unHeighLightThis(this)" onclick="setUserThis(this.innerHTML)"><{$userListArray[user].user_name}></span></div></td>
+	<{if ($smarty.section.user.index+1)%8 == 0}></tr><tr><{/if}>
+	
+	<{/section}>
+  </tr>
+</table>
+
+</div>
+<div id="bodyAll" style="width:100% !important;width:98%;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse">
+    <tr>
+      <td>INVOICE REQUISITION FORM</td>
+      <td><span style="float:right; margin: 5px;"><img src="img/cushman_logo.JPG" /></span></td>
+    </tr>
+  </table>
+<ul id="invoiceForm">
+  <hr />
+  <span class="STYLE6">(Fields marked <strong>* </strong>are mandatory)  </span>
+</ul>
+<div id="invoiceFormDiv">
+
+  <form action="add_invoice.php" method="post" enctype="multipart/form-data" name="invoiceForm" id="invoiceForm">
+    <div id="inlineDiv">
+      <div class="newContainer" id="newContainer">
+	  
+		<div align="center" style="margin:5px;">
+		<input type="button" name="saveit" id="saveit" value="Save" onclick="submit_form()" />
+		&nbsp;&nbsp;
+		<span id="time_count" style="color:#FF0000;"></span>&nbsp;minutes for relogon!</div>
+	  
+	  <div id="cf_div" class="confidential_agreement_unchecked" onclick="cf_check()"><input id="confidential_agreement" name="confidential_agreement" type="checkbox" value="1" class="confidential_agreement_check" onclick="cf_check()" />confidential agreement</div>
+        <div class="DragBox" id="Item1" overclass="OverDragBox" dragclass="DragDragBox">
+          
+		  <div class="searchBarBox" style="position:absolute;right:10px; top:150px;">
+		  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th colspan="2" scope="row">Basic info<hr /></th>
+    </tr>
+  <tr>
+    <td scope="row">Country:</td>
+    <td><input type="hidden" name="todayCountry" id="todayCountry" value="">
+	<span class="searchDetailHeighlight">
+    <span id="todayCountrySpan">(Please select Country first)</span></span></td>
+    </tr>
+  <tr>
+    <td scope="row">Currency:</td>
+    <td><span class="searchDetailHeighlight">
+	  <input type="hidden" name="curr_code" id="curr_code" />
+      <span id="todayCurrencySpan">(Please select Country first)</span>
+    </span></td>
+  </tr>
+  <tr>
+    <td scope="row">
+      Major Account Group:</td>
+    <td><span id="MAGroup" class="searchDetailHeighlight">
+      <input type="hidden" name="Client_Solutins_Major" id="Client_Solutins_Major" value="" />
+      <span id="Client_Solutins_Major_show">(Type in Client first)</span>
+    </span></td>
+  </tr>
+  <tr>
+    <td scope="row">Create By:</td>
+    <td><{$sArray.user_name}></td>
+  </tr>
+  <tr>
+    <td scope="row">Create Date:</td>
+    <td><{$todayDate}></td>
+  </tr>
+</table>
+          </div>
+		<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+<tr><td colspan="20"><div onclick="show_acc()" style="cursor:pointer">For Accounts only:</div>
+<div id="div_acc" style="display:none;">
+	<table><tr>
+			  <td height="30">Transaction No. </td>
+			  <td height="30" colspan="4"><input type="text" name="Transaction_No" id="Transaction_No" <{if $sArray.user_type != "Account"}> disabled="disabled"<{/if}> />
+			    <input type="button" name="tran_button" value="Generate No." onclick="getTransNo()"  <{if $sArray.user_type != "Account"}> disabled="disabled"<{/if}>  />
+			    (For accounts use only )</td>
+			</tr>
+			<tr>
+			  <td height="30">Original Invoice No. </td>
+			  <td height="30" colspan="4"><input type="text" name="Invoice_No" id="Invoice_No" <{if $sArray.user_type != "Account"}> disabled="disabled"<{/if}>   />			    
+			     (CN/ADJ Doc Type only)(For accounts use only )</td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30">Doc Type / Doc No. </td>
+			  <td height="30" colspan="4"><select name="doc_type" id="doc_type"  <{if $sArray.user_type != "Account"}> disabled="disabled"<{/if}> >
+				<{foreach from=$doc_type key=key item=item}>
+				<option value="<{$key}>"><{$item}></option>
+				<{/foreach}>
+              </select>
+			    /<span class="STYLE5"></span>
+                <input type="text" name="doc_type_num" id="doc_type_num"  <{if $sArray.user_type != "Account"}> disabled="disabled"<{/if}>  />
+				<input type="button" name="doc_num_button" value="Generate No." onclick="getDocNo()"  <{if $sArray.user_type != "Account"}> disabled="disabled"<{/if}>  />
+                (For accounts use only )
+				<input name="inter_invoice" type="checkbox" value="1" />(Internal invoice)</td>
+			  </tr></table></div></td></tr>
+
+			<tr>
+			  <td width="200" height="30">Country: <span class="STYLE6">*</span></td>
+			  <td height="30" colspan="4">
+				  <select name="selsqft" id="selsqft" onchange="changeSqft(this.value)">
+					<option value=""></option>
+					<{section name=perRow loop=$countryArray}>
+					<option value="<{$countryArray[perRow].Country}>"><{$countryArray[perRow].Country}> </option>
+					<{/section}>
+				  </select>>><span id="optionCity"></span>
+&nbsp;&nbsp;&nbsp;&nbsp;
+					<input name="sqft_rate_span" type="hidden" id="sqft_rate_span" />Invoice Currency:<span class="STYLE6">*</span>
+					<select name="selCountry" id="selCountry" onchange="changeCountry()">
+					  <option value=""></option>
+					  <{section name=perRow loop=$countryArray}>
+					  <option value="<{$countryArray[perRow].ID}>"><{$countryArray[perRow].default_curr_code}> </option>
+					  <{/section}>
+					</select>
+					
+					Exchange Rate:
+					 <input type="text" name="todayCurrency" id="todayCurrency" onchange="refreshAllCurrency()" />					</td>
+			</tr>
+			<tr>
+			  <td width="200" height="30">
+			    Document date:			    </td>
+			  <td height="30" colspan="4">
+			  	
+			    <input type='button' id='for_date5' name="for_date5" value='Select Date:' onclick="reShowCalender(this)"/>
+				<input type='text' id='date5' name='date5' style="width:70px" value="<{$todayDate}>"/>				</td>
+			  </tr>
+			
+		
+						  
+			<tr>
+			  <td width="200" height="30">Local Department:<span class="STYLE6">*</span></td>
+			  <td height="30" colspan="4">
+			    <!--<select name="Dept_info" onchange="dept2_select(this.value)">
+                  <{section name=perRow loop=$deptArray}>
+                  <option value="<{$deptArray[perRow].Dept_code}>" ><{$deptArray[perRow].Dept_desc}> </option>
+                  <{/section}>
+                </select>
+				
+				
+				-->
+				<span id="dept2_info_span">
+				<select name="Dept2_info" id="Dept2_info" onchange="dept2_select(this.value)">
+				<option>Please select the Country first</option>
+				</select>
+				</span>
+				
+				&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;(<span id="dept_info_span" style="font-style:italic;">Global Department</span>)
+				<input type="hidden" name="Dept_info" id="Dept_info" value=""/>				</td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30">Client:<span class="STYLE6">*</span> </td>
+			  <td height="30" colspan="4"><input type="text" name="Client" id="Client" width="120"  style="width:300px;" onkeyup="get_client(this.value)" onchange="xajax_change_client(document.getElementById('Client').value);" />
+			  <div id="client_list" style=" position: static;border:Silver 1px solid; border-collapse:collapse; height:50px; width:300px; display:block;"></div>
+			    Client Reference No.
+		          <input type="text" name="client_reference_no" id="client_reference_no" width="120"  style="width:100px;"/>&nbsp;&nbsp;&nbsp;&nbsp;Key client: <select name="key_client" id="key_client" >
+				 <option></option>
+                 <option value="NULL">N/A</option>
+                 <{foreach from=$key_client key=key item=item}>
+				 <option value="<{$item.client}>"><{$item.client}></option>
+				<{/foreach}>
+				</select>
+				  
+			    </td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30">Client Contact: </td>
+			  <td height="30">Name:<br />
+			    <input type="text" name="Client_name" id="Client_name" width="120" style="width:100px;"/></td>
+			  <td>Title:<br />
+			    <input type="text" name="Client_title" id="Client_title" width="120"  style="width:200px;"/></td>
+			  <td height="30">Phone:<br />
+			    <input type="text" name="Client_phone" id="Client_phone" width="120"  style="width:100px;"/></td>
+			  <td>Email:<br />
+			    <input type="text" name="Client_email" id="Client_email" width="120"  style="width:200px;"/></td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30">Other Party:</td>
+			  <td height="30" colspan="2">
+			    <input type="text" name="Other_Party" width="240" style="width:300px;"/>			    </td>
+			  <td height="30" colspan="2">&nbsp;</td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30">
+			    Re:(Specify client and premises)			    </td>
+			  <td height="30" colspan="4">
+			    <textarea name="Payer" cols="100" rows="2" wrap="soft" id="ReSpecify" style="height:25px; width:650px;"></textarea>			   	  </td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30">
+			    To:(Specify assignment/contract )			    </td>
+			  <td height="30" colspan="4">
+			    <textarea name="Property_Project_Name" cols="100" rows="2" wrap="soft" id="textarea"style="height:25px; width:650px;"></textarea>			     </td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30">
+			    At:(Specify nature of fee agreement)			    </td>
+			  <td height="30" colspan="4">
+			    <textarea name="contact" cols="100" rows="2" id="textarea2" wrap="soft" style="height:25px; width:650px;"></textarea>			    		  </td>
+			  </tr>
+			</table>
+		  </div>
+        <div id="typeSelect" class="DragBox">
+		<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+			<tr>
+			  <td width="200" height="30">
+			    Transaction Type:			    <span class="STYLE6">*</span></td>
+			  <td height="30">
+			    1.
+			    <select name="Trans_Type_1">
+					  <option value="unselected"></option>
+                      <option value="Lease">Lease</option>
+                      <option value="Purchase/Sale">Purchase/Sale</option>
+                      <option value="Professional Work">Professional Work</option>
+                  </select>
+              2.
+              <select name="Trans_Type_2">
+			    <option value="unselected"></option>
+                <option value="Tenant Rep">Tenant Rep</option>
+                <option value="Conventional Agency">Conventional Agency</option>
+                <option value="Sole/Joint Agency">Sole/Joint Agency</option>
+                <option value="Research">Research</option>
+                <option value="Consultancy">Consultancy</option>
+                <option value="Valuation">Valuation</option>
+				<option value="Property Management">Property Management</option>
+				<option value="Project Management">Project Management</option>
+				<option value="Facilities Management">Facilities Management</option>
+              </select></td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30">
+			    Property Type:			    <span class="STYLE6">*</span></td>
+			  <td height="30">
+			    &nbsp;&nbsp;&nbsp;
+                <select name="Ppty_Type">
+				  <option value="unselected"></option>
+                  <option value="Commercial">Commercial</option>
+                  <option value="Industrial">Industrial</option>
+                  <option value="Retail">Retail</option>
+                  <option value="Residential">Residential</option>
+                  <option value="Hotel">Hotel</option>
+                  <option value="Land">Land</option>
+				  <option value="Mixed use">Mixed use</option>
+                  <option value="Others">Others</option>
+                </select>              </td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30">Client Type: <span class="STYLE6">*</span></td>
+			  <td height="30">&nbsp;&nbsp;&nbsp;
+                <select name="Client_Type">
+				  <option value="unselected"></option>
+                  <option value="Commerical/Investment Bank">Commerical/Investment Bank</option>
+                  <option value="Corporations">Corporations</option>
+                  <option value="Pension Funds/Fund Advisiors">Pension Funds/Fund Advisiors</option>
+                  <option value="Investor/Domestic & Foreign">Investor/Domestic &amp; Foreign</option>
+                  <option value="Govt. Agencies">Govt. Agencies</option>
+                  <option value="Law Firms">Law Firms</option>
+                  <option value="Developers">Developers</option>
+                  <option value="Others">Others</option>
+                  </select></td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30">Industrial Type : </td>
+			  <td height="30">&nbsp;&nbsp;&nbsp;
+                <select name="select2" disabled="disabled" style="width:80px;">
+                  </select></td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30">
+			    <strong><em>Transaction Statistics:			    </em></strong></td>
+			  <td height="30">&nbsp;</td>
+			  </tr>
+			<tr>
+			  <td height="30">Square footage sold or leased: </td>
+			  <td height="30">&nbsp;&nbsp;
+                <input name="sqft_local" type="text" id="sqft" onkeyup="valueOfTransactionChange();fields_comma(this,event.keyCode);" value="0" width="30"/>
+                <span id="default_sqft"class="searchDetailHeighlight">(unselected)</span><input type="hidden" id="sqft_local_name" name="sqft_local_name"> &nbsp;=&nbsp;<span class="searchDetailHeighlight" id="default_sqft_us_span"></span><span class="searchDetailHeighlight">&nbsp;sq ft</span>
+                <input type="hidden" name="default_sqft_us" id="default_sqft_us" /></td>
+			  </tr>
+			<tr>
+			  <td height="30">One month Rent</td>
+			  <td height="30">&nbsp;&nbsp;&nbsp;<input type="text" name="oneMonthRent" width="30" id="oneMonthRent" onchange="valueOfTransactionChange();fields_comma(this,event.keyCode);"/>			    <span id="currencyCode13"class="searchDetailHeighlight">(unselected)</span></td>
+			  </tr>
+			<tr>
+			  <td height="30">Term of lease:</td>
+			  <td height="30">&nbsp;&nbsp;&nbsp;<input type="text" name="termOfLease" width="30" id="termOfLease" onchange="valueOfTransactionChange()"/>
+months </td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30">Value of Transaction<span class="STYLE6">*</span><br /></td>
+			  <td height="30">&nbsp;&nbsp;&nbsp;
+                <span id="currencyCode1"class="searchDetailHeighlight">(unselected)
+                
+                </span><input type="text" name="VofTRX" id="VofTRX" onkeyup="set_us_tx_directly();fields_comma(this,event.keyCode);" /> &nbsp;&nbsp;eq&nbsp;&nbsp;<span class="searchDetailHeighlight">USD</span> <span id="VofTRX_US">&nbsp;</span>
+                <input type="hidden" name="VofTRX_US_hidden" id="VofTRX_US_hidden" />
+                (<em>Sale/Purchase price,Consultancy fee
+ or
+[one months rent] × [term of lease]</em>) </td>
+			  </tr>
+			</table>
+          </div>
+        <div id="details1" class="DragBox">
+<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+			<tr>
+			  <td width="200" height="30">Date of Completion: </td>
+			  <td height="30" colspan="5">
+			    <input type='button' id='for_date6' name="for_date6" value='Select Date:' onclick="reShowCalender(this)"/>
+			    <input type='text' id='date6' name='date6' style="width:70px" value="<{$todayDate}>"/>			  </td>
+			  </tr>
+			<tr>
+			  <td height="30"><ul class="ulWrap">
+			    <strong><em>Payment Receivable Date:</em></strong></ul></td>
+			  <td height="30" colspan="5">&nbsp;</td>
+			  </tr>
+			<tr>
+			  <td height="30"><ul class="ulWrap">
+			    1st Payment:
+			    </ul></td>
+			  
+			  <td><input name="button3" type='button' id='for_date1' onclick='showCalender(this)' value='Due Date:'/>
+                <input type='text' id='date1' name='date1' style="width:70px" value=""  /></td>
+			  <td><input name="button" type='button' id='for_date2' onclick='showCalender(this)' value='Estimate Date:' />
+                <input type='text' id='date2' name='date2' style="width:70px" value=""  /></td>
+			  <td>Amount
+                <input type="text" name="amount1" style="width:50px;" /></td>
+			  <td>ie:
+                <input type="text" name="amount_percent" style="width:50px;" />
+%</td>
+<td height="30"><input name="for_date7" type='button' id='for_date7' onclick='showCalender(this)' value='Date paid:'/>
+                <input type='text' id='date7' name='date7' style="width:70px" value=""  /></td>
+			</tr>
+			<tr>
+			  <td height="30"><ul class="ulWrap">
+			    2nd Payment:(if any)
+			    </ul></td>
+			  <td height="30">
+                <input name="button2" type='button' id='for_date3' onclick='showCalender(this)' value='Due Date:' />
+                <input type='text' id='date3' name='date3' style="width:70px" value=""  /></td>
+			  <td height="30"><input name="button22" type='button' id='for_date4' onclick='showCalender(this)' value='Estimate Date:' />
+                <input type='text' id='date4' name='date4' style="width:70px" value=""  /></td>
+			  <td height="30">Amount
+                <input type="text" name="Payment_date2_amount"  style="width:50px;" /></td>
+			  <td height="30"> ie:
+                <input type="text" name="Payment_date2_amount2_percent" style="width:50px;" />
+%</td>
+			  <td height="30"><input name="for_date8" type='button' id='for_date8' onclick='showCalender(this)' value='Date paid:'/>
+                <input type='text' id='date8' name='date8' style="width:70px" value=""  /></td>
+			</tr>
+			<tr>
+			  <td height="30">Payment Remarks</td>
+			  <td height="30" colspan="4"><input type="text" name="payment_remarks" id="payment_remarks"  style="width:300px;" /></td>
+			  </tr>
+			</table>
+          </div>
+        <div id="fee" class="DragBox">
+<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+
+			<tr>
+			  <td width="200" height="30">Invoice to: </td>
+			  <td height="30" colspan="5">
+			    <input type="text" name="invoice_to" style="width:300px;" />			    </td>
+			  </tr>
+			<tr>
+			  <td width="200" rowspan="2">
+			    Invoice to
+			    address:			    </td>
+			  <td height="30" colspan="5">
+			    <input type="text" name="Address" style="width:300px;" /></td>
+			  </tr>
+			
+			<tr>
+			  <td height="30">Address2<br /><input type="text" name="Invoice_to_address2" /></td>
+			  <td>City<br /><input type="text" name="Invoice_to_city" /></td>
+			  <td>State/province<br /><input type="text" name="Invoice_to_province" /></td>
+			  <td>Country<br /><input type="text" name="Invoice_to_country" /></td>
+			  <td>Zip Code<br /><input type="text" name="Invoice_to_zipcode" /></td>
+			</tr>
+			<tr>
+			  <td height="30">Invoice to Trading Name(retail): </td>
+			  <td height="30" colspan="5">
+			    <input type="text" name="invoice_to_trading_name" id="invoice_to_trading_name" style="width:300px;" />			  </td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30">
+			    Contact Person:
+			    (A/C)			 </td>
+			  <td height="30" colspan="5">
+			    <input type="text" name="Contact_Person" style="width:300px;" />			    </td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30">Contact info: </td>
+			  <td height="30" colspan="5"><input type="text" name="Contact_info" style="width:300px;" />
+(<em>phone number,fax,etc</em>) </td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30">
+			    Fee basis:			    </td>
+			  <td height="30" colspan="5">
+			    <input type="text" name="Fee_basis" style="width:300px;" />			    </td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30">
+			    Out of pocket Expenses to be reimbursed:			    </td>
+			  <td height="30" colspan="5">
+			    <input type="text" name="reimbursed" style="width:300px;" />			    </td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30">
+			    Special Invoicing Instructions:			   </td>
+			  <td height="30" colspan="5">
+			    <input type="text" name="Special_instructions" style="width:300px;" />			    </td>
+			  </tr>
+			</table>
+          </div>
+        <div class="DragBox">
+			<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+			<tr>
+			  <td width="200" height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <th width="142" height="30">Fee amount </th>
+			  <td width="120" height="30">&nbsp;</td>
+			  </tr>
+			<tr>
+			<td width="200" height="30"><div align="left">Fee amount to be invoiced:  <span class="STYLE6">*</span></div></td>
+			<td height="30">&nbsp;</td>
+			<td height="30">&nbsp;</td>
+			<td height="30">&nbsp;</td>
+			<td height="30"><div align="right"><span id="currencyCode2"class="searchDetailHeighlight">(unselected)</span></div></td>
+			<td width="142" height="30"> (a)
+			  <input type="text" name="InvAmount" id="InvAmount" onkeyup="netFeeChange();fields_comma(this,event.keyCode);"/></td>
+			<td width="120" height="30"><span class="searchDetailHeighlight">USD</span>
+			  <span id="InvAmountUs">&nbsp;</span>
+              <input type="hidden" name="InvAmountUsHidden" id="InvAmountUsHidden"></td>
+			</tr>
+			<tr>
+			  <td height="30"><div align="left">Cost of Sales</div></td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30"><div align="right"><span id="currencyCode15"class="searchDetailHeighlight">(unselected)</span></div></td>
+			  <td height="30">(b)
+		      <input type="text" name="cost_of_sales" id="cost_of_sales" onkeyup="netFeeChange();fields_comma(this,event.keyCode);"/></td>
+			  <td height="30">
+					<span class="searchDetailHeighlight">USD</span>
+					<span id="cost_of_sales_span_us">&nbsp;</span>
+					<input type="hidden" name="cost_of_sales_us" id="cost_of_sales_us">
+				</td>
+			  </tr>
+
+			<tr>
+			<td width="200" rowspan="2" ><div align="left">Third Party:</div></td>
+			<td height="30">
+			  <input type="text" name="3rd_Pty" /><br /><span class="STYLE3">(Third Party 1)</span>
+			</td>
+			<td height="30">&nbsp;</td>
+			<td height="30">&nbsp;</td>
+			<td height="30"><div align="right"><span id="currencyCode3"class="searchDetailHeighlight">(unselected)</span></div></td>
+			<td width="142" height="30">
+			  (c)
+		      <input type="text" name="thirdAmount" id="thirdAmount" onkeyup="netFeeChange();fields_comma(this,event.keyCode);"/></td>
+			<td width="120" height="30"><span class="searchDetailHeighlight">USD</span>
+			  <span id="thirdAmountUs">&nbsp;</span>
+			  <input type="hidden" name="thirdAmountUsHidden" id="thirdAmountUsHidden"></td>
+			</tr>
+
+			<tr>
+			<td height="30">
+			  <input type="text" name="3rd_Pty2" /><br /><span class="STYLE3">(Third Party 2)</span>
+			</td>
+			<td height="30">&nbsp;</td>
+			<td height="30">&nbsp;</td>
+			<td height="30"><div align="right"><span id="currencyCode19"class="searchDetailHeighlight">(unselected)</span></div></td>
+			<td width="142" height="30">
+			  (d)
+		      <input type="text" name="thirdAmount2" id="thirdAmount2" onkeyup="netFeeChange();fields_comma(this,event.keyCode);"/></td>
+			<td width="120" height="30"><span class="searchDetailHeighlight">USD</span>
+			  <span id="thirdAmountUs2">&nbsp;</span>
+			  <input type="hidden" name="thirdAmountUsHidden2" id="thirdAmountUsHidden2"></td>
+			</tr>
+
+
+
+			<tr>
+			  <td width="200" height="30" rowspan="3"><div align="left">CWW Referral</div></td>
+			  <td height="30">
+			    <input type="text" name="CWWOffice" id="CWWOffice"/><br />
+				<span class="STYLE3">(CWW Office 1)</span></td>
+			  <td height="30"><input type="text" name="CWW_party_salesPerson" id="CWW_party_salesPerson"/><br />
+				<span class="STYLE3">(CWW Sales Person 1)</span></td>
+			  <td height="30"><input type="text" name="CWW_refPercent" id="refPercent" onkeyup="get_cw_ref()"/><br />
+					<span class="STYLE3">(CWW referral % 1)				    </span></td>
+			  <td height="30"><div align="right"><span id="currencyCode4"class="searchDetailHeighlight">(unselected)</span></div></td>
+			  <td width="142" height="30">(e)
+			    <input type="text" name="CWW_Referral_Fee" id="reAmount"  onkeyup="netFeeChange();fields_comma(this,event.keyCode);"/></td>
+			  <td width="120" height="30"><span class="searchDetailHeighlight">USD</span>
+			  <span id="reAmountUs">&nbsp;</span>
+			  <input type="hidden" name="reAmountUsHidden" id="reAmountUsHidden"></td>
+			  </tr>
+
+			<tr>
+			  <td height="30">
+			    <input type="text" name="CWWOffice2" id="CWWOffice2"/><br />
+				<span class="STYLE3">(CWW Office 2)</span></td>
+			  <td height="30"><input type="text" name="CWW_party_salesPerson2" id="CWW_party_salesPerson2"/><br />
+				<span class="STYLE3">(CWW Sales Person 2)</span></td>
+			  <td height="30"><input type="text" name="CWW_refPercent2" id="refPercent2" onkeyup="get_cw_ref()"/><br />
+					<span class="STYLE3">(CWW referral % 2)				    </span></td>
+			  <td height="30"><div align="right"><span id="currencyCode16"class="searchDetailHeighlight">(unselected)</span></div></td>
+			  <td width="142" height="30">(f)&nbsp;
+			    <input type="text" name="CWW_Referral_Fee2" id="reAmount2"  onkeyup="netFeeChange();fields_comma(this,event.keyCode);"/></td>
+			  <td width="120" height="30"><span class="searchDetailHeighlight">USD</span>
+			  <span id="reAmountUs2">&nbsp;</span>
+			  <input type="hidden" name="reAmountUsHidden2" id="reAmountUsHidden2"></td>
+			  </tr>
+
+			<tr>
+			  <td height="30">
+			    <input type="text" name="CWWOffice3" id="CWWOffice3"/><br />
+				<span class="STYLE3">(CWW Office 3)</span></td>
+			  <td height="30"><input type="text" name="CWW_party_salesPerson3" id="CWW_party_salesPerson3"/><br />
+				<span class="STYLE3">(CWW Sales Person 3)</span></td>
+			  <td height="30"><input type="text" name="CWW_refPercent3" id="refPercent3" onkeyup="get_cw_ref()"/><br />
+					<span class="STYLE3">(CWW referral % 3)				    </span></td>
+			  <td height="30"><div align="right"><span id="currencyCode17"class="searchDetailHeighlight">(unselected)</span></div></td>
+			  <td width="142" height="30">(g)
+			    <input type="text" name="CWW_Referral_Fee3" id="reAmount3"  onkeyup="netFeeChange();fields_comma(this,event.keyCode);"/></td>
+			  <td width="120" height="30"><span class="searchDetailHeighlight">USD</span>
+			  <span id="reAmountUs3">&nbsp;</span>
+			  <input type="hidden" name="reAmountUsHidden3" id="reAmountUsHidden3"></td>
+			  </tr>
+
+
+
+			<tr>
+			  <td width="200" height="30"><div align="left">CS management Fee</div></td>
+			  <td height="30"><input type="text" name="CSOffice" id="CSOffice"/><br>
+			    <span class="STYLE3">(CS Office)</span></td>
+			  <td height="30"><input type="text" name="CSsalesPerson" id="CSsalesPerson"/><br>			    
+			    <span class="STYLE3">(CS Sales Person)</span></td>
+			  <td height="30"><input type="text" name="CSrefPercent" id="CSrefPercent" onkeyup="get_cs_ref()"/>
+			    <br>
+		        <span class="STYLE3">(CS referral %) </span></td>
+			  <td height="30"><div align="right"><span id="currencyCode11"class="searchDetailHeighlight">(unselected)</span></div></td>
+			  <td width="142" height="30"> (h)
+			    <input type="text" name="CSOfficeFee" id="CSOfficeFee" onkeyup="netFeeChange();fields_comma(this,event.keyCode);"/></td>
+			  <td width="120" height="30"><span class="searchDetailHeighlight">USD</span> <span id="CSOfficeFeeUs">&nbsp;</span>
+			    <input type="hidden" name="CSOfficeFeeUsHidden" id="CSOfficeFeeUsHidden" /></td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30"><div align="left">Net Fee </div></td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30"><div align="right"><span id="currencyCode5"class="searchDetailHeighlight">(unselected)</span></div></td>
+			  <td width="142" height="30"><span id="netFeeAmountSpan"></span>
+<input type="hidden" name="netFeeAmount" id="netFeeAmount"/></td>
+			  <td width="120" height="30">
+			    <span class="searchDetailHeighlight">USD</span> <span id="netFeeUs">&nbsp;</span>
+                <input type="hidden" name="netFeeUsHiddlen" id="netFeeUsHiddlen" />              </td>
+			  </tr>
+			</table>
+		</div> 
+        <div id="share" class="DragBox">
+<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+		<tr>
+		  <td height="30" colspan="2"><ul class="ulWidth">
+			Commission Split:<span class="searchDetailHeighlight">(<em class="searchDetailHeighlight">Fee sharing arrangments,% must equal to 100</em>)
+			</span>
+		  </ul></td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person1:
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p1"  id="Fee_sharing_p1" onchange="check_dot(this)" value="<{$sArray.user_name}>" />
+            <input type="button" name="select person" value="Select User" onclick="show_list_div('Fee_sharing_p1')" />
+            &nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p1_percent" id="Fee_sharing_p1_percent" onkeyup="fee_share_percent(1)"/>
+			% of Fee:
+			<input type="text" name="Fee_sharing_p1_fee" id="Fee_sharing_p1_fee"  onkeyup="fee_share_fee(1);fields_comma(this,event.keyCode);"   />
+			<span id="currencyCode6" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person2:
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p2" id="Fee_sharing_p2" onchange="check_dot(this)" />
+			<input type="button" name="select person2" value="Select User" onclick="show_list_div('Fee_sharing_p2')" />
+&nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p2_percent" id="Fee_sharing_p2_percent"  onkeyup="fee_share_percent(2)" />
+			% of Fee:
+			<input type="text" name="Fee_sharing_p2_fee" id="Fee_sharing_p2_fee" onkeyup="fee_share_fee(2);fields_comma(this,event.keyCode);"  />
+			<span id="currencyCode7" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person3:
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p3" id="Fee_sharing_p3"  onchange="check_dot(this)" />
+			<input type="button" name="select person3" value="Select User" onclick="show_list_div('Fee_sharing_p3')" />
+&nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p3_percent" id="Fee_sharing_p3_percent" onkeyup="fee_share_percent(3)"  />
+			% of Fee:
+			<input type="text" name="Fee_sharing_p3_fee" id="Fee_sharing_p3_fee" onkeyup="fee_share_fee(3);fields_comma(this,event.keyCode);"  />
+			<span id="currencyCode8" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person4:
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p4" id="Fee_sharing_p4"  onchange="check_dot(this)" />
+			<input type="button" name="select person4" value="Select User" onclick="show_list_div('Fee_sharing_p4')" />
+&nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p4_percent" id="Fee_sharing_p4_percent"  onkeyup="fee_share_percent(4)"  />
+			% of Fee:
+			<input type="text" name="Fee_sharing_p4_fee" id="Fee_sharing_p4_fee" onkeyup="fee_share_fee(4);fields_comma(this,event.keyCode);"  />
+			<span id="currencyCode9" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30">
+			Sales Person5:
+			</td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p5"  id="Fee_sharing_p5"  onchange="check_dot(this)"/>
+			<input type="button" name="select person5" value="Select User" onclick="show_list_div('Fee_sharing_p5')" />
+&nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p5_percent" id="Fee_sharing_p5_percent"  onkeyup="fee_share_percent(5)" />
+			% of Fee:
+			<input type="text" name="Fee_sharing_p5_fee" id="Fee_sharing_p5_fee"  onkeyup="fee_share_fee(5);fields_comma(this,event.keyCode);" />
+			<span id="currencyCode10" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person6:
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p6" id="Fee_sharing_p6" onchange="check_dot(this)" />
+			<input type="button" name="select person6"  value="Select User" onclick="show_list_div('Fee_sharing_p6')" />
+&nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p6_percent" id="Fee_sharing_p6_percent"  onkeyup="fee_share_percent(6)" />
+			% of Fee:
+			<input type="text" name="Fee_sharing_p6_fee"  id="Fee_sharing_p6_fee" onkeyup="fee_share_fee(6);fields_comma(this,event.keyCode);"  />
+			<span id="currencyCode12" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person7:
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p7"  id="Fee_sharing_p7"  onchange="check_dot(this)"/>
+			<input type="button" name="select person7" value="Select User" onclick="show_list_div('Fee_sharing_p7')" />
+&nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p7_percent" id="Fee_sharing_p7_percent" onkeyup="fee_share_percent(7)" />
+			% of Fee:
+			<input type="text" name="Fee_sharing_p7_fee" id="Fee_sharing_p7_fee" onkeyup="fee_share_fee(7);fields_comma(this,event.keyCode);" />
+			<span id="currencyCode14" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person8:
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p8"  id="Fee_sharing_p8"  onchange="check_dot(this)"/>
+			<input type="button" name="select person8" value="Select User" onclick="show_list_div('Fee_sharing_p8')" />
+&nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p8_percent" id="Fee_sharing_p8_percent" onkeyup="fee_share_percent(8)" />
+			% of Fee:
+			<input type="text" name="Fee_sharing_p8_fee" id="Fee_sharing_p8_fee" onkeyup="fee_share_fee(8);fields_comma(this,event.keyCode);" />
+			<span id="currencyCode14" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person9:
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p9"  id="Fee_sharing_p9"  onchange="check_dot(this)"/>
+			<input type="button" name="select person9" value="Select User" onclick="show_list_div('Fee_sharing_p9')" />
+&nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p9_percent" id="Fee_sharing_p9_percent" onkeyup="fee_share_percent(9)" />
+			% of Fee:
+			<input type="text" name="Fee_sharing_p9_fee" id="Fee_sharing_p9_fee" onkeyup="fee_share_fee(9);fields_comma(this,event.keyCode);" />
+			<span id="currencyCode14" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person10:
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p10"  id="Fee_sharing_p10"  onchange="check_dot(this)"/>
+			<input type="button" name="select person10" value="Select User" onclick="show_list_div('Fee_sharing_p10')" />
+&nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p10_percent" id="Fee_sharing_p10_percent" onkeyup="fee_share_percent(10)" />
+			% of Fee:
+			<input type="text" name="Fee_sharing_p10_fee" id="Fee_sharing_p10_fee" onkeyup="fee_share_fee(10);fields_comma(this,event.keyCode);" />
+			<span id="currencyCode14" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30">Total%</td>
+		  <td height="30">
+		  <span id="totalPercent">%</span>
+		  &nbsp;&nbsp;
+		  Total Revenue:
+		  &nbsp;&nbsp;
+		  <span id="totalRevenue"></span>
+		  </td>
+	    </tr>
+		</table>
+	  </div>
+        <div id="signPart" class="DragBox">
+<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+			<tr>
+			  <td height="30" colspan="2"><ul class="ulWidth">
+			    To be agreed in conjunction with Department Head:
+			    </ul></td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30"><ul class="ulWrap">
+			    Client Survey to be sent?
+			    </ul></td>
+			  <td height="30"><ul class="ulWidth">
+			    <input name="clientSurveySent" type="radio" value="1" id="clientSurveySent1"/>
+			    YES
+			    <input name="clientSurveySent" type="radio" value="0" id="clientSurveySent2"/>
+			    No&nbsp;&nbsp;Please tick one box
+			    </ul>			  </td>
+			  </tr>
+			<tr>
+			  <td height="30">&nbsp;</td>
+			  <td height="30"><input type="checkbox" name="Online" value="1" />
+			    On-line
+			    &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="Telephone" value="1" />
+			    Telephone
+			    &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="Inperson" value="1" />
+			    In person 
+			  </td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30"><ul class="ulWrap">
+			    Reference Letter to be obtained?
+			    </ul></td>
+			  <td height="30"><ul class="ulWidth">
+                <input name="referenceLetter" type="radio" value="1" id="referenceLetter1"/>
+			    YES
+			    <input name="referenceLetter" type="radio" value="0" id="referenceLetter2"/>
+			    No&nbsp;&nbsp;Please tick one box
+			    </ul></td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30"><ul class="ulWrap">
+			    Major Case Study?
+			    </ul></td>
+			  <td height="30"><ul class="ulWidth">
+                <input name="MajorCaseStudy" type="radio" value="1" id="MajorCaseStudy1"/>
+			    YES
+			    <input name="MajorCaseStudy" type="radio" value="0" id="MajorCaseStudy2"/>
+			    No&nbsp;&nbsp;Please tick one box
+			    </ul></td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30"><ul class="ulWrap">
+			    Minor Case Study?
+			    </ul></td>
+			  <td height="30"><ul class="ulWidth">
+			    <input name="MinorCaseStudy" type="radio" value="1" id="MinorCaseStudy1"/>
+			    YES
+			    <input name="MinorCaseStudy" type="radio" value="0" id="MinorCaseStudy2"/>
+			    No&nbsp;&nbsp;Please tick one box
+			    </ul>			  </td>
+			  </tr>
+
+			</table>
+          </div>
+          <div id="footerSign" class="DragBox">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+
+			<tr>
+			  <td height="30" colspan="3"><ul class="ulWidth">
+			    (<em>The original of this form should be given to Accounts
+			    and a copy to local Admin <br />
+			    if a Client Survey is to be sent. A copy should be kept by the Head of Department and one placed in the transaction file</em>)
+			    <br />
+			  </ul></td>
+			  </tr>
+			<tr>
+			  <td width="30%">
+			    <div align="center"><br />
+			      Preparers Initials:<br />
+			      <br />
+			      <br />
+			      
+		        ______________________________		        <br />&nbsp;
+			    </div></td>
+			  <td width="30%">
+			    <div align="center"><br />
+			      Approved by:(<em>Department Head</em>)<br />
+			      <br />
+			      <br />
+			      ______________________________<br />&nbsp; </div></td>
+			  <td width="30%" height="30">
+			    <div align="center"><br />
+			      Approved by:(<em>Executive Directors</em>)<br />
+			      <br />
+			      <br />
+			      ______________________________ <br />&nbsp;</div></td>
+			  </tr>
+			</table>
+          </div>
+          <div align="center">
+	  	<div id="submitThis" onclick="submit_form()" class="unHeightLight" onmousemove="highLightThis(this)" onmouseout="unHighLightThis(this)" style="width:100px; height:15px;">Save</div>
+	  </div>
+      </div>
+
+    </div>
+  </form>
+</div>
+</div>
+</body>
+</html>

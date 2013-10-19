@@ -1,0 +1,441 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.htm
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Search List</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<link href="css/drag_drop.css" rel="stylesheet" type="text/css" />
+<link href="css/date_selector.css" rel="stylesheet" type="text/css" />
+
+<{$search_ajax}>
+<script language="javascript" src="js/drag_drop.js"></script>
+<script language="javascript" src="js/date_selector.js"></script>
+<script language="javascript" src="js/func.js"></script>
+<script language="javascript">
+var headerName = 'check';
+function getDetails(idNum){
+	window.open("search_getDetail.php?ID=" + idNum, '_blank');
+}
+function submitForm(){
+	document.searchBarForm.submit();
+}
+function hideSearch(){
+	if(document.getElementById('searchBarWidth').style.display == "")
+	{
+		document.getElementById('searchBarWidth').style.display='none';
+		document.getElementById('controlButton').innerHTML = 'Maximize';
+	}
+	else
+	{
+		document.getElementById('searchBarWidth').style.display='';
+		document.getElementById('controlButton').innerHTML = 'Minimize';
+	}
+}
+function openNewWindow(ID){
+	window.open("page.html","newwindow","height=100,width=400,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no");
+}
+function heighLightThis(obj){
+	document.getElementById(obj.id).className="buttonColorHeight";
+}
+function unHeighLightThis(obj){
+	document.getElementById(obj.id).className="buttonColor";
+}
+function exExcel(){
+	var url = "export_to_excel.php?orderBy=<{$search_conditions}>";
+	window.open(url,'excel')
+}
+function confirm_recure(id){
+	if(confirm("Are you sure to recure this invoice?")){
+		window.location = 'invoice_recure.php?ID='+id;
+	}
+}
+
+</script>
+<style type="text/css">
+<!--
+.STYLE4 {font-size: 10px}
+.STYLE5 {color: #FFFFFF}
+-->
+</style>
+</head>
+<body>
+<div id="allDivs"  style=" border:#003333;">
+  <table width="98%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse">
+    <tr>
+      <td>INVOICE REQUISITION System</td>
+      <td><span style="float:right; margin: 5px;"><img src="img/cushman_logo.JPG" /></span></td>
+    </tr>
+    <tr>
+      <td bgcolor="#0033CC" height="10" >
+      	<div style="">
+					<table width="636">
+					<tr>
+						<td width="15%" align="center">
+							<div align="center" id="buttonSearch" class="buttonColor" onclick="window.location='./search_list.php'"  onmousemove="heighLightThis(this)" onmouseout="unHeighLightThis(this)">Home</div>
+						</td>
+						<td width="15%" align="center">
+							<div align="center" id="buttonAdd" class="buttonColor" onclick="window.open('fill_form.php', '_blank')" onmousemove="heighLightThis(this)" onmouseout="unHeighLightThis(this)">Invoice Add</div>
+						</td>
+						<{if $sArray.user_type eq "Account"}>
+						<td width="15%" align="center">
+							<div align="center" id="export_to_excel" class="buttonColor" onclick="exExcel()" onmousemove="heighLightThis(this)" onmouseout="unHeighLightThis(this)">Export to Excel</div>
+						</td>
+						<{/if}>
+						<td width="15%" align="center">
+							<div align="center" id="user_guide" class="buttonColor" onclick="window.open('./IRQ_Userguide.pdf','userguide')" onmousemove="heighLightThis(this)" onmouseout="unHeighLightThis(this)">User Guide</div>
+						</td>
+						<{if $sArray.approve eq 1}>
+						<td width="15%" align="center">
+							<div align="center" id="approve" class="buttonColor" onclick="window.open('./approve_list.php','approve_list')" onmousemove="heighLightThis(this)" onmouseout="unHeighLightThis(this)">Approve List</div>
+						</td>
+						<{/if}>
+						<td width="15%" align="center">
+							<div align="center" id="buttonLogout" class="buttonColor" onclick="window.location='logout.php'" onmousemove="heighLightThis(this)" onmouseout="unHeighLightThis(this)">Logout</div>
+						</td>
+					</tr>
+					</table>
+				</div>
+	  </td>
+      <td bgcolor="#0033CC" height="10" ><div align="right" class="STYLE5">Welcome, &nbsp;<strong><{$user_name}></strong></div></td>
+    </tr>
+  </table>
+  <div id="searchBarBox" align="center" class="searchBarBox_searchPage" style="width:240px; float:none">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td bgcolor="#CECECE" scope="col"><div style="float:right;"><a href="#" onclick="hideSearch()"><span id="controlButton">Maximize</span></a></div>Search Bar</td>
+      </tr>
+    </table>
+    <div id="searchBarWidth" style=" display:none">
+      <form id="searchBarForm"  action="search_start.php" method="post" enctype="multipart/form-data" name="searchBarForm">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td bgcolor="#EEEEEE"><span class="STYLE4">Country: </span></td>
+            <td bgcolor="#EEEEEE"><span class="STYLE4">
+              <select name="searchCountry" style=" width:100px" onchange="xajax_selectCity_search(this.value);">
+                <option value="all">All Country</option>
+                <{section name=perRow loop=$countryArray}> <option value="<{$countryArray[perRow].Country}>" <{if $selectedCountry eq $countryArray[perRow].Country}>selected<{/if}>><{$countryArray[perRow].Country}>
+                </option>
+                <{/section}>
+              </select>
+              </span></td>
+          </tr>
+		  <tr>
+            <td bgcolor="#EEEEEE"><span class="STYLE4"> City </span></td>
+            <td bgcolor="#EEEEEE"><span id="optionCity"><input type="hidden" value="all" name="City" /></span></td>
+          </tr>
+          <tr>
+            <td bgcolor="#EEEEEE"><span class="STYLE4"> Transaction No: </span></td>
+            <td bgcolor="#EEEEEE"><input name="Transaction_No" id="Transaction_No"  style="width:100px"/></td>
+          </tr>
+          <tr>
+            <td bgcolor="#EEEEEE"><span class="STYLE4">Idx of Transaction</span></td>
+            <td bgcolor="#EEEEEE"><input id="invoice_id" name="invoice_id"  style="width:50px"/><input type="button" value="go!" 
+			onclick="window.open('search_getDetail.php?ID=' + searchBarForm.invoice_id.value,'_blank')" /></td>
+          </tr>		  
+		  <tr>
+            <td bgcolor="#EEEEEE"><span class="STYLE4"> Document No: </span></td>
+            <td bgcolor="#EEEEEE"><input name="doc_type_num" id="doc_type_num"  style="width:100px"/></td>
+          </tr>
+		  <tr>
+            <td bgcolor="#EEEEEE"><span class="STYLE4"> Document Type: </span></td>
+            <td bgcolor="#EEEEEE">
+			<select name="doc_type" id="doc_type">
+				<option value="All" <{if $selected_doc_type eq "All"}>selected<{/if}>>All Doc Types</option>
+				<{foreach from=$doc_type key=key item=item}>
+				<option value="<{$key}>"  <{if $selected_doc_type eq $key}>selected<{/if}>><{$item}></option>
+				<{/foreach}>
+              </select>
+			 </td>
+          </tr>		  
+          <tr>
+            <td bgcolor="#EEEEEE"><span class="STYLE4"> Invoice Status: </span></td>
+            <td bgcolor="#EEEEEE">
+				<select name="trans_state">
+					<{html_options options=$state_options selected=$selectedState}>
+				</select>
+			</td>
+          </tr>
+          <tr>
+            <td bgcolor="#EEEEEE"><span class="STYLE4">Client:</span></td>
+            <td bgcolor="#EEEEEE"><input name="Client" id="Client" value="<{$Client}>"  style="width:100px"/></td>
+          </tr>
+          <tr>
+            <td bgcolor="#EEEEEE"><span class="STYLE4">Trading Names:</span></td>
+            <td bgcolor="#EEEEEE"><input name="invoice_to_trading_name" id="Client" value="<{$invoice_to_trading_name}>"  style="width:100px"/></td>
+          </tr>
+          <tr>
+            <td bgcolor="#EEEEEE"><span class="STYLE4">Dept: </span></td>
+            <td bgcolor="#EEEEEE"><span class="STYLE4">
+              <select name="selectedDept" style="width:100px">
+                <option value="all">All Dept</option>
+                <{section name=perRow loop=$deptArray}> <option value="<{$deptArray[perRow].Dept_code}>"  <{if $selectedDept eq $deptArray[perRow].Dept_code}>selected<{/if}>><{$deptArray[perRow].Dept_code}>
+                </option>
+                <{/section}>
+              </select>
+              </span> </td>
+          </tr>
+          <tr>
+            <td bgcolor="#EEEEEE"><span class="STYLE4">MAGroup</span></td>
+            <td bgcolor="#EEEEEE"><span class="STYLE4">
+              <select name="selectedMAG" style="width:100px">
+                <option value="all">Major A/C</option>
+                <{section name=perRow loop=$MAGroup}> <option value="<{$MAGroup[perRow].Client_Solutins_Major}>"  <{if $selectedMAG eq $MAGroup[perRow].Client_Solutins_Major}>selected<{/if}>><{$MAGroup[perRow].Client_Solutins_Major}>
+                </option>
+                <{/section}>
+              </select>
+              </span></td>
+          </tr>
+          <tr>
+            <td bgcolor="#EEEEEE"><ul class="STYLE4" style="float:left; width: 80px;">
+                Order by:
+              </ul></td>
+            <td bgcolor="#EEEEEE"><span style="font-size: 10px">
+			<select name="orderBySelect" id="orderBySelect" style="">
+				<{html_options options=$searchFields selected=$orderBy}>
+			</select>
+			  
+			  </span>
+			 </td>
+          </tr>
+		  <tr>
+            <td bgcolor="#EEEEEE">Sort:</td>
+            <td bgcolor="#EEEEEE">
+			<select name="desc" id="desc" style="">
+				<option value="des" <{if $desc eq "des"}>selected<{/if}> />Descending</option>
+				<option value="asc" <{if $desc eq "asc"}>selected<{/if}>>Ascending</option>
+			</select></td>
+          </tr>
+
+		  <tr>
+            <td bgcolor="#EEEEEE">Fee split:</td>
+            <td bgcolor="#EEEEEE"><input type="text" name="fee_split" value="<{$fee_split}>" /></td>
+          </tr> 
+          <tr>
+            <td colspan="2" bgcolor="#EEEEEE"><span class="STYLE4">
+              <input type='button' id='for_date1' value='From' onclick='showCalender(this)' />
+              <input type='text' id='date1' name='date1' style="width:70px;" value="<{$date1}>"/>
+              <input type='button' id='for_date2' value='To' onclick='showCalender(this)' />
+              <input type='text' id='date2' name='date2' style="width:70px" value="<{$date2}>"/>
+              </span></td>
+          </tr>
+          <tr>
+            <td colspan="2" bgcolor="#EEEEEE"><div align="center" class="STYLE4">
+                <input name="searchButton" type="button" onclick="submitForm();" value="Submit"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input name="resetButton" type="reset" value="Reset"/>
+              </div></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
+  <hr />
+  <div id="invoiceFormDiv" class="DragContainer" style="float:none; margin-right:5px; width:auto !important; width:100%;">
+    <table width="100%" border="2" cellspacing="0" cellpadding="0">
+      <tr height="30">
+	  	<th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Transaction No/<br />Original Invoice No</th>
+        <th width="30" bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Doc Type </th>
+        <th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Doc No.</th>
+		<th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Doc Date</th>
+        <th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col"> Country </th>
+		<th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col"> City </th>
+        <th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col"> Client</th>
+        <th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Dept</th>
+        <th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Ppt <br />
+          Type </th>
+        <th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col"> Trans <br />
+          Type1</th>
+        <th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Trans<br />
+          Type2</th>
+		<th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Fee Split</th>
+		<th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Trading Name</th>
+        <th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Sqft</th>
+        <td bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col" width="180" align="center">&nbsp;</td>
+      </tr>
+	  <{if count($listArray) > 0}>
+      <{section name=perRow loop=$listArray}>
+      <tr onmouseover="highLightThis(this)" onmouseout="this.className='invoice_state<{$listArray[perRow].trans_state}>'" class="invoice_state<{$listArray[perRow].trans_state}>">
+        <td width="90" bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].Transaction_No}><br /><{$listArray[perRow].Invoice_No}></div></td>
+		
+        <td width="30" bordercolor="#FFFFFF"><div align="center">
+		<{foreach from=$doc_type key=key item=item}>
+			  	<{if $key == $listArray[perRow].doc_type}><{$item}><{/if}>
+		<{/foreach}></div></td>
+        <td bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].doc_type_num}></div></td>
+		<td width="80" bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].Invoice_date}></div></td>
+        <td bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].Country}></div></td>
+		<td bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].City}></div></td>
+        <td width="200" bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].Client}></div></td>
+        <td bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].Dept_info}></div></td>
+        <td bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].Ppty_Type}></div></td>
+        <td bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].Trans_Type_1}></div></td>
+        <td bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].Trans_Type_2}></div></td>
+		<td bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].Fee_sharing_p1}></div></td>
+		<td bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].invoice_to_trading_name}></div></td>
+        <td bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].Sq_Ft}></div></td>
+        <td width="150" nowrap="nowrap" bordercolor="#FFFFFF" bgcolor="#EEEEEE"><div align="center">
+        		<{assign var='t_access' value='false'}>
+        <{foreach from=$globalDept key=key item=item}>
+			  	<{if $item.dept2_id == $listArray[perRow].Dept2_info }> 
+			  	    <{assign var='t_access' value='true'}>
+			  	<{/if}>
+		<{/foreach}>
+		<{if 
+			(
+				(
+					($sArray.invoice_view eq "1") 
+						AND 
+					( 	
+					    ($t_access eq "true")
+					       ||
+					    ($sArray.power eq 0)
+							||
+						($sArray.power eq 2)
+							||
+						($sArray.power eq 3 AND ($sArray.priority_dept == $listArray[perRow].Dept_info))
+							||							
+						(stristr($sArray.priority_country,$listArray[perRow].Country) AND $sArray.power eq 4) 
+							||
+						(stristr($sArray.priority_country,$listArray[perRow].Country) AND ($sArray.priority_city == $listArray[perRow].City) AND $sArray.power eq 5) 
+							||
+						(stristr($sArray.priority_country,$listArray[perRow].Country) AND stristr($sArray.priority_dept,$listArray[perRow].Dept2_info) AND ($sArray.approve eq 1)  AND $sArray.power eq 6)
+							||
+						(stristr($sArray.priority_country,$listArray[perRow].Country) AND ($sArray.priority_city == $listArray[perRow].City) AND stristr($sArray.priority_dept,$listArray[perRow].Dept2_info) AND $sArray.power eq 8)
+					)
+				)
+				||(
+							(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p1))
+								||
+							(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p2))
+								||
+							(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p3))
+								||
+							(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p4))
+								||
+							(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p5))
+								||
+							(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p6))
+								||
+							(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p7))
+								||
+							(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p8))
+								||
+							(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p9))
+								||
+							(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p10))
+					)
+			)
+		}>
+		<input type="button" onclick="window.open('search_getDetail.php?ID=<{$listArray[perRow].ID}>','_blank')" value="View"/>
+		<{else}>
+		<input type="button" disabled="disabled" value="View"><{/if}>
+		
+		<{if 
+			(
+				(
+					($sArray.invoice_modify eq "1") 
+						AND 
+					( 	
+					    ($t_access eq "true" AND ($listArray[perRow].trans_state eq "1") )
+					       ||
+					    ($sArray.power eq 0)
+							||
+						($sArray.power eq 2)
+							||
+						($sArray.power eq 3 AND ($sArray.priority_dept == $listArray[perRow].Dept_info))
+							||							
+						(stristr($sArray.priority_country,$listArray[perRow].Country) AND $sArray.power eq 4) 
+							||
+						(stristr($sArray.priority_country,$listArray[perRow].Country) AND ($sArray.priority_city == $listArray[perRow].City) AND $sArray.power eq 5) 
+							||
+						(stristr($sArray.priority_country,$listArray[perRow].Country) AND ($sArray.priority_city == $listArray[perRow].City) AND stristr($sArray.priority_dept,$listArray[perRow].Dept2_info) AND $sArray.power eq 8)
+					)
+				)
+				|| 
+				(
+					(
+						(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p1))
+							||
+						(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p2))
+							||
+						(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p3))
+							||
+						(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p4))
+							||
+						(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p5))
+							||
+						(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p6))
+							||
+						(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p7))
+							||
+						(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p8))
+							||
+						(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p9))
+							||
+						(strtolower($sArray.user_name) eq strtolower($listArray[perRow].Fee_sharing_p10))
+					)
+					AND ($listArray[perRow].trans_state eq "1")
+				)
+			)
+		}>
+		<input type="button" onclick="window.open('modify_invoice.php?ID=<{$listArray[perRow].ID}>','_blank')" value="Edit"/>
+		<{else}><input type="button" disabled="disabled" value="Edit"><{/if}>
+
+		<{if 
+			(
+			($t_access eq "true")
+					       ||
+			($sArray.power <= 2)
+					||
+			 	(stristr($sArray.priority_country,$listArray[perRow].Country) AND $sArray.power <= 4 AND $sArray.power >2)
+			)
+		}>
+		<input type="button" onclick="window.open('invoice_print_sel.php?ID=<{$listArray[perRow].ID}>','_blank')" value="Print"/>
+		
+		<{else}><input type="button" disabled="disabled" value="Print"><{/if}>
+		<input type="button" onclick="confirm_recure('<{$listArray[perRow].ID}>')" value="Recur"/>
+		</div></td>
+      </tr>
+      <{/section}>
+	  <{else}><tr><td colspan="20">Found no record match your search conditions</td></tr><{/if}>
+    </table>
+  </div>
+  <div align="center"> <{$PAGELINK}> </div>
+  <table width="100%" border="0" cellspacing="2" cellpadding="2">
+  <tr>
+    <td width="50"><div class="invoice_state1" style=" margin:1px;">&nbsp;</div></td>
+	<td>status1 (Invoice Requisition Form created by brokers) </td>
+  </tr>
+  <tr>
+    <td width="50"><div class="invoice_state2" style=" margin:1px;">&nbsp;</div></td>
+	<td>status2 (Invoice Requisition Form approved by Department head and send to account)</td>
+  </tr>
+  <tr>
+    <td width="50"><div class="invoice_state3" style=" margin:1px;">&nbsp;</div></td>
+	<td>status3 (Invoice printed and sent to customer) </td>
+  </tr>
+  <tr>
+    <td width="50"><div class="invoice_state4" style=" margin:1px;">&nbsp;</div></td>
+	<td>status4 (Invoice payment received) </td>
+  </tr>
+  <tr>
+    <td width="50"><div class="invoice_state0" style=" margin:1px;">&nbsp;</div></td>
+	<td>trashed (void,unavailable) </td>
+  </tr>
+  </tr>
+</table>
+</div>
+</body>
+</html>

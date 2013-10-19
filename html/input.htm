@@ -1,0 +1,27 @@
+<head>
+<script language="javascript">
+function changeThis(){
+	var replaceContent =  document.form1.inputContent.value;
+	replaceContent = replaceContent.replace(/\n/gi, "<br>");
+	replaceContent = replaceContent.replace(/ /gi, "&nbsp;");
+	window.opener.document.getElementById('inputArea').innerHTML = replaceContent;
+	window.close();
+}
+</script>
+</head>
+<body>
+<form action="" method="get" name="form1" id="form1">
+<table width="400" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>
+      <textarea name="inputContent" style="width:380px; height:180px"></textarea>
+    </td>
+  </tr>
+  <tr>
+    <td><div align="center">
+      <input type="submit" name="Submit" value="Save" onclick="changeThis()" />
+    </div></td>
+  </tr>
+</table>
+</form>
+</body>

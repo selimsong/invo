@@ -1,0 +1,938 @@
+<HTML>
+<HEAD>
+<LINK 
+href="Form-Invoice_files/filelist.xml" rel=File-List><LINK 
+href="Form-Invoice_files/editdata.mso" rel=Edit-Time-Data><LINK 
+href="Form-Invoice_files/oledata.mso" rel=OLE-Object-Data><!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>dung.vu</o:Author>
+  <o:LastAuthor>leon</o:LastAuthor>
+  <o:LastPrinted>2009-11-16T08:03:26Z</o:LastPrinted>
+  <o:Created>2009-04-13T10:47:23Z</o:Created>
+  <o:LastSaved>2009-11-16T08:03:39Z</o:LastSaved>
+  <o:Company>Cushman</o:Company>
+  <o:Version>11.6568</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<STYLE>
+<!--table
+	{mso-displayed-decimal-separator:"\.";
+	mso-displayed-thousand-separator:"\,";}
+@page
+	{margin:.57in .4in .5in .45in;
+	mso-header-margin:.38in;
+	mso-footer-margin:.28in;
+	mso-horizontal-page-align:center;
+	mso-vertical-page-align:center;}
+tr
+	{mso-height-source:auto;
+	mso-ruby-visibility:none;}
+col
+	{mso-width-source:auto;
+	mso-ruby-visibility:none;}
+br
+	{mso-data-placement:same-cell;}
+.style0
+	{mso-number-format:General;
+	text-align:general;
+	vertical-align:bottom;
+	white-space:nowrap;
+	mso-rotate:0;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	border:none;
+	mso-protection:locked visible;
+	mso-style-name:Normal;
+	mso-style-id:0;}
+td
+	{mso-style-parent:style0;
+	padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:bottom;
+	border:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	mso-protection:locked visible;
+	white-space:nowrap;
+	mso-rotate:0;}
+.xl24
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	text-align:center;}
+.xl25
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;}
+.xl26
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl27
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:none;
+	white-space:normal;}
+.xl28
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:none;
+	white-space:normal;}
+.xl29
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:none;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl30
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	white-space:normal;}
+.xl31
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:none;
+	white-space:normal;}
+.xl32
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:none;}
+.xl33
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	border-top:none;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;}
+.xl34
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl35
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	white-space:normal;}
+.xl36
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	white-space:normal;}
+.xl37
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	text-align:center;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl38
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl39
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	text-align:center;
+	vertical-align:top;
+	border:.5pt solid windowtext;
+	white-space:normal;}
+.xl40
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl41
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	white-space:normal;}
+.xl42
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	text-decoration:underline;
+	text-underline-style:single;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	white-space:normal;}
+.xl43
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	text-align:right;
+	vertical-align:top;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl44
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	white-space:normal;}
+.xl45
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl46
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	white-space:normal;}
+.xl47
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:none;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl48
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:none;
+	white-space:normal;}
+.xl49
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	text-decoration:underline;
+	text-underline-style:single;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:none;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl50
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	text-decoration:underline;
+	text-underline-style:single;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:none;
+	white-space:normal;}
+.xl51
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:none;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;}
+.xl52
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;}
+.xl53
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:none;}
+.xl54
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:none;}
+.xl55
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;}
+.xl56
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	vertical-align:top;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:none;}
+.xl57
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:0;
+	vertical-align:top;
+	white-space:normal;}
+.xl58
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:0;
+	mso-number-format:Standard;
+	text-align:right;
+	vertical-align:top;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl59
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:0;
+	white-space:normal;}
+.xl60
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:0;
+	mso-number-format:Fixed;
+	border:.5pt solid windowtext;
+	white-space:normal;}
+.xl61
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:0;}
+.xl62
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:0;
+	mso-number-format:Standard;
+	border:.5pt solid windowtext;}
+.xl63
+	{mso-style-parent:style0;
+	font-size:16.0pt;
+	font-weight:700;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	text-align:center;}
+.xl64
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	text-align:left;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	white-space:normal;}
+.xl65
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	text-align:left;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	white-space:normal;}
+.xl66
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	text-align:left;}
+.xl67
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	text-align:center;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl68
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	text-align:center;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:none;
+	white-space:normal;}
+.xl69
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	text-align:center;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:none;
+	white-space:normal;}
+.xl70
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	text-align:left;
+	vertical-align:top;
+	white-space:normal;}
+ruby
+	{ruby-align:left;}
+rt
+	{color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	mso-char-type:none;
+	display:none;}
+.xl701 {mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:"Times New Roman", serif;
+	mso-font-charset:163;
+	text-align:left;
+	vertical-align:top;
+	white-space:normal;}
+-->
+</STYLE>
+<!--[if gte mso 9]><xml>
+ <x:ExcelWorkbook>
+  <x:ExcelWorksheets>
+   <x:ExcelWorksheet>
+    <x:Name>Sheet1</x:Name>
+    <x:WorksheetOptions>
+     <x:DefaultRowHeight>315</x:DefaultRowHeight>
+     <x:Print>
+      <x:ValidPrinterInfo/>
+      <x:PaperSizeIndex>9</x:PaperSizeIndex>
+      <x:HorizontalResolution>600</x:HorizontalResolution>
+      <x:VerticalResolution>0</x:VerticalResolution>
+     </x:Print>
+     <x:Selected/>
+     <x:Panes>
+      <x:Pane>
+       <x:Number>3</x:Number>
+       <x:ActiveRow>18</x:ActiveRow>
+       <x:ActiveCol>1</x:ActiveCol>
+      </x:Pane>
+     </x:Panes>
+     <x:ProtectContents>False</x:ProtectContents>
+     <x:ProtectObjects>False</x:ProtectObjects>
+     <x:ProtectScenarios>False</x:ProtectScenarios>
+    </x:WorksheetOptions>
+   </x:ExcelWorksheet>
+   <x:ExcelWorksheet>
+    <x:Name>Sheet2</x:Name>
+    <x:WorksheetOptions>
+     <x:ProtectContents>False</x:ProtectContents>
+     <x:ProtectObjects>False</x:ProtectObjects>
+     <x:ProtectScenarios>False</x:ProtectScenarios>
+    </x:WorksheetOptions>
+   </x:ExcelWorksheet>
+   <x:ExcelWorksheet>
+    <x:Name>Sheet3</x:Name>
+    <x:WorksheetOptions>
+     <x:ProtectContents>False</x:ProtectContents>
+     <x:ProtectObjects>False</x:ProtectObjects>
+     <x:ProtectScenarios>False</x:ProtectScenarios>
+    </x:WorksheetOptions>
+   </x:ExcelWorksheet>
+  </x:ExcelWorksheets>
+  <x:WindowHeight>8850</x:WindowHeight>
+  <x:WindowWidth>11355</x:WindowWidth>
+  <x:WindowTopX>480</x:WindowTopX>
+  <x:WindowTopY>90</x:WindowTopY>
+  <x:ProtectStructure>False</x:ProtectStructure>
+  <x:ProtectWindows>False</x:ProtectWindows>
+ </x:ExcelWorkbook>
+</xml><![endif]--></HEAD>
+<BODY class=xl25 vLink=purple link=blue>
+<TABLE width="654"  border=0 cellPadding=0 
+cellSpacing=0 style="TABLE-LAYOUT: fixed; WIDTH: auto; BORDER-COLLAPSE: collapse" >
+  <COLGROUP>
+  <COL class=xl25 
+  style="WIDTH: 95pt; mso-width-source: userset; mso-width-alt: 4644" width=127>
+  <COL class=xl25 
+  style="WIDTH: 176pt; mso-width-source: userset; mso-width-alt: 8557" 
+width=234>
+  <COL class=xl25 
+  style="WIDTH: 109pt; mso-width-source: userset; mso-width-alt: 5302" 
+width=135>
+  <COL class=xl25 
+  style="WIDTH: 110pt; mso-width-source: userset; mso-width-alt: 5851" 
+width=160>
+  <COL class=xl25 style="WIDTH: 48pt" span=2 width=64>
+  <TBODY>
+  <TR style="HEIGHT: auto" height=21>
+    <TD 
+ colspan="2" class=xl24 ><div align="left"><strong>Cushman & Wakefield (Vietnam) Ltd</strong></div></TD>
+    <TD colspan="2" rowspan="3"><div align="right"><img src="img/ca600041_CW_tagline_web.gif"></div></TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD 
+height=21 colspan="2" class=xl24 ><div align="left">Level 3, Pathfinder Building</div></TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD 
+height=21 colspan="2" class=xl24 ><div align="left">52 Dong Du, District 1</div></TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD 
+height=21 colspan="2" class=xl24><p align="left">Ho Chi Minh City, Vietnam</p></TD>
+    <TD class=xl25 style="WIDTH: 109pt"></TD>
+    <TD class=xl25 style="WIDTH: 110pt"></TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD 
+height=21 colspan="2" class=xl24 ><div align="left">Tel: (84-8) 291 4707</div></TD>
+    <TD class=xl25 style="WIDTH: 109pt"></TD>
+    <TD class=xl25 style="WIDTH: 110pt"></TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD 
+height=21 colspan="2" class=xl24 ><p align="left">Fax: (84-8) 291 4717</p></TD>
+    <TD class=xl25 style="WIDTH: 109pt"></TD>
+    <TD class=xl25 style="WIDTH: 110pt"></TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl24 style="WIDTH: 95pt; HEIGHT: 15.75pt" 
+height=21>&nbsp;</TD>
+    <TD class=xl25 style="WIDTH: 176pt">&nbsp;</TD>
+    <TD class=xl25 style="WIDTH: 109pt"></TD>
+    <TD class=xl25 style="WIDTH: 110pt"></TD>
+  </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD 
+height=21 colspan="2" class=xl24 style="WIDTH: 95pt; HEIGHT: 15.75pt"><p align="left">www.cushmanwakefield.com</p></TD>
+    <TD class=xl25 style="WIDTH: 109pt"></TD>
+    <TD class=xl25 style="WIDTH: 110pt"></TD>
+    </TR>
+  <TR style="HEIGHT: 20.25pt" height=27>
+    <TD class=xl63 style="HEIGHT: 20.25pt" colSpan=4 height=27><SPAN 
+      style="mso-spacerun: yes">&nbsp;</SPAN>INVOICE</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl25 style="HEIGHT: 15.75pt" height=21><SPAN 
+      style="mso-spacerun: yes">&nbsp;</SPAN></TD>
+    <TD class=xl25 style="mso-ignore: colspan"></TD>
+    <TD class=xl25 style="mso-ignore: colspan"></TD>
+    <TD class=xl25 style="mso-ignore: colspan"></TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl26 style="WIDTH: 95pt; HEIGHT: 15.75pt" width=506 
+      height=21>Company:</TD>
+    <TD class=xl27 style="WIDTH: 176pt" width=379><{$idArray.Client}></TD>
+    <TD class=xl26 style="WIDTH: 109pt" width=135>Date:</TD>
+    <TD class=xl28 style="WIDTH: 110pt" width=160><{$idArray.Invoice_date}></TD>
+    </TR>
+  <TR style="HEIGHT: 31.5pt" height=42>
+    <TD class=xl29 style="WIDTH: 95pt; HEIGHT: 31.5pt" width=506 
+      height=42>Address:</TD>
+    <TD class=xl30 style="WIDTH: 176pt" width=379><{$idArray.Invoice_to_address2}></TD>
+    <TD class=xl29 style="WIDTH: 109pt" width=135>Invoice No.:</TD>
+    <TD class=xl31 style="WIDTH: 110pt" width=160><{$idArray.Invoice_No}></TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl29 style="WIDTH: 95pt; HEIGHT: 15.75pt" width=506 
+      height=21>Tax code</TD>
+    <TD class=xl25></TD>
+    <TD class=xl29 style="WIDTH: 109pt" width=135>Our Ref.:</TD>
+    <TD class=xl32>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl33 style="HEIGHT: 15.75pt" height=21>&#12288;</TD>
+    <TD class=xl25></TD>
+    <TD class=xl29 style="WIDTH: 109pt" width=135>Your Ref.:</TD>
+    <TD class=xl31 style="WIDTH: 110pt" width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl29 style="WIDTH: 95pt; HEIGHT: 15.75pt" width=506 
+      height=21>Attention:</TD>
+    <TD class=xl30 style="WIDTH: 176pt" width=379><{$idArray.Contact_person}></TD>
+    <TD class=xl29 style="WIDTH: 109pt" width=135>Our Contact:</TD>
+    <TD class=xl31 style="WIDTH: 110pt" width=160>Ms.Linh Le</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl34 style="WIDTH: 95pt; HEIGHT: 15.75pt" width=506 
+    height=21>&#12288;</TD>
+    <TD class=xl35 style="WIDTH: 176pt" width=379>&#12288;</TD>
+    <TD class=xl34 style="WIDTH: 109pt" width=135>&#12288;</TD>
+    <TD class=xl36 style="WIDTH: 110pt" width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl25 style="HEIGHT: 15.75pt; mso-ignore: colspan" 
+    height=21></TD>
+    <TD class=xl25 style="HEIGHT: 15.75pt; mso-ignore: colspan" 
+    height=21></TD>
+    <TD class=xl25 style="HEIGHT: 15.75pt; mso-ignore: colspan" 
+    height=21></TD>
+    <TD class=xl25 style="HEIGHT: 15.75pt; mso-ignore: colspan" 
+    height=21></TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl67 
+    style="BORDER-RIGHT: black 0.5pt solid; WIDTH: 380pt; HEIGHT: 15.75pt" 
+    width=506 colSpan=3 height=21>Description</TD>
+    <TD class=xl37 style="BORDER-LEFT: medium none; WIDTH: 110pt" width=160 
+    x:str="Amount ">Amount<SPAN style="mso-spacerun: yes">&nbsp;</SPAN></TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl38 style="WIDTH: 95pt; HEIGHT: 15.75pt" width=506 height=21 
+    x:str="Re : ">Re :<SPAN style="mso-spacerun: yes">&nbsp;</SPAN></TD>
+    <TD class=xl64 style="BORDER-RIGHT: black 0.5pt solid; WIDTH: 285pt" 
+    width=379 colSpan=2>&nbsp;</TD>
+    <TD class=xl39 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>USD</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl52 style="BORDER-TOP: medium none; HEIGHT: 15.75pt" 
+    height=21>&#12288;</TD>
+    <TD class=xl53 style="BORDER-TOP: medium none">&#12288;</TD>
+    <TD class=xl54 style="BORDER-TOP: medium none">&#12288;</TD>
+    <TD class=xl40 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl51 style="HEIGHT: 15.75pt" height=21>&#12288;</TD>
+    <TD class=xl55></TD>
+    <TD class=xl56>&#12288;</TD>
+    <TD class=xl40 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl51 style="HEIGHT: 15.75pt" height=21>&nbsp;</TD>
+    <TD class=xl55></TD>
+    <TD class=xl56>&#12288;</TD>
+    <TD class=xl40 style="BORDER-LEFT: medium none; WIDTH: 110pt" align=right 
+    width=160 x:num><{$idArray.Invoice_Amount}></TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl51 style="HEIGHT: 15.75pt" height=21>&#12288;</TD>
+    <TD class=xl55></TD>
+    <TD class=xl56>&#12288;</TD>
+    <TD class=xl40 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl51 style="HEIGHT: 15.75pt" height=21>&nbsp;</TD>
+    <TD class=xl55></TD>
+    <TD class=xl56>&#12288;</TD>
+    <TD class=xl40 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl51 style="HEIGHT: 15.75pt" height=21>&#12288;</TD>
+    <TD class=xl55></TD>
+    <TD class=xl56>&#12288;</TD>
+    <TD class=xl40 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl51 style="HEIGHT: 15.75pt" height=21>&nbsp;</TD>
+    <TD class=xl55></TD>
+    <TD class=xl56>&#12288;</TD>
+    <TD class=xl40 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl51 style="HEIGHT: 15.75pt" height=21>&#12288;</TD>
+    <TD class=xl55></TD>
+    <TD class=xl56>&#12288;</TD>
+    <TD class=xl40 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl34 style="WIDTH: 95pt; HEIGHT: 15.75pt" width=506 
+    height=21>&#12288;</TD>
+    <TD class=xl44 style="WIDTH: 176pt" width=379><SPAN 
+      style="mso-spacerun: yes">&nbsp;</SPAN></TD>
+    <TD class=xl31 style="WIDTH: 109pt" width=135>&#12288;</TD>
+    <TD class=xl40 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl47 style="WIDTH: 95pt; HEIGHT: 15.75pt" width=506 
+    height=21>&#12288;</TD>
+    <TD class=xl41></TD>
+    <TD class=xl48 style="WIDTH: 109pt" width=135>&#12288;</TD>
+    <TD class=xl40 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl49 style="WIDTH: 95pt; HEIGHT: 15.75pt" width=506 
+      height=21>Payment Details</TD>
+    <TD class=xl42></TD>
+    <TD class=xl50 style="WIDTH: 109pt" width=135><U 
+      style="VISIBILITY: hidden; mso-ignore: visibility">&#12288;</U></TD>
+    <TD class=xl43 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl29 style="WIDTH: 95pt; HEIGHT: 15.75pt" width=506 
+      height=21>Beneficiary Name:</TD>
+    <TD class=xl55 style="BORDER-RIGHT: black 0.5pt solid; mso-ignore: colspan" 
+    colSpan=2>Cushman &amp; Wakefield (Vietnam) Ltd.</TD>
+    <TD class=xl43 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl29 style="WIDTH: 95pt; HEIGHT: 15.75pt" width=506 
+      height=21>Bank:</TD>
+    <TD class=xl30 style="WIDTH: 176pt" width=379>HSBC Bank (Vietnam) Ltd.</TD>
+    <TD class=xl31 style="WIDTH: 109pt" width=135>&#12288;</TD>
+    <TD class=xl43 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl29 style="WIDTH: 95pt; HEIGHT: 15.75pt" width=506 
+    height=21>&#12288;</TD>
+    <TD class=xl30></TD>
+    <TD class=xl31 style="WIDTH: 109pt" width=135>&#12288;</TD>
+    <TD class=xl43 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl29 style="WIDTH: 95pt; HEIGHT: 15.75pt" width=506 
+      height=21>Account No.:</TD>
+    <TD class=xl30 style="WIDTH: 176pt" width=379>001-334341-101 (USD)</TD>
+    <TD class=xl31 style="WIDTH: 109pt" width=135>&#12288;</TD>
+    <TD class=xl40 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl29 style="WIDTH: 95pt; HEIGHT: 15.75pt" width=506 
+    height=21>&#12288;</TD>
+    <TD class=xl30 style="WIDTH: 176pt" width=379>001-334341-001 (VND)</TD>
+    <TD class=xl31 style="WIDTH: 109pt" width=135>&#12288;</TD>
+    <TD class=xl40 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl29 style="WIDTH: 95pt; HEIGHT: 15.75pt" width=506 
+    height=21>&#12288;</TD>
+    <TD class=xl30></TD>
+    <TD class=xl31 style="WIDTH: 109pt" width=135>&#12288;</TD>
+    <TD class=xl43 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl29 style="WIDTH: 95pt; HEIGHT: 15.75pt" width=506 
+      height=21>SWIFT Code:</TD>
+    <TD class=xl30 style="WIDTH: 176pt" width=379>HSBCVNVX</TD>
+    <TD class=xl31 style="WIDTH: 109pt" width=135>&#12288;</TD>
+    <TD class=xl43 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl34 style="WIDTH: 95pt; HEIGHT: 15.75pt" width=506 
+    height=21>&#12288;</TD>
+    <TD class=xl44 style="WIDTH: 176pt" width=379>&#12288;</TD>
+    <TD class=xl36 style="WIDTH: 109pt" width=135>&#12288;</TD>
+    <TD class=xl45 style="BORDER-LEFT: medium none; WIDTH: 110pt" 
+    width=160>&#12288;</TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl30 style="HEIGHT: 15.75pt; mso-ignore: colspan" colSpan=2 
+    height=21></TD>
+    <TD class=xl57 style="WIDTH: 109pt" width=135>Fee total</TD>
+    <TD class=xl58 style="WIDTH: 110pt" width=160 x:num 
+      x:fmla="=SUM(D15:D31)"><{$idArray.Invoice_Amount}></TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl46 style="HEIGHT: 15.75pt; mso-ignore: colspan" colSpan=2 
+    height=21></TD>
+    <TD class=xl59 style="WIDTH: 109pt" width=135>VAT - 10%</TD>
+    <TD class=xl60 style="BORDER-TOP: medium none; WIDTH: 110pt" align=right 
+    width=160 x:num="90.909000000000006" x:fmla="=D15*0.1"><{$idArray.VAT}></TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl25 style="HEIGHT: 15.75pt; mso-ignore: colspan" colSpan=2 
+    height=21></TD>
+    <TD class=xl61>Total amount</TD>
+    <TD class=xl62 style="BORDER-TOP: medium none" align=right 
+    x:num="999.99900000000002" x:fmla="=D32+D33"><{$idArray.VAT_total}></TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl25 style="HEIGHT: 15.75pt; mso-ignore: colspan" colSpan=3 
+    height=21><span class="xl701" style="WIDTH: 271pt; HEIGHT: 15.75pt">Cushman&amp;Wakefield (Vietnam) Ltd</span></TD>
+    <TD class=xl30></TD>
+    </TR>
+  <TR style="HEIGHT: 15.75pt" height=21>
+    <TD class=xl70 colSpan=4 
+    height=21><div align="right">This invoice is due 
+      for payment on presentation</div></TD>
+    </TR><![if supportMisalignedColumns]>
+ <tr height=0 style='display:none'>
+  <td width=506 style='width:95pt'></td>
+  <td width=379 style='width:176pt'></td>
+  <td width=135 style='width:109pt'></td>
+  <td width=160 style='width:110pt'></td>
+  </tr>
+</TBODY></TABLE>
+</BODY></HTML>

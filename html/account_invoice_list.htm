@@ -1,0 +1,178 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.htm
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Search List</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<link href="css/drag_drop.css" rel="stylesheet" type="text/css" />
+<link href="css/date_selector.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="js/drag_drop.js"></script>
+<script language="javascript" src="js/date_selector.js"></script>
+<script language="javascript" src="js/func.js"></script>
+<script language="javascript">
+var headerName = 'check';
+function getDetails(idNum){
+	window.open("search_getDetail.php?ID=" + idNum, '_blank');
+}
+function submitForm(){
+	document.searchBarForm.submit();
+}
+function hideSearch(){
+	if(document.getElementById('searchBarWidth').style.display == "")
+	{
+		document.getElementById('searchBarWidth').style.display='none';
+		document.getElementById('controlButton').innerHTML = 'Maximize';
+	}
+	else
+	{
+		document.getElementById('searchBarWidth').style.display='';
+		document.getElementById('controlButton').innerHTML = 'Minimize';
+	}
+}
+function openNewWindow(ID){
+	window.open("page.html","newwindow","height=100,width=400,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no");
+}
+function heighLightThis(obj){
+	document.getElementById(obj.id).className="buttonColorHeight";
+}
+function unHeighLightThis(obj){
+	document.getElementById(obj.id).className="buttonColor";
+}
+
+</script>
+<style type="text/css">
+<!--
+.STYLE4 {font-size: 10px}
+.STYLE5 {color: #FFFFFF}
+-->
+</style>
+</head>
+<body style="background-image:url(img/www.momii8.com_200711142142123.gif)">
+<div id="allDivs"  style=" border:#003333;">
+  <table width="98%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse">
+    <tr>
+      <td>INVOICE REQUISITION FORM</td>
+      <td><span style="float:right; margin: 5px;"><img src="img/cushman_logo.JPG" /></span></td>
+    </tr>
+    <tr>
+      <td bgcolor="#0033CC" height="10" >
+	  	<table width="636">
+			<tr>
+				<!--<td width="15%">
+					<div align="center" id="buttonSearch" class="buttonColor"  onclick="window.location='./search_list.php'"  onmousemove="heighLightThis(this)" onmouseout="unHeighLightThis(this)" >Invoice Search</div>
+				</td>
+            	<td width="15%">
+					<{if $sArray.invoice_add eq "1"}><div align="center" id="buttonAdd" class="buttonColor" onclick="window.open('fill_form.php', 'newwin', 'height=500, width=1024,top=200,toolbar=no,scrollbars=yes')" onmousemove="heighLightThis(this)" onmouseout="unHeighLightThis(this)" />Invoice Add</div><{/if}>										                </td>
+            	<td width="15%">
+					<div align="center" id="buttonLogout" class="buttonColor" onclick="window.location='logout.php'" onmousemove="heighLightThis(this)" onmouseout="unHeighLightThis(this)" />Logout</div>
+				</td>-->
+            	<td width="">&nbsp;</td>
+            	<td width=""></td>
+      </tr>
+	  </table>
+	  </td>
+      <td bgcolor="#0033CC" height="10" ><div align="right" class="STYLE5">Welcome, &nbsp;<strong><{$sArray.user_name}></strong></div></td>
+    </tr>
+  </table>
+  <hr />
+  <div id="invoiceFormDiv" class="DragContainer" style="float:none; margin-right:5px; width:auto !important; width:100%;">
+    <table width="100%" border="2" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+      <tr height="30">
+        <th width="100" bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col"> Invoice Date </th>
+        <th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Invoice No.</th>
+        <th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col"> Country </th>
+        <th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col"> Client</th>
+        <th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Dept</th>
+        <th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Sqft</th>
+        <th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">&nbsp;</th>
+      </tr>
+      <{section name=perRow loop=$listArray}>
+      <tr onmouseover="highLightThis(this)" onmouseout="this.className='invoice_state<{$listArray[perRow].trans_state}>'"  class="invoice_state<{$listArray[perRow].trans_state}>">
+        <td width="100" bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].Invoice_date}></div></td>
+        <td bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].Invoice_No}></div></td>
+        <td bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].Country}></div></td>
+        <td bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].Client}></div></td>
+        <td bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].Dept_info}></div></td>
+        <td bordercolor="#FFFFFF"><div align="center"><{$listArray[perRow].Sq_Ft}></div></td>
+        <td width="180" bordercolor="#FFFFFF" bgcolor="#EEEEEE"><div align="center">
+		<{if 
+			($sArray.invoice_view eq "1") 
+				AND 
+			( 	($sArray.power <= 2)
+					||
+			 	(stristr($sArray.priority_country,$listArray[perRow].Country) AND $sArray.power <= 4 AND $sArray.power >2) 
+					||
+			    (stristr($sArray.priority_country,$listArray[perRow].Country) AND $sArray.power <= 6 AND $sArray.power >4 AND stristr($sArray.priority_dept,$listArray[perRow].Dept_info))
+			)
+		}>
+		<input type="button" onclick="window.open('search_getDetail.php?ID=<{$listArray[perRow].ID}>','_blank')" value="View"/>
+		<{else}><input type="button" disabled="disabled" value="View"><{/if}>
+		
+		<{if 
+			($sArray.invoice_modify eq "1") 
+				AND 
+			( 	($sArray.power <= 2)
+					||
+			 	(stristr($sArray.priority_country,$listArray[perRow].Country) AND $sArray.power <= 4 AND $sArray.power >2) 
+					||
+			    (stristr($sArray.priority_country,$listArray[perRow].Country) AND $sArray.power <= 6 AND $sArray.power >4 AND stristr($sArray.priority_dept,$listArray[perRow].Dept_info))
+			)
+		}>
+		<input type="button" onclick="window.open('modify_invoice.php?ID=<{$listArray[perRow].ID}>','_blank')" value="Edit"/>
+		<{else}><input type="button" disabled="disabled" value="Edit"><{/if}>
+		
+		<{if 
+			(($sArray.power <= 2)
+					||
+			 	(stristr($sArray.priority_country,$listArray[perRow].Country) AND $sArray.power <= 4 AND $sArray.power >2) 
+					||
+			    (stristr($sArray.priority_country,$listArray[perRow].Country) AND $sArray.power <= 6 AND $sArray.power >4 AND stristr($sArray.priority_dept,$listArray[perRow].Dept_info))
+			)
+		}>
+		<input type="button" onclick="window.open('print_preview_invr.php?ID=<{$listArray[perRow].ID}>','_blank')" value="Invoice print"/>
+		<{else}><input type="button" disabled="disabled" value="Invoice print"><{/if}>
+		</div></td>
+      </tr>
+      <{/section}>
+    </table>
+  </div>
+  <div align="center"> <{$PAGELINK}> </div>
+  <table width="100%" border="0" cellspacing="2" cellpadding="2">
+  <tr>
+    <td width="50"><div class="invoice_state1" style=" margin:1px;">&nbsp;</div></td>
+	<td>state1 (Invoice created by brokers, ready for print) </td>
+  </tr>
+  <tr>
+    <td width="50"><div class="invoice_state2" style=" margin:1px;">&nbsp;</div></td>
+	<td>state2 (Invoice approved by Department head and send to account make it to state 2)</td>
+  </tr>
+  <tr>
+    <td width="50"><div class="invoice_state3" style=" margin:1px;">&nbsp;</div></td>
+	<td>state3 (Invoice printed and sent to customer,changed by account) </td>
+  </tr>
+  <tr>
+    <td width="50"><div class="invoice_state4" style=" margin:1px;">&nbsp;</div></td>
+	<td>state4 (Invoice finished,changed by account) </td>
+  </tr>
+  <tr>
+    <td width="50"><div class="invoice_state0" style=" margin:1px;">&nbsp;</div></td>
+	<td>state0 (Invoice trashed,unavailable) </td>
+  </tr>
+</table>
+
+  
+</div>
+</body>
+</html>

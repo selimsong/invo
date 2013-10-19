@@ -1,0 +1,726 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.htm
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Get detail Invoice information</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<link href="css/drag_drop.css" rel="stylesheet" type="text/css" />
+<link href="css/date_selector.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="js/drag_drop.js"></script>
+<script language="javascript" src="js/date_selector.js"></script>
+<script language="JavaScript" type="text/javascript" src="js/func.js"></script>
+<script language="javascript">
+function heighLightThis(obj){
+	obj.src="./img/" +obj.id+"-h.gif";
+	obj.style.cursor="pointer;";
+}
+function unHeighLightThis(obj){
+	obj.src="./img/" +obj.id+".gif";
+}
+function fee_share_percent(){
+	var fee;
+	var totalPercent;
+	var fname;
+	fee = new Array();
+	totalPercent = 0;
+	for(i=1;i<=10;i++){
+		fname = "Fee_sharing_p"+i+"_percent";
+		if(document.getElementById(fname).value != ""){
+			fee[i] = document.getElementById(fname).value;
+		}
+		else {fee[i] = 0;}
+		totalPercent = totalPercent + parseInt(fee[i]);
+	}
+	if(totalPercent != 100){
+		document.getElementById('totalPercent').innerHTML = '<font color=red><b>' + totalPercent + '</b>%&nbsp;&nbsp;(should be 100 percentage)</font>';
+	}
+	else{
+		document.getElementById('totalPercent').innerHTML = '100%';
+	}
+	 
+}
+var p = true;
+function check_invoice_completion(){
+	if('<{$idArray[0].Trans_Type_1 }>' == "unselected") {p = false; document.getElementById('Trans_Type_1').style.background='orange';}
+	if('<{$idArray[0].Trans_Type_2 }>' == "unselected") {p = false; document.getElementById('Trans_Type_1').style.background='orange';}
+	if('<{$idArray[0].Ppty_Type }>' == "unselected") {p = false; document.getElementById('Ppty_Type').style.background='orange';}
+	if('<{$idArray[0].Fee_sharing_p1_fee }>' == "") {p = false; document.getElementById('Fee_sharing_p1_fee').style.background='orange';}
+	if('<{$idArray[0].Fee_sharing_p1_percent }>' == "") {p = false; document.getElementById('Fee_sharing_p1_percent').style.background='orange';}
+}
+function check_print(){
+	check_invoice_completion();
+	if(p){
+		window.location = 'print_preview.php?ID=<{$idArray[0].ID}>';
+	}
+	else{
+		alert('Please fill up the fields in orange first!');
+	}	
+}
+</script>
+</head>
+<body >
+<table width="98%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse">
+    <tr>
+      <td>INVOICE REQUISITION FORM</td>
+      <td><span style="float:right; margin: 5px;"><img src="img/cushman_logo.JPG" /></span></td>
+    </tr>
+  </table>
+<ul id="invoiceForm">
+  <hr />
+</ul>
+<{section name=perRow loop=$idArray}>
+<div id="invoiceFormDiv">
+    <div id="inlineDiv">
+      <div class="newContainer" id="DragContainer4" overclass="">
+	  <div align="center"> <div id="printThis" onclick="check_print()" class="unHeightLight" onmousemove="highLightThis(this)" onmouseout="unHighLightThis(this)" style="cursor:pointer; width:100px;">Print Priview</div>
+	  &nbsp;
+	  </div>
+	<form action="modify_invoice_ok.php" method="post" enctype="multipart/form-data" name="invoiceForm" id="invoiceForm">
+	
+			  <div id="cf_div" <{if $idArray[perRow].confidential_agreement eq "1"}>class="confidential_agreement"<{else}>class="confidential_agreement_unchecked"<{/if}> ><input id="confidential_agreement" name="confidential_agreement" type="checkbox" value="1" class="confidential_agreement_check"  <{if $idArray[perRow].confidential_agreement eq "1"}>checked<{/if}> />confidential agreement</div>
+
+		<div class="DragBox" id="Item1" overclass="OverDragBox" dragclass="DragDragBox">
+     	 <div  style="width:250; position:absolute; right:10px;top:70px;" class="searchBarBox">
+            <fieldset>
+            <center>
+              <legend>Basic info</legend>
+            </center>
+            <table width="220">
+              <tr>
+                <td width="100" style="font-weight:bold">Country:</td>
+                <td><{$idArray[perRow].Country}><input type="hidden" name="Country" id="Country" value="<{$idArray[perRow].Country}>" /></td>
+              </tr>
+              <tr>
+                <td width="100" style="font-weight:bold">Currency:</td>
+                <td><span id="curr_code_span"><{$idArray[perRow].curr_code}></span>
+					<input type="hidden" name="Exchange_rate" id="todayCurrency" value="<{$idArray[perRow].Exchange_rate}>">
+					<input type="hidden" name="curr_code" id="todayCurrencySpanModify" value="<{$idArray[perRow].curr_code}>" />
+				</td>
+              </tr>
+              <tr>
+			  
+                <td width="100" style="font-weight:bold">Major Account Group:</td>
+                <td><input type="hidden" name="Client_Solutins_Major" id="Client_Solutins_Major" value="<{$idArray[perRow].Client_Solutins_Major}>" />
+     			 <span id="Client_Solutins_Major_show"><{$idArray[perRow].Client_Solutins_Major}></span></td>
+              </tr>
+              <tr>
+                <td width="100" style="font-weight:bold">Create By:</td>
+                <td><{$idArray[perRow].Create_by}></td>
+              </tr>
+              <tr>
+                <td width="100" style="font-weight:bold">Create Date:</td>
+                <td><{$idArray[perRow].Create_date}></td>
+              </tr>
+              <tr>
+                <td width="100" style="font-weight:bold">Modified By:</td>
+                <td><{$idArray[perRow].Modified_by}></td>
+              </tr>
+              <tr>
+                <td width="100" style="font-weight:bold">Modified By:</td>
+                <td><{$idArray[perRow].Modified_date}></td>
+              </tr>
+              <tr>
+                <td width="100" style="font-weight:bold">Transaction Idx:</td>
+                <td><{$idArray[perRow].ID}></td>
+              </tr>
+            </table>
+            </fieldset>
+      </div>
+	 	 <div>
+	 	   <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+		   			<tr>
+			  <td width="200" height="30">
+			    Document date:			    </td>
+			  <td height="30" colspan="4"><{$idArray[perRow].Invoice_date}></td>
+	    </tr>
+		   
+             <tr>
+               <td width="200" height="30">Tansaction No.</td>
+               <td height="30" colspan="4"><{$idArray[perRow].Transaction_No}></td>
+             </tr>
+             <tr>
+               <td height="30">Original Invoice No. </td>
+               <td height="30" colspan="4"><{$idArray[perRow].Invoice_No}></td>
+             </tr>
+             <tr>
+               <td width="200" height="30">Doc Type / Doc No.</td>
+               <td height="30" colspan="4">
+			  <{foreach from=$doc_type key=key item=item}>
+			  	<{if $key == $idArray[perRow].doc_type}><{$item}> / <{/if}>
+				<{/foreach}>
+                
+                <{$idArray[perRow].doc_type_num}>
+				<{if $idArray[perRow].inter_invoice eq 1}><font color="red">(Internal invoice)</font><{/if}>				</td>
+             </tr>
+             <tr>
+               <td width="200" height="30">Country: </td>
+               <td height="30" colspan="4"><{$idArray[perRow].Country}>&nbsp;>>&nbsp;<span id="optionCity"><{$idArray[perRow].City}></span></td>
+             </tr>
+             <tr>
+               <td width="200" height="30">
+               Invoice Currency:</td>
+               <td height="30" colspan="4"><{$idArray[perRow].curr_code}></td>
+             </tr>
+             <tr>
+               <td width="200" height="30">Local Department:</td>
+               <td height="30" colspan="4"><{$idArray[perRow].dept2_desc}>
+			   &nbsp;&nbsp;/&nbsp;&nbsp;(<{$idArray[perRow].Dept_info}>)
+			   
+			   </td>
+             </tr>
+             <tr>
+               <td width="200" height="30">Client / Client Reference No </td>
+               <td height="30" colspan="4"><{$idArray[perRow].Client}> / <{$idArray[perRow].client_reference_no}>
+			   
+			   </td>
+             </tr>
+             <tr>
+               <td width="200" height="30">Client Contact: </td>
+               <td height="30">Name:<br />
+               <{$idArray[perRow].Client_name}></td>
+               <td height="30">Title:<br />
+               <{$idArray[perRow].Client_title}></td>
+               <td height="30">Phone:<br />
+               <{$idArray[perRow].Client_phone}></td>
+               <td height="30">Email:<br />
+               <{$idArray[perRow].Client_email}></td>
+             </tr>
+             <tr>
+               <td width="200" height="30">Other Party:</td>
+               <td height="30" colspan="4"><{$idArray[perRow].Other_Party}></td>
+             </tr>
+             <tr>
+               <td width="200" height="30"> Re:(Specify client and premises) </td>
+               <td height="30" colspan="4"><{$idArray[perRow].Payer}></td>
+             </tr>
+             <tr>
+               <td width="200" height="30"> To:(Specify assignment/contract ) </td>
+               <td height="30" colspan="4"><{$idArray[perRow].Property_Project_Name}></td>
+             </tr>
+             <tr>
+               <td width="200" height="30"> At:(Specify nature of fee agreement) </td>
+               <td height="30" colspan="4"><{$idArray[perRow].contact}></td>
+             </tr>
+           </table>
+	 	 </div>
+		</div>
+        <div id="typeSelect" class="DragBox">
+		<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+			<tr id="Trans_Type_1">
+			  <td width="200" height="30">
+			    Transaction Type:			    </td>
+			  <td height="30">
+			    1.
+			    <{$idArray[perRow].Trans_Type_1}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              2.
+              <{$idArray[perRow].Trans_Type_2}></td>
+		  </tr>
+			<tr id="Ppty_Type">
+			  <td width="200" height="30">
+			    Property Type:			    </td>
+			  <td height="30">
+			    &nbsp;&nbsp;&nbsp;<{$idArray[perRow].Ppty_Type}></td>
+		  </tr>
+			<tr>
+			  <td width="200" height="30">Client Type: </td>
+			  <td height="30">&nbsp;&nbsp;&nbsp;<{$idArray[perRow].Client_Type}></td>
+		  </tr>
+			<tr>
+			  <td width="200" height="30">Industrial Type : </td>
+			  <td height="30">&nbsp;&nbsp;&nbsp;</td>
+		  </tr>
+			<tr>
+			  <td width="200" height="30">
+			    <strong><em>Transaction Statistics:			    </em></strong></td>
+			  <td height="30">&nbsp;</td>
+		  </tr>
+			<tr>
+			  <td height="30">Square footage sold or leased: </td>
+			  <td height="30">&nbsp;&nbsp;
+                <{$idArray[perRow].sqft_local}>
+                <span id="default_sqft"class="searchDetailHeighlight"><{$idArray[perRow].sqft_local_name}></span>
+				 &nbsp;=&nbsp;
+				 <span id="default_sqft_us_span"><{$idArray[perRow].Sq_Ft}></span>
+				 <span class="searchDetailHeighlight">&nbsp;sq ft</span>			  </td>
+		  </tr>
+			<tr>
+			  <td height="30">One month Rent </td>
+			  <td height="30">&nbsp;&nbsp;&nbsp;<span id="currencyCode13"class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span> <{$idArray[perRow].1_Mths_rent}></td>
+		  </tr>
+			<tr>
+			  <td height="30">Term of lease: </td>
+			  <td height="30">&nbsp;&nbsp;&nbsp;<{$idArray[perRow].Lease_Term}>
+months </td>
+		  </tr>
+			<tr>
+			  <td width="200" height="30">Value of Transaction<br /></td>
+			  <td height="30">&nbsp;&nbsp;&nbsp;<span id="currencyCode18"class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span> 
+<{$idArray[perRow].Transaction_Value}>
+<span class="searchDetailHeighlight">USD</span> 
+<span id="Transaction_Value_US_span"><{$idArray[perRow].Transaction_Value_US}></span>
+
+                (<em>Sale/Purchase price,Consultancy fee
+ or
+[one months rent] × [term of lease]</em>) </td></tr>
+		  </table>
+    </div>
+        <div id="details1" class="DragBox">
+<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+			<tr>
+			  <td width="200" height="30">Date of Completion: </td>
+			  <td height="30" colspan="5"><{$idArray[perRow].complete_date}></td>
+	    </tr>
+			<tr>
+			  <td height="30"><ul class="ulWrap">
+			    <strong><em>Payment Receivable Date:</em></strong></ul></td>
+			  <td height="30" colspan="5">&nbsp;</td>
+	    </tr>
+			<tr>
+			  <td height="30">
+			    1st Payment:
+		      </td>
+			  
+			  <td width="100"><{$idArray[perRow].Payment_date1}></td>
+			  <td  width="100"><{$idArray[perRow].Payment_date1_estimate}></td>
+			  <td width="100">Amount:
+                <{$idArray[perRow].Payment_date1_amount1}></td>
+			  <td>ie:
+                <{$idArray[perRow].Payment_date1_amount1_percent}>
+%</td>
+<td height="30">Date Paid1: <{$idArray[perRow].date_paid1}></td>
+			</tr>
+			<tr>
+			  <td height="30">
+			    2nd Payment:(if any)
+		      </td>
+			  <td height="30"><{$idArray[perRow].Payment_date2}></td>
+			  <td height="30"><{$idArray[perRow].Payment_date2_estimate}></td>
+			  <td height="30">Amount:
+                <{$idArray[perRow].Payment_date2_amount}></td>
+			  <td height="30"> ie:
+                <{$idArray[perRow].Payment_date2_amount2_percent}>
+%</td>
+			  <td height="30">Date Paid2: <{$idArray[perRow].date_paid2}></td>
+			</tr>
+			<tr>
+			  <td height="30">Payment Remarks</td>
+			  <td height="30" colspan="4"><{$idArray[perRow].payment_remarks}></td>
+		    </tr>
+		  </table>
+      </div>
+        <div id="fee" class="DragBox">
+<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+
+			<tr>
+			  <td width="200" height="30">Invoice to: </td>
+			  <td height="30" colspan="5">
+			    <{$idArray[perRow].Invoice_to}>		      </td>
+	    </tr>
+			<tr>
+			  <td width="200" rowspan="2">
+			    Invoice to
+			    address:			    </td>
+			  <td height="30" colspan="5"><{$idArray[perRow].Address}>			    </td>
+	    </tr>
+			<tr>
+			<td height="30" width="200">Address2<br /><{$idArray[perRow].Invoice_to_address2}></td>
+			  <td width="100">City<br /><{$idArray[perRow].Invoice_to_city}></td>
+			  <td width="100">State/province<br /><{$idArray[perRow].Invoice_to_province}></td>
+			  <td width="100">Country<br /><{$idArray[perRow].Invoice_to_country}></td>
+			  <td>Zip Code<br /><{$idArray[perRow].Invoice_to_zipcode}></td>
+		  </tr>
+			<tr>
+			  <td height="30">Invoice to Trading Name(retail):</td>
+			  <td height="30" colspan="5"><{$idArray[perRow].invoice_to_trading_name}></td>
+		    </tr>
+			<tr>
+			  <td width="200" height="30">
+			    Contact Person:
+			    (A/C)			 </td>
+			  <td height="30" colspan="5">
+			    <{$idArray[perRow].Contact_person}></td>
+	    </tr>
+			<tr>
+			  <td width="200" height="30">Contact info: </td>
+			  <td height="30" colspan="5"><{$idArray[perRow].Contact_info}></td>
+	    </tr>
+			<tr>
+			  <td width="200" height="30">
+			    Fee basis:			    </td>
+			  <td height="30" colspan="5">
+			    <{$idArray[perRow].Fee_basis}></td>
+	    </tr>
+			<tr>
+			  <td width="200" height="30">
+			    Out of pocket Expenses to be reimbursed:			    </td>
+			  <td height="30" colspan="5">
+			    <{$idArray[perRow].Reimbursed}></td>
+	    </tr>
+			<tr>
+			  <td width="200" height="30">
+			    Special Invoicing Instructions:			   </td>
+			  <td height="30" colspan="5">
+			   <{$idArray[perRow].Special_instructions}> </td>
+	    </tr>
+		  </table>
+      </div>
+        <div class="DragBox">
+			<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+			<tr>
+			  <td width="200" height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <th width="142" height="30">Fee amount </th>
+			  <td width="120" height="30">&nbsp;</td>
+			  </tr>
+			<tr>
+			<td width="200" height="30"><div align="left">Fee amount to be invoiced: </div></td>
+			<td height="30">&nbsp;</td>
+			<td height="30">&nbsp;</td>
+			<td height="30">&nbsp;</td>
+			<td height="30"><div align="right"><span id="currencyCode2"class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></div></td>
+			<td width="142" height="30"> (a)
+			  <{$idArray[perRow].Invoice_Amount}></td>
+			<td width="120" height="30">&nbsp;</td>
+			</tr>
+
+			<tr>
+			<td width="200" height="30"><div align="left">Cost of Sales:</div></td>
+			<td height="30"></td>
+			<td height="30">&nbsp;</td>
+			<td height="30">&nbsp;</td>
+			<td height="30"><div align="right"><span id="currencyCode15"class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></div></td>
+			<td width="142" height="30">
+			  (b)
+		      <{$idArray[perRow].cost_of_sales}></td>
+			<td width="120" height="30">&nbsp;</td>
+			</tr>
+
+
+			<tr>
+			<td width="200" rowspan="2"><div align="left">Third Party:</div></td>
+			<td height="30">
+			  <{$idArray[perRow].3rd_Pty}></td>
+			<td height="30">&nbsp;</td>
+			<td height="30">&nbsp;</td>
+			<td height="30"><div align="right"><span id="currencyCode3"class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></div></td>
+			<td width="142" height="30">
+			  (c)
+		      <{$idArray[perRow].3rd_Pty_Fee}></td>
+			<td width="120" height="30">&nbsp;</td>
+			</tr>
+
+			<tr>
+			<td height="30">
+			  <{$idArray[perRow].3rd_Pty2}></td>
+			<td height="30">&nbsp;</td>
+			<td height="30">&nbsp;</td>
+			<td height="30"><div align="right"><span class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></div></td>
+			<td width="142" height="30">
+			  (d)
+		      <{$idArray[perRow].3rd_Pty_Fee2}></td>
+			<td width="120" height="30">&nbsp;</td>
+			</tr>
+
+			<tr>
+			  <td width="200" rowspan="3"><div align="left">CWW Referral</div></td>
+			  <td height="30">
+			    <{$idArray[perRow].CWWOffice}><br />
+				<span class="STYLE3">(CWW Office)</span></td>
+			  <td height="30"><{$idArray[perRow].CWW_party_salesPerson}><br />
+				<span class="STYLE3">(CWW Sales Person)</span></td>
+			  <td height="30"><{$idArray[perRow].CWW_refPercent}><br />
+					<span class="STYLE3">(CWW referral %)				    </span></td>
+			  <td height="30"><div align="right"><span id="currencyCode4"class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></div></td>
+			  <td width="142" height="30">(e)
+		      <{$idArray[perRow].CWW_Referral_Fee}></td>
+			  <td width="120" height="30">&nbsp;</td>
+			  </tr>
+
+			<tr>
+			  <td height="30">
+			    <{$idArray[perRow].CWWOffice2}><br />
+				<span class="STYLE3">(CWW Office)</span></td>
+			  <td height="30"><{$idArray[perRow].CWW_party_salesPerson2}><br />
+				<span class="STYLE3">(CWW Sales Person)</span></td>
+			  <td height="30"><{$idArray[perRow].CWW_refPercent2}><br />
+					<span class="STYLE3">(CWW referral %)				    </span></td>
+			  <td height="30"><div align="right"><span class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></div></td>
+			  <td width="142" height="30">(f)&nbsp;
+		      <{$idArray[perRow].CWW_Referral_Fee2}></td>
+			  <td width="120" height="30">&nbsp;</td>
+			  </tr>
+			<tr>
+			  <td height="30">
+			    <{$idArray[perRow].CWWOffice3}><br />
+				<span class="STYLE3">(CWW Office)</span></td>
+			  <td height="30"><{$idArray[perRow].CWW_party_salesPerson3}><br />
+				<span class="STYLE3">(CWW Sales Person)</span></td>
+			  <td height="30"><{$idArray[perRow].CWW_refPercent3}><br />
+					<span class="STYLE3">(CWW referral %)				    </span></td>
+			  <td height="30"><div align="right"><span class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></div></td>
+			  <td width="142" height="30">(g)
+		      <{$idArray[perRow].CWW_Referral_Fee3}></td>
+			  <td width="120" height="30">&nbsp;</td>
+			  </tr>
+
+			<tr>
+			  <td width="200" height="30"><div align="left">CS management Fee</div></td>
+			  <td height="30"><{$idArray[perRow].CSOffice}><br>
+			    <span class="STYLE3">(CS Office)</span></td>
+			  <td height="30"><{$idArray[perRow].CSsalesPerson}><br>			    
+			    <span class="STYLE3">(CS Sales Person)</span></td>
+			  <td height="30"><{$idArray[perRow].CSrefPercent}>
+			    <br>
+		        <span class="STYLE3">(CS referral %) </span></td>
+			  <td height="30"><div align="right"><span id="currencyCode11"class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></div></td>
+			  <td width="142" height="30"> (h)
+			    <{$idArray[perRow].CSOfficeFee}></td>
+			  <td width="120" height="30">&nbsp;</td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30"><div align="left">Net Fee </div></td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30"><div align="right"><span id="currencyCode5"class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></div></td>
+			  <td width="142" height="30"><span id="Net_Fee_span"><{$idArray[perRow].Net_Fee}></span>
+<input type="hidden" name="Net_Fee" id="Net_Fee" value="<{$idArray[perRow].Net_Fee}>"/></td>
+			  <td width="120" height="30">
+			    <span class="searchDetailHeighlight">USD</span> <span id="netFeeUs"><{$idArray[perRow].Net_Fee_US}></span>
+                <input type="hidden" name="Net_Fee_US" id="Net_Fee_US" value="<{$idArray[perRow].Net_Fee_US}>" />              </td>
+			  </tr>
+			</table>
+		</div>  
+	    <div id="share" class="DragBox">
+<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+		<tr>
+		  <td height="30" colspan="4"><ul class="ulWidth">
+			Commission Split:
+		  </ul></td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person1:
+			</ul></td>
+		  <td height="30">
+			<{$idArray[perRow].Fee_sharing_p1}>
+&nbsp;&nbsp;			</td>
+	      <td id="Fee_sharing_p1_percent">&nbsp;<{$idArray[perRow].Fee_sharing_p1_percent}>
+			% of Fee:</td>
+	      <td id="Fee_sharing_p1_fee"><span class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>&nbsp;<{$idArray[perRow].Fee_sharing_p1_fee}></td>
+		</tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person2:
+			</ul></td>
+		  <td height="30"><{$idArray[perRow].Fee_sharing_p2}>
+  &nbsp;&nbsp; </td>
+		  <td>&nbsp;<{$idArray[perRow].Fee_sharing_p2_percent}>
+		    % of Fee:</td>
+		  <td><span class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>&nbsp;<{$idArray[perRow].Fee_sharing_p2_fee}></td>
+		</tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person3:
+			</ul></td>
+		  <td height="30"><{$idArray[perRow].Fee_sharing_p3}>
+  &nbsp;&nbsp; </td>
+		  <td>&nbsp;<{$idArray[perRow].Fee_sharing_p3_percent}>
+		    % of Fee:</td>
+		  <td><span  class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>&nbsp;<{$idArray[perRow].Fee_sharing_p3_fee}></td>
+		</tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person4:
+			</ul></td>
+		  <td height="30"><{$idArray[perRow].Fee_sharing_p4}>
+  &nbsp; </td>
+		  <td>&nbsp;<{$idArray[perRow].Fee_sharing_p4_percent}>
+		    % of Fee:</td>
+		  <td><span  class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>&nbsp;<{$idArray[perRow].Fee_sharing_p4_fee}></td>
+		</tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person5:
+			</ul></td>
+		  <td height="30"><{$idArray[perRow].Fee_sharing_p5}>
+  &nbsp;&nbsp; </td>
+		  <td>&nbsp;<{$idArray[perRow].Fee_sharing_p5_percent}>
+		    % of Fee:</td>
+		  <td><span  class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span> <{$idArray[perRow].Fee_sharing_p5_fee}></td>
+		</tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person6:
+			</ul></td>
+		  <td height="30"><{$idArray[perRow].Fee_sharing_p6}>
+  &nbsp;&nbsp; </td>
+		  <td>&nbsp;<{$idArray[perRow].Fee_sharing_p6_percent}>
+		    % of Fee:</td>
+		  <td><span  class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>&nbsp;<{$idArray[perRow].Fee_sharing_p6_fee}></td>
+		</tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person7:
+			</ul></td>
+		  <td height="30"><{$idArray[perRow].Fee_sharing_p7}>
+  &nbsp;&nbsp; </td>
+		  <td>&nbsp;<{$idArray[perRow].Fee_sharing_p7_percent}>
+		    % of Fee:</td>
+		  <td><span  class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>&nbsp;<{$idArray[perRow].Fee_sharing_p7_fee}></td>
+		</tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person8:
+			</ul></td>
+		  <td height="30"><{$idArray[perRow].Fee_sharing_p8}>
+  &nbsp;&nbsp; </td>
+		  <td>&nbsp;<{$idArray[perRow].Fee_sharing_p8_percent}>
+		    % of Fee:</td>
+		  <td><span  class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>&nbsp;<{$idArray[perRow].Fee_sharing_p8_fee}></td>
+		</tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person9:
+			</ul></td>
+		  <td height="30"><{$idArray[perRow].Fee_sharing_p9}>
+  &nbsp;&nbsp; </td>
+		  <td>&nbsp;<{$idArray[perRow].Fee_sharing_p9_percent}>
+		    % of Fee:</td>
+		  <td><span  class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>&nbsp;<{$idArray[perRow].Fee_sharing_p9_fee}></td>
+		</tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person 10:
+			</ul></td>
+		  <td height="30"><{$idArray[perRow].Fee_sharing_p10}>
+  &nbsp;&nbsp; </td>
+		  <td>&nbsp;<{$idArray[perRow].Fee_sharing_p10_percent}>
+		    % of Fee:</td>
+		  <td><span  class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>&nbsp;<{$idArray[perRow].Fee_sharing_p10_fee}></td>
+		</tr>
+		
+		</table>
+	  </div>
+	    <div id="signPart" class="DragBox">
+<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+		<tr>
+		  <td height="30" colspan="2"><ul class="ulWidth">
+			To be agreed in conjunction with Department Head:
+			</ul></td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Client Survey to be sent?
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input name="clientSurveySent" type="radio" value="1" id="clientSurveySent1" <{if $idArray[perRow].clientSurveySent eq 1}>checked<{/if}> />
+			Yes
+			<input name="clientSurveySent" type="radio" value="0" id="clientSurveySent2" <{if $idArray[perRow].clientSurveySent eq 0}>checked<{/if}>/>
+			No
+		  </ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Reference Letter to be obtained?
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input name="referenceLetter" type="radio" value="1" id="referenceLetter1" <{if $idArray[perRow].referenceLetter eq 1}>checked<{/if}> />
+			Yes
+			<input name="referenceLetter" type="radio" value="0" id="referenceLetter2" <{if $idArray[perRow].referenceLetter eq 0}>checked<{/if}> />
+			No
+		  </ul></td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Major Case Study?
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input name="MajorCaseStudy" type="radio" value="1" id="MajorCaseStudy1" <{if $idArray[perRow].MajorCaseStudy eq 1}>checked<{/if}>/>
+			Yes
+			<input name="MajorCaseStudy" type="radio" value="0" id="MajorCaseStudy2" <{if $idArray[perRow].MajorCaseStudy eq 0}>checked<{/if}>/>
+			No&nbsp;
+		  </ul></td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Minor Case Study?
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input name="MinorCaseStudy" type="radio" value="1" id="MinorCaseStudy1" <{if $idArray[perRow].MinorCaseStudy eq 1}>checked<{/if}>/>
+			Yes
+			<input name="MinorCaseStudy" type="radio" value="0" id="MinorCaseStudy2" <{if $idArray[perRow].MinorCaseStudy eq 0}>checked<{/if}>/>
+			No&nbsp;&nbsp;
+		  </ul>			  </td>
+	    </tr>
+		<tr>
+		  <td height="30" colspan="2">
+			&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="Online" value="On-line" <{if $idArray[perRow].Online eq 1}>checked<{/if}> />
+			On-line
+			&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="Telephone" value="Telephone" <{if $idArray[perRow].Telephone eq 1}>checked<{/if}> />
+			Telephone
+			&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="Inperson" value="In person"  <{if $idArray[perRow].Inperson eq 1}>checked<{/if}>/>
+			In person </td>
+	    </tr>
+		</table>
+	  </div>
+	    <div id="footerSign" class="DragBox">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+
+		<tr>
+		  <td height="30" colspan="3"><ul class="ulWidth">
+			(<em>The original of this form should be given to Accounts
+			and a copy to local Admin <br />
+			if a Client Survey is to be sent. A copy should be kept by the Head of Department and one placed in the transaction file</em>)
+			<br />
+		  </ul></td>
+	    </tr>
+		<tr>
+		  <td width="30%">
+			<div align="center"><br />
+			  Preparers Initials:<br />
+			  <br />
+			  <br />
+			  
+			______________________________		        <br />&nbsp;
+			</div></td>
+		  <td width="30%">
+			<div align="center"><br />
+			  Approved by:(<em>Department Head</em>)<br />
+			  <br />
+			  <br />
+			  ______________________________<br />&nbsp; </div></td>
+		  <td width="30%" height="30">
+			<div align="center"><br />
+			  Approved by:(<em>Executive Directors</em>)<br />
+			  <br />
+			  <br />
+			  ______________________________ <br />&nbsp;</div></td>
+	    </tr>
+		</table>
+	  </div>
+	  
+	 
+  </form> 
+</div>
+	  </div>
+    </div>
+</div>
+<{/section}>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.htm
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Invoice login</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<link href="css/drag_drop.css" rel="stylesheet" type="text/css" />
+<link href="css/date_selector.css" rel="stylesheet" type="text/css" />
+<script language="javascript">
+function submitForm(){
+	var submitForm;
+	submitForm = true;
+	if(document.getElementById('curr_rate').value == ""){
+		submitForm = false;
+		alert('Please input the currency rate!');
+	}
+	if(submitForm)document.userForm.submit();
+	
+}
+</script>
+</head>
+<body>
+<div id="allDivs">
+<table width="98%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>INVOICE REQUISITION FORM</td>
+    <td><span style="float:right; margin: 5px;"><img src="img/cushman_logo.JPG" /></span></td>
+  </tr>
+  <tr>
+    <td><ul>
+      
+    </ul></td>
+    <td><ul style="float:right">
+      Welcome, &nbsp;<{$sArray.user_name}>
+    </ul></td>
+  </tr>
+</table>
+<hr />
+<form action="admin_curr_add_ok.php" method="post" enctype="multipart/form-data" name="userForm" target="_self">
+<table width="318" cellspacing="1" cellpadding="0">
+  <tr>
+    <th width="9%" nowrap="nowrap" bgcolor="#CECECE" scope="col">Currency Code</th>
+    <th width="23%" nowrap="nowrap" bgcolor="#CECECE" scope="col">Currency Date </th>
+    <th width="68%" nowrap="nowrap" bgcolor="#CECECE" scope="col">Currency Rate </th>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" bgcolor="#EEEEEE">
+	  <div align="center">
+	    <select name=curr_code>
+	      <{html_options options=$countryOptions}>
+	        </select>
+	      </div></td>
+	<td nowrap="nowrap" bgcolor="#EEEEEE"><select name="period_year">
+		<option value="2007">2007</option>
+	  <option value="2008" <{if $smarty.now|date_format:"%Y" eq 2008}>selected<{/if}>>2008</option>
+	  <option value="2009" <{if $smarty.now|date_format:"%Y" eq 2009}>selected<{/if}>>2009</option>
+	  <option value="2010" <{if $smarty.now|date_format:"%Y" eq 2010}>selected<{/if}>>2010</option>
+	  <option value="2011" <{if $smarty.now|date_format:"%Y" eq 2011}>selected<{/if}>>2011</option>
+	  </select>
+	  <select name="period_month">
+	    <option value="1" <{if $smarty.now|date_format:"%m" eq 01}>selected<{/if}>>January</option>
+	    <option value="2" <{if $smarty.now|date_format:"%m" eq 02}>selected<{/if}>>February</option>
+	    <option value="3" <{if $smarty.now|date_format:"%m" eq 03}>selected<{/if}>>March</option>
+	    <option value="4" <{if $smarty.now|date_format:"%m" eq 04}>selected<{/if}>>April</option>
+	    <option value="5" <{if $smarty.now|date_format:"%m" eq 05}>selected<{/if}>>May</option>
+	    <option value="6" <{if $smarty.now|date_format:"%m" eq 06}>selected<{/if}>>June</option>
+		<option value="7" <{if $smarty.now|date_format:"%m" eq 07}>selected<{/if}>>July</option>
+		<option value="8" <{if $smarty.now|date_format:"%m" eq 08}>selected<{/if}>>Aguest</option>
+		<option value="9" <{if $smarty.now|date_format:"%m" eq 09}>selected<{/if}>>September</option>
+		<option value="10" <{if $smarty.now|date_format:"%m" eq 10}>selected<{/if}>>October</option>
+		<option value="11" <{if $smarty.now|date_format:"%m" eq 11}>selected<{/if}>>November</option>
+		<option value="12" <{if $smarty.now|date_format:"%m" eq 12}>selected<{/if}>>December</option>
+	    </select></td>
+    <td nowrap="NOWRAP" bgcolor="#EEEEEE"><div align="center">
+      <input type="text" name="curr_rate" id="curr_rate" style="width:80px"/>
+    </div></td>
+  </tr>
+  <tr>
+    <td colspan="3" bgcolor="#FFFFFF"><div align="center">
+      <input name="submitChange" type="button" id="submitChange" value="Save" onclick="submitForm()" />
+      <input name="reset2" type="reset" id="reset2" value="Cancel" />
+    </div></td>
+    </tr>
+</table>
+<div align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+</form>
+</div>
+</body>
+</html>

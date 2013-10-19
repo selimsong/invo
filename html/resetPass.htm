@@ -1,0 +1,72 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.htm
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Invoice login</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<link href="css/drag_drop.css" rel="stylesheet" type="text/css" />
+<link href="css/date_selector.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript" type="text/javascript" src="js/func.js"></script>
+<script language="javascript">
+function submit_pass(){
+	var submitForm;
+	submitForm = true;
+	if(document.getElementById('old_pass').value ==""){alert('Please enter the old password');submitForm = false;}
+	if(document.getElementById('new_pass').value =="" || document.getElementById('new_pass2').value =="" || document.getElementById('new_pass').value != document.getElementById('new_pass2').value){alert('Please make sure you type in 2 same password');submitForm = false;}
+	if(submitForm)document.passform.submit();
+	
+}
+function openRight(URL){
+	window.open(URL,"rightFrame")
+}
+</script>
+</head>
+<body style=" background-image:url(img/www.momii8.com_200711142142123.gif)">
+<div style="margin-left:5px;">
+<form action="resetPass_ok.php" method="post" enctype="multipart/form-data" target="_self" name="passform">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr valign="middle">
+    <td valign="middle">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+		  <td><div align="right">Type in old password: </div></td>
+		  <td><input name="old_pass" type="password" id="old_pass" /></td>
+		  </tr>
+		<tr>
+		<td width="150"><div align="right">Enter new password: </div></td>
+		<td><input name="new_pass" type="password" id="new_pass" /></td>
+		</tr>
+		<tr>
+		<td width="150"><div align="right">Confirm new password: </div></td>
+		<td><input name="new_pass2" type="password" id="new_pass2" /></td>
+		</tr>
+		<tr>
+		<td colspan="2"><div align="center">
+		<input type="button" name="set_pass" value="Save" onclick="submit_pass()"/>
+		</div></td>
+		</tr>
+		</table>
+	
+	
+	</td>
+  </tr>
+</table>
+
+
+
+</form>
+</div>
+</body>
+</html>

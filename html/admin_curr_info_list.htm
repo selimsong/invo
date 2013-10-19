@@ -1,0 +1,91 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.htm
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Currency Info</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<link href="css/drag_drop.css" rel="stylesheet" type="text/css" />
+<link href="css/date_selector.css" rel="stylesheet" type="text/css" />
+<script language="javascript">
+function submitForm(){
+	var submitForm;
+	submitForm = true;
+	if(document.getElementById('name').value ==""){alert('Please enter the username');submitForm = false;}
+	if(document.getElementById('password').value ==""){alert('Please enter the password');submitForm = false;}
+	if(submitForm)document.loginForm.submit();
+	
+}
+</script>
+</head>
+<body>
+<div id="allDivs">
+<table width="98%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>CURRENCY ADMIN</td>
+    <td><span style="float:right; margin: 5px;"><img src="img/cushman_logo.JPG" /></span></td>
+  </tr>
+  <tr>
+    <td><ul>
+     Today is <em><{$smarty.now|date_format}></em>, this year's currency is as follow:
+    </ul></td>
+    <td><ul style="float:right">
+      Welcome, &nbsp;<{$sArray.user_name}>
+    </ul></td>
+  </tr>
+</table>
+<hr />
+
+<form action="admin_user_list_power.php" method="post" enctype="multipart/form-data" name="userForm" target="_self">
+<table width="98%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF">
+  <tr>
+    <th bgcolor="#CECECE" scope="col">curr_code</th>
+    <th bgcolor="#CECECE" scope="col">Jan</th>
+    <th bgcolor="#CECECE" scope="col">Feb</th>
+    <th bgcolor="#CECECE" scope="col">Mat</th>
+    <th bgcolor="#CECECE" scope="col">Apr</th>
+    <th bgcolor="#CECECE" scope="col">May</th>
+    <th bgcolor="#CECECE" scope="col">Jun</th>
+    <th bgcolor="#CECECE" scope="col">July</th>
+    <th bgcolor="#CECECE" scope="col">Aug</th>
+    <th bgcolor="#CECECE" scope="col">Sep</th>
+    <th bgcolor="#CECECE" scope="col">Oct</th>
+    <th bgcolor="#CECECE" scope="col">Nov</th>
+    <th bgcolor="#CECECE" scope="col">Dec</th>
+	<th bgcolor="#CECECE" scope="col">&nbsp;</th>
+  </tr>
+
+ <{section name=perRow loop=$currList}>
+  <tr>
+  <td bgcolor="#EEEEEE"><{$currList[perRow].curr_code}></td>
+  <td bgcolor="#D2FFD2"><{$currList[perRow].month1}></td>
+  <td bgcolor="#D2FFD2"><{$currList[perRow].month2}></td>
+  <td bgcolor="#D2FFD2"><{$currList[perRow].month3}></td>
+  <td bgcolor="#D2FFD2"><{$currList[perRow].month4}></td>
+  <td bgcolor="#D2FFD2"><{$currList[perRow].month5}></td>
+  <td bgcolor="#D2FFD2"><{$currList[perRow].month6}></td>
+  <td bgcolor="#D2FFD2"><{$currList[perRow].month7}></td>
+  <td bgcolor="#D2FFD2"><{$currList[perRow].month8}></td>
+  <td bgcolor="#D2FFD2"><{$currList[perRow].month9}></td>
+  <td bgcolor="#D2FFD2"><{$currList[perRow].month10}></td>
+  <td bgcolor="#D2FFD2"><{$currList[perRow].month11}></td>
+  <td bgcolor="#D2FFD2"><{$currList[perRow].month12}></td>
+  <td bgcolor="#D2FFD2"><div align="center"><a href="admin_curr_modify.php?curr_code=<{$currList[perRow].curr_code}>" target="_self">[Edit]</a></div></td>
+  </tr>
+<{/section}>
+</table>
+</form>
+</div>
+</body>
+</html>

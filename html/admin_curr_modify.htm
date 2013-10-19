@@ -1,0 +1,92 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.htm
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Currency Info</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<link href="css/drag_drop.css" rel="stylesheet" type="text/css" />
+<link href="css/date_selector.css" rel="stylesheet" type="text/css" />
+<script language="javascript">
+function submitForm(){
+	var submitForm;
+	submitForm = true;
+	if(submitForm)document.currencyForm.submit();
+	
+}
+</script>
+</head>
+<body>
+<div id="allDivs">
+<table width="98%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>CURRENCY ADMIN</td>
+    <td><span style="float:right; margin: 5px;"><img src="img/cushman_logo.JPG" /></span></td>
+  </tr>
+  <tr>
+    <td><ul>
+     Today is <{$smarty.now|date_format}>
+    </ul></td>
+    <td><ul style="float:right">
+      Welcome, &nbsp;<{$sArray.user_name}>
+    </ul></td>
+  </tr>
+</table>
+<hr />
+
+<form action="admin_curr_modify_ok.php" method="post" enctype="multipart/form-data" name="currencyForm" target="_self">
+<table width="98%" cellspacing="1" cellpadding="0">
+  <tr>
+    <th bgcolor="#CECECE" scope="col">curr_code</th>
+    <th bgcolor="#CECECE" scope="col">Jan</th>
+    <th bgcolor="#CECECE" scope="col">Feb</th>
+    <th bgcolor="#CECECE" scope="col">Mat</th>
+    <th bgcolor="#CECECE" scope="col">Apr</th>
+    <th bgcolor="#CECECE" scope="col">May</th>
+    <th bgcolor="#CECECE" scope="col">Jun</th>
+    <th bgcolor="#CECECE" scope="col">July</th>
+    <th bgcolor="#CECECE" scope="col">Aug</th>
+    <th bgcolor="#CECECE" scope="col">Sep</th>
+    <th bgcolor="#CECECE" scope="col">Oct</th>
+    <th bgcolor="#CECECE" scope="col">Nov</th>
+    <th bgcolor="#CECECE" scope="col">Dec</th>
+  </tr>
+
+
+  <tr>
+  
+  <td bgcolor="#EEEEEE"><input type="hidden" name="curr_code" style=" width:50px" value="<{$currList.0.curr_code}>" /><{$currList.0.curr_code}></td>
+  <td bgcolor="#D2FFD2"><input type="text" name="1" style=" width:50px" value="<{$currList.0.curr_rate}>" <{if $currList.0.curr_rate eq "" }>disabled="disabled"<{/if}> /></td>
+  <td bgcolor="#D2FFD2"><input type="text" name="2" style=" width:50px" value="<{$currList.1.curr_rate}>" <{if $currList.1.curr_rate eq "" }>disabled="disabled"<{/if}>  /></td>
+  <td bgcolor="#D2FFD2"><input type="text" name="3" style=" width:50px" value="<{$currList.2.curr_rate}>" <{if $currList.2.curr_rate eq "" }>disabled="disabled"<{/if}>  /></td>
+  <td bgcolor="#D2FFD2"><input type="text" name="4" style=" width:50px" value="<{$currList.3.curr_rate}>" <{if $currList.3.curr_rate eq "" }>disabled="disabled"<{/if}>  /></td>
+  <td bgcolor="#D2FFD2"><input type="text" name="5" style=" width:50px" value="<{$currList.4.curr_rate}>" <{if $currList.4.curr_rate eq "" }>disabled="disabled"<{/if}>  /></td>
+  <td bgcolor="#D2FFD2"><input type="text" name="6" style=" width:50px" value="<{$currList.5.curr_rate}>" <{if $currList.5.curr_rate eq "" }>disabled="disabled"<{/if}>  /></td>
+  <td bgcolor="#D2FFD2"><input type="text" name="7" style=" width:50px" value="<{$currList.6.curr_rate}>" <{if $currList.6.curr_rate eq "" }>disabled="disabled"<{/if}>  /></td>
+  <td bgcolor="#D2FFD2"><input type="text" name="8" style=" width:50px" value="<{$currList.7.curr_rate}>" <{if $currList.7.curr_rate eq "" }>disabled="disabled"<{/if}>  /></td>
+  <td bgcolor="#D2FFD2"><input type="text" name="9" style=" width:50px" value="<{$currList.8.curr_rate}>" <{if $currList.8.curr_rate eq "" }>disabled="disabled"<{/if}>  /></td>
+  <td bgcolor="#D2FFD2"><input type="text" name="10" style=" width:50px" value="<{$currList.9.curr_rate}>" <{if $currList.9.curr_rate eq "" }>disabled="disabled"<{/if}>  /></td>
+  <td bgcolor="#D2FFD2"><input type="text" name="11" style=" width:50px" value="<{$currList.10.curr_rate}>" <{if $currList.10.curr_rate eq "" }>disabled="disabled"<{/if}>  /></td>
+  <td bgcolor="#D2FFD2"><input type="text" name="12" style=" width:50px" value="<{$currList.11.curr_rate}>" <{if $currList.11.curr_rate eq "" }>disabled="disabled"<{/if}>  /></td>
+
+  </tr>
+  
+</table>
+<div align="center"><input type="button" value="Save" name="submitCurrency" onclick="submitForm()" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="reset" type="reset" value="Cancel" />
+</div>
+</form>
+</div>
+</body>
+</html>

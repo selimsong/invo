@@ -1,0 +1,154 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.htm
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Invoice login</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<link href="css/drag_drop.css" rel="stylesheet" type="text/css" />
+<link href="css/date_selector.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript" type="text/javascript" src="js/func.js"></script>
+<script language="javascript">
+function submitForm(){
+	var submitForm;
+	submitForm = true;
+	if(document.getElementById('name').value ==""){alert('Please enter the username');submitForm = false;}
+	if(document.getElementById('password').value ==""){alert('Please enter the password');submitForm = false;}
+	if(submitForm)document.loginForm.submit();
+	
+}
+function openRight(URL){
+	window.open(URL,"rightFrame")
+}
+</script>
+</head>
+<body style="background-image: url(img/www.momii8.com_200711142142120.gif)">
+<div style="margin-left:5px; width:150px;">
+	<div align="left"><img src="img/cushman_logo.JPG" width="115" />
+	</div>
+	<div id="loginTable" style="">
+	<ul>
+	  <strong><{$sArray.user_name}></strong>
+	</ul>
+	<ul>
+	 Login as:<strong><{$sArray.user_type}></strong>
+	</ul>
+
+	<div id="leftTableContainer">
+<{if $sArray.user_type eq "Administrator"}>
+	<table width="95%" border="1" cellpadding="0" cellspacing="0" bordercolor="#A8BEFF">
+  <tr>
+    <th colspan="2"   scope="col" style="background-color: #A8BEFF; color:#FFFFFF">User List(Administrator)</th>
+    </tr>
+  <tr>
+    <td colspan="2" scope="col"  class="unHeightLight" onmousemove="highLightThis(this)" onmouseout="unHighLightThis(this)">&nbsp;&nbsp;User Add(Disabled)</td>
+  </tr>
+  <tr>
+    <td colspan="2" scope="col"  class="unHeightLight" onmousemove="highLightThis(this)" onmouseout="unHighLightThis(this)" onclick="openRight('admin_user_list.php')">&nbsp;&nbsp;User List</td>
+  </tr>
+  </table>
+  
+<{/if}>
+<{if ($sArray.user_type eq "Administrator") || (($sArray.user_type eq "Account") AND ($sArray.currency_manager eq 1))}>
+  <table width="95%" border="1" cellpadding="0" cellspacing="0" bordercolor="#A8BEFF">
+  <tr>
+    <th colspan="2"   scope="col" style="background-color: #A8BEFF; color:#FFFFFF">Currency</th>
+  </tr>
+  <tr>
+    <td colspan="2" scope="col"  class="unHeightLight" onmousemove="highLightThis(this)" onmouseout="unHighLightThis(this)" onclick="openRight('admin_curr_add.php')">&nbsp;&nbsp;Currency Add</td>
+  </tr>
+  <tr>
+    <td colspan="2" scope="col"  class="unHeightLight" onmousemove="highLightThis(this)" onmouseout="unHighLightThis(this)" onclick="openRight('admin_curr_info_list.php')">&nbsp;&nbsp;Currency List</td>
+  </tr>
+</table>
+<{/if}>
+<table width="95%" border="1" cellpadding="0" cellspacing="0" bordercolor="#A8BEFF">
+  <tr>
+    <th   scope="col" style="background-color: #A8BEFF; color:#FFFFFF">Invoice List</th>
+  </tr>
+  <tr>
+    <td scope="col"  class="unHeightLight" onmousemove="highLightThis(this)" onmouseout="unHighLightThis(this)" onclick="openRight('search_list.php')">&nbsp;&nbsp;Invoice List </td>
+  </tr>
+</table>
+<table width="95%" border="1" cellpadding="0" cellspacing="0" bordercolor="#A8BEFF">
+  <tr>
+    <th colspan="2"   scope="col" style="background-color: #A8BEFF; color:#FFFFFF">User List</th>
+    </tr>
+  <tr>
+    <td colspan="2" scope="col"  class="unHeightLight" onmousemove="highLightThis(this)" onmouseout="unHighLightThis(this)" onclick="openRight('account_user_add.php')">&nbsp;&nbsp;User Add</td>
+  </tr>
+  <tr>
+    <td colspan="2" scope="col"  class="unHeightLight" onmousemove="highLightThis(this)" onmouseout="unHighLightThis(this)" onclick="openRight('account_user_list.php')">&nbsp;&nbsp;User List</td>
+  </tr>
+  </table>
+
+<table width="95%" border="1" cellpadding="0" cellspacing="0" bordercolor="#A8BEFF">
+  <tr>
+    <th colspan="2"   scope="col" style="background-color: #A8BEFF; color:#FFFFFF">Dept(level 2)</th>
+    </tr>
+  <tr>
+    <td colspan="2" scope="col"  class="unHeightLight" onmousemove="highLightThis(this)" onmouseout="unHighLightThis(this)" onclick="openRight('account_dept2_add.php')">&nbsp;&nbsp;Local Dept Add</td>
+  </tr>
+  <tr>
+    <td colspan="2" scope="col"  class="unHeightLight" onmousemove="highLightThis(this)" onmouseout="unHighLightThis(this)" onclick="openRight('account_dept2_list.php')">&nbsp;&nbsp;Local Dept List</td>
+  </tr>
+  </table>
+
+
+<table width="95%" border="1" cellpadding="0" cellspacing="0" bordercolor="#A8BEFF">
+  <tr>
+    <th colspan="2"   scope="col" style="background-color: #A8BEFF; color:#FFFFFF">Major Account Group </th>
+  </tr>
+  <tr>
+    <td colspan="2" scope="col"  class="unHeightLight" onmousemove="highLightThis(this)" onmouseout="unHighLightThis(this)" onclick="openRight('account_mag_list.php')">&nbsp;&nbsp;Group List </td>
+  </tr>
+  <tr>
+    <td colspan="2" scope="col"  class="unHeightLight" onmousemove="highLightThis(this)" onmouseout="unHighLightThis(this)" onclick="openRight('account_mag_add.php')">&nbsp;&nbsp;Group Add </td>
+  </tr>
+</table>
+
+<table width="95%" border="1" cellpadding="0" cellspacing="0" bordercolor="#A8BEFF">
+  <tr>
+    <th colspan="2"   scope="col" style="background-color: #A8BEFF; color:#FFFFFF">Report</th>
+  </tr>
+  <tr>
+    <td colspan="2" scope="col"  class="unHeightLight" onmousemove="highLightThis(this)" onmouseout="unHighLightThis(this)" onclick="openRight('report.php')">&nbsp;&nbsp;Report </td>
+  </tr>
+</table>
+	</div>
+	</div>
+	<a href="./logout.php" target="_parent">[logout]</a>
+</div>
+<div>
+<table border="1" width="90%" style="margin-left:2px;">
+<tr><th colspan="2">Data Check</th>
+  </tr>
+<tr>
+  <th rowspan="2">2008</th>
+  <th><a href="admin_analysis.php?year=2008" target="rightFrame">overView</a></th>
+</tr>
+<tr>
+  <th><a href="admin_data_gap.php?year=2008" target="rightFrame">Details</a></th>
+</tr>
+<tr>
+  <th rowspan="2">2009</th>
+  <th><a href="admin_analysis.php?year=2009" target="rightFrame">overView</a></th>
+</tr>
+<tr>
+  <th><a href="admin_data_gap.php?year=2009" target="rightFrame">Details</a></th>
+</tr>
+</table>	
+</div>
+</body>
+</html>

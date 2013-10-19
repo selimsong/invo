@@ -1,0 +1,51 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.htm
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Invoice login</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<link href="css/drag_drop.css" rel="stylesheet" type="text/css" />
+<link href="css/date_selector.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript" type="text/javascript" src="js/func.js"></script>
+<script language="javascript">
+function submitForm(){
+	var submitForm;
+	submitForm = true;
+	if(document.getElementById('name').value ==""){alert('Please enter the username');submitForm = false;}
+	if(document.getElementById('password').value ==""){alert('Please enter the password');submitForm = false;}
+	if(submitForm)document.loginForm.submit();
+	
+}
+function openRight(URL){
+	window.open(URL,"rightFrame")
+}
+</script>
+</head>
+<body style=" background-image:url(img/www.momii8.com_200711142142123.gif)">
+<div style="margin-left:5px;">
+	<div align="right"><img src="img/cushman_logo.JPG" width="115" />
+  </div>
+	<div id="loginTable" align="center" valign=center>
+	<ul>
+	  Welcome&nbsp;&nbsp;<strong><{$sArray.user_name}></strong>,
+	</ul>
+	<ul>
+	 You are login as:<strong><{$sArray.user_type}></strong>&nbsp;&nbsp;in&nbsp;&nbsp;<{$sArray.priority_country}>
+	</ul>
+
+	</div>
+	<a href="./logout.php" target="_parent"></a></div>
+</body>
+</html>

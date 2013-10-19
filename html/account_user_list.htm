@@ -1,0 +1,99 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.htm
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Invoice login</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<link href="css/drag_drop.css" rel="stylesheet" type="text/css" />
+<link href="css/date_selector.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript" type="text/javascript" src="./js/func.js"></script>
+<script language="javascript">
+function confirm_del(id){
+	if(confirm("Are you sure to delete the user?")){
+		window.location='account_user_delete.php?ID=' + id;
+	}
+}
+
+
+</script>
+</head>
+<body style="background-image:url(img/www.momii8.com_200711142142123.gif)">
+<div id="allDivs">
+<table width="98%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>INVOICE LIST </td>
+    <td><span style="float:right; margin: 5px;"><img src="img/cushman_logo.JPG" /></span></td>
+  </tr>
+  <tr>
+    <td><ul>
+      
+    </ul></td>
+    <td><ul style="float:right">
+      Welcome, &nbsp;<{$sArray.user_name}>
+    </ul></td>
+  </tr>
+</table>
+
+<{if $sArray.user_type eq "Administrator"}>
+<table width="98%" border="0" cellspacing="0" cellpadding="0">
+<form name="s" action="" method="post">
+  <tr>
+    <td>search:<input type="text" name="username" value="" /> <input type="submit" name="search" value="search" /></td>
+  </tr>
+</form>
+</table>
+<{/if}>
+
+<hr />
+<div>The list of the user in <strong><{$sArray.priority_country}></strong>: <{$PAGELINK}></div>
+<div style="font-style:italic">(order by City > Department > User Name)</div>
+<form action="account_user_list_power.php" method="post" enctype="multipart/form-data" name="userForm" target="_self">
+<table width="98%" border="1" cellpadding="0" cellspacing="0">
+  <tr>
+    <th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Priority City</th>
+    <th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Priority Dept</th>
+    <th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">User Name</th>
+    <th width="40" bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Add</th>
+    <th width="40" bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">View</th>
+    <th width="40" bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Modify</th>
+    <th width="100" bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">&nbsp;</th>
+  </tr>
+<{section name=perRow loop=$userList}>
+  <tr>
+    <td bordercolor="#FFFFFF" bgcolor="#D6FED7">&nbsp;&nbsp;<{$userList[perRow].priority_city}></td>
+    <td bordercolor="#FFFFFF" bgcolor="#FFFFB3">&nbsp;&nbsp;<{$userList[perRow].dept2_desc}></td>
+    <td bordercolor="#FFFFFF" bgcolor="#EEEEEE">&nbsp;&nbsp;<{$userList[perRow].user_name}></td>
+    <td width="40" bordercolor="#FFFFFF" bgcolor="#FFB7B7"><div align="center"><input type="checkbox" name="invoice_add-<{$userList[perRow].ID}>" value="1" <{if $userList[perRow].invoice_add eq 1 }>checked<{/if}> /></div></td>
+	<td width="40" bordercolor="#FFFFFF" bgcolor="#FFB7B7"><div align="center"><input type="checkbox" name="invoice_view-<{$userList[perRow].ID}>" value="1" <{if $userList[perRow].invoice_view eq 1 }>checked<{/if}> /></div></td>
+    <td width="40" bordercolor="#FFFFFF" bgcolor="#FFB7B7"><div align="center"><input type="checkbox" name="invoice_modify-<{$userList[perRow].ID}>" value="1" <{if $userList[perRow].invoice_modify eq 1 }>checked<{/if}> /></div></td>
+    <td width="100" bordercolor="#FFFFFF" bgcolor="#FFB7B7">
+	<input type="button" value="Modify" onclick="window.location='account_user_modify.php?ID=<{$userList[perRow].ID}>'"/>
+	<input type="button" value="Delete" onclick="confirm_del(<{$userList[perRow].ID}>)"/>
+	</td>
+  </tr>
+ <{/section}>
+  <tr>
+    <td colspan="13">&nbsp;</td>
+    </tr>
+</table>
+<!--div align="center">
+  <input name="submitChange" type="submit" id="submitChange" value="Save" />
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <input name="reset2" type="reset" id="reset2" value="Cancel" />
+</div-->
+</form>
+</div>
+</body>
+</html>

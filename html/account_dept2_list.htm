@@ -1,0 +1,86 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.htm
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Invoice login</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<link href="css/drag_drop.css" rel="stylesheet" type="text/css" />
+<link href="css/date_selector.css" rel="stylesheet" type="text/css" />
+
+<script language="JavaScript" type="text/javascript" src="./js/func.js"></script>
+<script language="javascript">
+function submitForm(){
+	var submitForm;
+	submitForm = true;
+	if(document.getElementById('name').value ==""){alert('Please enter the username');submitForm = false;}
+	if(document.getElementById('password').value ==""){alert('Please enter the password');submitForm = false;}
+	if(submitForm)document.loginForm.submit();
+	
+}
+</script>
+<style type="text/css">
+body,div,table,tr,td {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:10px;
+}
+</style>
+</head>
+<body style="background-image:url(img/www.momii8.com_200711142142123.gif)">
+<div id="allDivs">
+<table width="98%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>DEPT LIST (LEVEL 2) </td>
+    <td><span style="float:right; margin: 5px;"><img src="img/cushman_logo.JPG" /></span></td>
+  </tr>
+  <tr>
+    <td><ul>
+      
+    </ul></td>
+    <td><ul style="float:right">
+      Welcome, &nbsp;<{$sArray.user_name}>
+    </ul></td>
+  </tr>
+</table>
+<hr />
+<div>The list of the department (level 2) in <strong><{$sArray.priority_country}></strong>: <{$PAGELINK}></div>
+<form action="account_user_list_power.php" method="post" enctype="multipart/form-data" name="userForm" target="_self">
+<table width="98%" border="1" cellpadding="0" cellspacing="0">
+  <tr>
+    <th bgcolor="#CCCCCC">Global Dept name</th>
+	<th bgcolor="#CCCCCC">Local Dept code</th>
+	<th bgcolor="#CCCCCC">Local Dept description</th>
+	<th width="100" bgcolor="#CCCCCC">Create By</th>
+	<th width="120" bgcolor="#CCCCCC">Create Date</th>
+  </tr>
+  <{section name=perRow loop=$dept2Array}>
+  <tr>
+  <td>&nbsp;&nbsp;<{$dept2Array[perRow].Dept_desc}>&nbsp;&nbsp;(<{$dept2Array[perRow].Dept_code}>)</td>
+  <td>&nbsp;&nbsp;<{$dept2Array[perRow].dept2_code}></td>
+  <td>&nbsp;&nbsp;<{$dept2Array[perRow].dept2_desc}></td>
+  <td>&nbsp;&nbsp;<{$dept2Array[perRow].dept2_add_by}></td>
+  <td><div align="center"><{$dept2Array[perRow].dept2_create_date}></div></td>
+  </tr>
+  
+ <{/section}>
+</table>
+<!--div align="center">
+  <input name="submitChange" type="submit" id="submitChange" value="Save" />
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <input name="reset2" type="reset" id="reset2" value="Cancel" />
+</div-->
+</form>
+</div>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.htm
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Search List</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<link href="css/drag_drop.css" rel="stylesheet" type="text/css" />
+<link href="css/date_selector.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="js/drag_drop.js"></script>
+<script language="javascript" src="js/date_selector.js"></script>
+<script language="javascript" src="js/func.js"></script>
+<script language="javascript">
+var headerName = 'check';
+function getDetails(idNum){
+	window.open("search_getDetail.php?ID=" + idNum, '_blank');
+}
+function hideSearch(){
+	if(document.getElementById('searchBarWidth').style.display == "")
+	{
+		document.getElementById('searchBarWidth').style.display='none';
+		document.getElementById('controlButton').innerHTML = 'Maximize';
+	}
+	else
+	{
+		document.getElementById('searchBarWidth').style.display='';
+		document.getElementById('controlButton').innerHTML = 'Minimize';
+	}
+}
+function openNewWindow(ID){
+	window.open("page.html","newwindow","height=100,width=400,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no");
+}
+function heighLightThis(obj){
+	document.getElementById(obj.id).className="buttonColorHeight";
+}
+function unHeighLightThis(obj){
+	document.getElementById(obj.id).className="buttonColor";
+}
+function confirm_password(){
+	if(document.getElementById('password1').value == document.getElementById('password2').value){
+		document.getElementById('confirmPass').innerHTML = "&nbsp;(Password matched)";
+	}
+	else{
+		document.getElementById('confirmPass').innerHTML = "<font color=red>&nbsp;(Password do not match)</font>";
+	}
+}
+
+function myAlert(){
+	var submitPermit = true;
+	if(document.userForm.user_name.value == ""){
+		submitPermit = false;
+		alert('Please type in user name!');
+	}
+	if(document.userForm.password.value == "" || document.userForm.password.value != document.userForm.password2.value){
+		submitPermit = false;
+		alert('Please type in user password and make sure the password the same!');
+	}
+	if(submitPermit){
+		document.userForm.submit();
+	}
+}
+function confirmThis(URL){
+	if(confirm('Are you sure to Delete?'))
+	window.location=URL;
+}
+</script>
+<style type="text/css">
+<!--
+.STYLE4 {font-size: 10px}
+.STYLE5 {color: #FFFFFF}
+.tableLeft{
+	text-align:right;
+	margin-right:8px;
+}
+-->
+</style>
+</head>
+<body style="background-image:url(img/www.momii8.com_200711142142123.gif)">
+<div id="allDivs"  style=" border:#003333; width:auto !important; width:100%;">
+  <table width="98%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse">
+    <tr>
+      <td>Major Account Group List</td>
+      <td><span style="float:right; margin: 5px;"><img src="img/cushman_logo.JPG" /></span></td>
+    </tr>
+    <tr>
+      <td bgcolor="#0033CC" height="10" >
+	  	<table width="636">
+			<tr>
+				<!--<td width="15%">
+					<div align="center" id="buttonSearch" class="buttonColor"  onclick="window.location='./search_list.php'"  onmousemove="heighLightThis(this)" onmouseout="unHeighLightThis(this)" >Invoice Search</div>
+				</td>
+            	<td width="15%">
+					<{if $sArray.invoice_add eq "1"}><div align="center" id="buttonAdd" class="buttonColor" onclick="window.open('fill_form.php', 'newwin', 'height=500, width=1024,top=200,toolbar=no,scrollbars=yes')" onmousemove="heighLightThis(this)" onmouseout="unHeighLightThis(this)" />Invoice Add</div><{/if}>										                </td>
+            	<td width="15%">
+					<div align="center" id="buttonLogout" class="buttonColor" onclick="window.location='logout.php'" onmousemove="heighLightThis(this)" onmouseout="unHeighLightThis(this)" />Logout</div>
+				</td>-->
+            	<td width="">&nbsp;</td>
+            	<td width=""></td>
+      </tr>
+	  </table>
+	  </td>
+      <td bgcolor="#0033CC" height="10" ><div align="right" class="STYLE5">Welcome, &nbsp;<strong><{$sArray.user_name}></strong></div></td>
+    </tr>
+  </table>
+  <hr />
+  <div class="searchDetailHeighlight">(Please click the item to modify and click the 'Update' button for updating the Data)</div>
+  <div id="invoiceFormDiv" class="DragContainer" style="float:none; margin-right:5px; width:auto !important; width:100%;">
+
+  
+    <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000" style="border-collapse:collapse;">
+      <tr height="22">
+        <th colspan="3" bordercolor="#000000" bgcolor="#FFE6E6"><div align="center">Major Account Group List </div></th>
+      </tr>
+      <tr height="22">
+        <th width="130" bordercolor="#000000">Group name </th>
+        <th bordercolor="#000000">Client</th>
+        <th width="110" bordercolor="#000000">&nbsp;</th>
+      </tr>
+	  <{section name=perRow loop=$magArray}>
+	  <form action="account_mag_modify_ok.php" method="post" name="thisForm<{$magArray[perRow].ID}>" target="_self" id="thisForm<{$magArray[perRow].ID}>">
+	  
+      <tr height="22">
+	  <td width="130" height="22" bordercolor="#000000"><div align="center">
+	  	<input type="hidden" name="ID" value="<{$magArray[perRow].ID}>">
+	    <input name="Client_Solutins_Major" type="text" class="noneBorderInput" style=" background-image:url(./img/www.momii8.com_200711142142123.gif); text-align:center; width:80px" value="<{$magArray[perRow].Client_Solutins_Major}>"  />
+	    </div></td>
+	  <td height="22" bordercolor="#000000"><div align="center">
+	    <input name="Client" type="text" class="noneBorderInput" style=" background-image:url(./img/www.momii8.com_200711142142123.gif); text-align:center; width:550px;" value="<{$magArray[perRow].Client}>">
+	  </div></td>
+      <td width="110" bordercolor="#000000">
+	  	<input name="" type="submit" value="Update" />
+		<input type="button" value="Delete" onclick="confirmThis('account_mag_delete.php?ID=<{$magArray[perRow].ID}>')"/>
+	  </td>
+      </tr>
+	  </form>
+	  <{/section}>
+      <tr height="22">
+        <td colspan="3" bordercolor="#000000">
+          <div align="center">&nbsp;&nbsp;&nbsp;
+            <input name="areset" type="button" id="areset" value="Cancel" onclick="location.reload()"/>
+          </div></td>
+      </tr>   
+    </table>
+	
+  </div>
+  
+
+  
+</div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.htm
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Invoice login</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<link href="css/drag_drop.css" rel="stylesheet" type="text/css" />
+<link href="css/date_selector.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript" type="text/javascript" src="js/func.js"></script>
+<script language="javascript">
+function submitForm(){
+	var submitForm;
+	submitForm = true;
+	if(document.getElementById('name').value ==""){alert('Please enter the username');submitForm = false;}
+	if(document.getElementById('password').value ==""){alert('Please enter the password');submitForm = false;}
+	if(submitForm)document.loginForm.submit();
+	
+}
+function Anonymous_login(){
+	window.location='./login_ok.php';
+}
+function key_press(k){
+	if(k == 13)submitForm();
+}
+</script>
+<style type="text/css">
+<!--
+.STYLE1 {
+	font-size: 12px;
+	font-weight: bold;
+	font-style: italic;
+}
+-->
+</style>
+</head>
+<body onkeydown=key_press(event.keyCode) onload="document.loginForm.name.focus()">
+<div style="float:right"> <img src="img/cushman_logo.JPG" /></div>
+<div id="headDiv" style="height:45px;">
+  <H3>INVOICE REQUISITION SYSTEM</H3>
+</div>
+<hr />
+<div id="loginTable" style="">
+<form action="login_ok.php" method="post" enctype="multipart/form-data" name="loginForm" target="_self">
+<center>
+<table width="395" border="0">
+  <tr>
+    <td><div align="right">Email Address: </div></td>
+    <td>
+      <input type="text" name="name" id="name"/>
+      <span class="STYLE1">@ap.cushwake.com</span> </td>
+    </tr>
+  <tr>
+    <td><div align="right">Password:</div></td>
+    <td><label>
+      <input type="password" name="password" id="password"/>
+    </label></td>
+    </tr>
+  <tr>
+    <td colspan="2">
+	  <div style="margin-left:100px;"><input type="button" onclick="submitForm()" value="Login"></div>
+	  </td>
+    </tr>
+</table>
+</center>
+</form>
+</div>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.htm
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Invoice login</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<link href="css/drag_drop.css" rel="stylesheet" type="text/css" />
+<link href="css/date_selector.css" rel="stylesheet" type="text/css" />
+<style>
+body,div,table,td,tr,input {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+}
+.right{
+	color:#006600;
+	font-weight:bolder;
+}
+.wrong{
+	color:#FF0000;
+	font-weight:bolder;
+}
+</style>
+
+<script language="javascript">
+function submitForm(){
+	var submitForm = true;
+	if(submitForm)document.loginForm.submit();
+	
+}
+function del_confirm(name,time,ip,id){
+	var c = false;
+	var str = "Are you sure to delete the login record?\n[" + name + "] from [" + ip + "] on [" + time + "]";
+	//alert(str);
+	c = confirm(str);
+	if(c){
+		window.location = "./admin_user_log_del.php?id=" + id;
+	}
+}
+function cha(){
+alert('test');
+	if(document.getElementById('checkAll').checked == false){
+		for(i=0;i<delid.length;i++){
+			alert(delid[i]);
+		}
+	}
+	else{
+		document.getElementById('delid').checked = false;
+	}
+}
+</script>
+</head>
+<body style="background-image:url(../img/www.momii8.com_200711142142123.gif)">
+<div id="allDivs">
+<table width="98%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>INVOICE REQUISITION FORM</td>
+    <td><span style="float:right; margin: 5px;"><img src="img/cushman_logo.JPG" /></span></td>
+  </tr>
+  <tr>
+    <td><ul>
+      
+    </ul></td>
+    <td><ul style="float:right">
+      Welcome, &nbsp;<{$sArray.user_name}>
+    </ul></td>
+  </tr>
+</table>
+<{$PAGELINK}>
+<hr />
+<form action="admin_user_log_del.php" method="post" enctype="multipart/form-data" name="loginForm" target="_self">
+<table border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style="border-collapse:collapse">
+  <tr>
+  	<th bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col"><input name="checkAll" type="checkbox" value="1" onclick="cha()" /></th>
+    <th width="200" bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">User Name</th>
+    <th width="100" bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Login from IP </th>
+    <th width="20" bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Login Status </th>
+    <th width="150" bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Login Time </th>
+	<th width="150" bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">VPN Domain </th>
+	<th width="40" bordercolor="#FFFFFF" bgcolor="#CECECE" scope="col">Options</th>
+  </tr>
+<{section name=perRow loop=$logArray}>
+  <tr>
+  	<td bgcolor="#E9E9E9"><input name="delid[]" id="delid[]" type="checkbox" value="<{$logArray[perRow].log_id}>" /></td>
+    <td bordercolor="#FFFFFF" bgcolor="#EEEEEE"><{$logArray[perRow].log_name}></td>
+    <td bordercolor="#FFFFFF" bgcolor="#D2FFD2"><{$logArray[perRow].user_ip}></td>
+    <td bordercolor="#FFFFFF" bgcolor="#D2FFD2">
+	  <div align="center"><{if $logArray[perRow].log_status eq 1}><span class="right">√</span> <{else}><span class="wrong">X</span> <{/if}>	      </div></td>
+    <td bordercolor="#FFFFFF" bgcolor="#D2FFD2"><{$logArray[perRow].log_time}></td>
+	<td bordercolor="#FFFFFF" bgcolor="#D2FFD2"><{$logArray[perRow].VPN_domain}></td>
+	<td bordercolor="#FFFFFF" bgcolor="#D2FFD2">
+		[ <a href="javascript:void(0)" onclick="del_confirm('<{$logArray[perRow].log_name}>','<{$logArray[perRow].log_time}>','<{$logArray[perRow].user_ip}>','<{$logArray[perRow].log_id}>')">Del</a> ]	</td>
+
+ <{/section}>
+  <tr>
+    <td colspan="12" bgcolor="#FFFFFF">&nbsp;</td>
+    </tr>
+</table>
+<div style="margin-left:250px;">
+  <input name="submitChange" type="submit" id="submitChange" value="Delete Selected" />
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <input name="reset2" type="reset" id="reset2" value="Cancel" />
+</div>
+</form>
+</div>
+</body>
+</html>

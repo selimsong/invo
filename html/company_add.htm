@@ -1,0 +1,296 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：index.html
+ * 
+ * @summery：index
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Parent Client</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+input,select { width:150px;}
+table,tr,td { border-collapse:collapse; border-width:1px; border-bottom-color: #FFFFFF;}
+</style>
+</head>
+<body style=" margin:5px;">
+<div style="float:right"> <img src="img/cushman_logo.JPG"; /></div>
+<div id="headDiv" style="height:45px;">
+  <H3>INVOICE REQUISITION FORM</H3>
+</div>
+Add Company
+<hr />
+<div>
+<div class="manditory">Fields marked * are manditory</div>
+<h5>ADD Company </h5>
+<div class="tableContainer">
+<h4>Basic Details</h4>
+<table style="">
+<tr>
+  <td>Legal Name:<span class="red">*</span></td>
+<td><input type="text" /></td>
+  </tr>
+<tr>
+  <td>Trading Name:<span class="red">*</span> </td>
+  <td><input name="text" type="text" value="IB" />
+  	<div style="position:relative;">
+		<div style=" overflow:hidden;position: absolute; z-index: 120; left: 155px; top: 0px; width: 330px; height: 220px; border:#999999 1px solid; display: block; background-color:#FFFFFF">
+			<div class="d_list" id="address_list">
+			<a style="display: block;" class="a1" href="#" onMouseDown="sel_kwords($rs[id])"><span>IBM</span>IBM China Beijing Co.LTD</a>
+			<a style="display: block;" class="a1" href="#" onMouseDown="sel_kwords($rs[id])"><span>IBM</span>IBM China Shanghai Co.LTD</a>			</div>
+		</div>
+	</div>  </td>
+  </tr>
+<tr>
+  <td>Parent Group:</td>
+  <td><input name="text2" type="text" /></td>
+  </tr>
+<tr>
+  <td>Global Headquarters:<span class="red">*</span></td>
+  <td><select name="select">
+    <option selected="selected">Please select</option>
+    <option value="China">China</option>
+    </select>    </td>
+  </tr>
+<tr>
+  <td valign="top">APAC Headquarters:</td>
+  <td><select name="select2">
+    <option selected="selected">Please select</option>
+    <option value="China">China</option>
+  </select>
+  	<select name="select3">
+    <option selected="selected">Please select</option>
+    <option value="China">Shanghai</option>
+  </select>
+  <div class="list_item">
+  	<div class="list_item_1">Country</div>
+	<div class="list_item_2">City</div>
+  </div>
+  </td>
+  </tr>
+<tr>
+  <td>Client  Type:<span class="red">*</span></td>
+  <td><select name="select4">
+    <option selected="selected">Please select</option>
+    <option value="Occupier">Occupier</option>
+    <option value="Investor or Developer">Investor or Developer</option>
+      </select></td>
+  </tr>
+<tr>
+  <td valign="top">Industry Segment:<span class="red">*</span></td>
+  <td><select name="select5">
+    <option>Please select</option>
+  </select>
+    <select name="select6">
+      <option>Please select</option>
+    </select>
+	  <div class="list_item">
+  	<div class="list_item_1">Primary</div>
+	<div class="list_item_2">Secondary</div>
+  </div>
+	</td>
+  </tr>
+</table>
+</div>
+<div class="tableContainer">
+<h4>Addresses and contact details</h4>
+<table>
+<tr>
+	<td  valign="top" width="300"><table>
+<tr>
+  <td colspan="2"><h6>Physical Address</h6> </td>
+  </tr>
+<tr>
+  <td>Address: <span class="red">*</span> </td>
+  <td><input name="text22" type="text" /></td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+  <td><input name="text222" type="text" /></td>
+</tr>
+<tr>
+  <td>City: <span class="red">* </span></td>
+  <td><select name="select9">
+    <option>Please select</option>
+  </select></td>
+</tr>
+<tr>
+  <td>Province:</td>
+  <td><input name="text24" type="text" /></td>
+</tr>
+<tr>
+  <td>Country:<span class="red">*</span></td>
+  <td><select name="select7">
+    <option>Please select</option>
+  </select></td>
+</tr>
+<tr>
+  <td>Postcode:<span class="red">*</span></td>
+  <td><input name="text242" type="text" /></td>
+</tr>
+</table></td>
+	<td  valign="top" width="300"><table>
+
+    <td colspan="2"><h6>Business Contact</h6> </td>
+  </tr>
+<tr>
+  <td>Salutation:<span class="red">*</span></td>
+  <td><select name="select8">
+    <option>Please select</option>
+  </select></td>
+</tr>
+<tr>
+  <td>First Name:<span class="red">*</span></td>
+  <td><input name="text2422" type="text" /></td>
+</tr>
+<tr>
+  <td>Last Name:<span class="red">*</span></td>
+  <td><input name="text2423" type="text" /></td>
+</tr>
+<tr>
+  <td>Job Title:</td>
+  <td><input name="text2424" type="text" /></td>
+</tr>
+<tr>
+  <td>Department:</td>
+  <td><input name="text2425" type="text" /></td>
+</tr>
+<tr>
+  <td>Phone:</td>
+  <td><input name="text2426" type="text" style="width:25px;"/>
+  	-
+    <input name="text2427" type="text" style="width:112px;"/></td>
+</tr>
+<tr>
+  <td>Email:<span class="red">*</span></td>
+  <td><input name="text24252" type="text" /></td>
+</tr>
+</table></td>
+	<td  valign="top" width="300"><table>
+
+      <td colspan="2"><h6>Business Contact 2 </h6></td>
+  </tr>
+<tr>
+  <td>Salutation:</td>
+  <td><select name="select8">
+    <option>Please select</option>
+  </select></td>
+</tr>
+<tr>
+  <td>First Name:</td>
+  <td><input name="text2422" type="text" /></td>
+</tr>
+<tr>
+  <td>Last Name:</td>
+  <td><input name="text2423" type="text" /></td>
+</tr>
+<tr>
+  <td>Job Title:</td>
+  <td><input name="text2424" type="text" /></td>
+</tr>
+<tr>
+  <td>Department:</td>
+  <td><input name="text2425" type="text" /></td>
+</tr>
+<tr>
+  <td>Phone:</td>
+  <td><input name="text2426" type="text" style="width:25px;"/>
+  	-
+    <input name="text2427" type="text" style="width:112px;"/></td>
+</tr>
+<tr>
+  <td>Email Address:</td>
+  <td><input name="text24252" type="text" /></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+	<td  valign="top" width="300"><table>
+<tr>
+  <td><h6>Invoice Address </h6> </td>
+  <td><input type="button" value="Same as the above" class="button_en" /> </td>
+  </tr>
+<tr>
+  <td>Address: <span class="red">*</span> </td>
+  <td><input name="text22" type="text" /></td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+  <td><input name="text223" type="text" /></td>
+</tr>
+<tr>
+  <td>City: <span class="red">* </span></td>
+  <td><select name="select9">
+    <option>Please select</option>
+  </select></td>
+</tr>
+<tr>
+  <td>Province:</td>
+  <td><input name="text24" type="text" /></td>
+</tr>
+<tr>
+  <td>Country:<span class="red">*</span></td>
+  <td><select name="select7">
+    <option>Please select</option>
+  </select></td>
+</tr>
+<tr>
+  <td>Postcode:<span class="red">*</span></td>
+  <td><input name="text242" type="text" /></td>
+</tr>
+</table></td>
+	<td  valign="top" width="300"><table>
+
+      <td><h6>Invoice Contact  </h6></td>
+	  <td><input type=button class="button_en" value="Same as the above" /></td>
+  </tr>
+<tr>
+  <td>Salutation:<span class="red">*</span></td>
+  <td><select name="select8">
+    <option>Please select</option>
+  </select></td>
+</tr>
+<tr>
+  <td>First Name:<span class="red">*</span></td>
+  <td><input name="text2422" type="text" /></td>
+</tr>
+<tr>
+  <td>Last Name:<span class="red">*</span></td>
+  <td><input name="text2423" type="text" /></td>
+</tr>
+<tr>
+  <td>Job Title:</td>
+  <td><input name="text2424" type="text" /></td>
+</tr>
+<tr>
+  <td>Department:</td>
+  <td><input name="text2425" type="text" /></td>
+</tr>
+<tr>
+  <td>Phone:</td>
+  <td><input name="text2426" type="text" style="width:25px;"/>
+  	-
+      <input name="text24272" type="text" style="width:112px;"/></td>
+</tr>
+<tr>
+  <td>Email Address:</td>
+  <td><input name="text24252" type="text" /></td>
+</tr>
+</table></td>
+	<td  valign="top" width="300">&nbsp;</td>
+</tr>
+</table>
+</div>
+<input type="button" class="button_en" value="Save"  />
+<input type="button" class="button_en" value="Cancel"  />
+</div>
+</body>
+</html>

@@ -1,0 +1,1175 @@
+<!--/*
+ * @Copyright (c) 2007, www.cushwake.com
+ * @All rights reserved.
+ *
+ * @File name：fill_form.htm
+ * 
+ * @summery：fill_form template
+ *
+ * @author：leon.zhao@ap.cushwake.com
+ * @date：06.22.2007 10:22 AM
+ *
+ */-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Modify Invoice information</title>
+<link href="css/invocie_global.css" rel="stylesheet" type="text/css" />
+<link href="css/drag_drop.css" rel="stylesheet" type="text/css" />
+<link href="css/date_selector.css" rel="stylesheet" type="text/css" />
+<{$fill_form_ajax}>
+<script language="javascript" src="js/date_selector.js"></script>
+<script language="JavaScript" type="text/javascript" src="js/func.js"></script>
+<script language="JavaScript" type="text/javascript" src="js/net.js"></script>
+<script language="javascript">
+
+var submit_f = new Array();
+
+function whileWait(){
+}
+function changeCountry(){
+	if((document.getElementById('selCountry').value) == "")
+	{
+		alert ('Please select the country first!');
+	}
+	else{
+		whileWait();
+		xajax_selectCountry(document.getElementById('selCountry').value,document.getElementById('date6').value);
+	}
+}
+
+
+function getMAGroup(value){
+	xajax_change_client(value);
+	//document.getElementById('MAGroup').innerHTML = "WPP.corp";
+}
+function netFeeChange(){
+	var InvAmount;
+	var thirdAmount;
+	var reAmount;
+	var CSOfficeFee;
+	var currency;
+	var cost_of_sales;
+	currency = (document.getElementById('todayCurrency').value)?(document.getElementById('todayCurrency').value):false;
+	if(!currency) window.alert('For currency is not selected,\nPlease select the Currency first!');
+	else{
+		if(document.getElementById('Invoice_Amount').value)
+		{	
+			InvAmount = numRemoveComma(document.getElementById('Invoice_Amount').value);
+		}else InvAmount = 0;
+		if(document.getElementById('cost_of_sales').value)
+		{	
+			cost_of_sales = numRemoveComma(document.getElementById('cost_of_sales').value);
+		} else cost_of_sales = 0;
+
+
+
+		if(document.getElementById('3rd_Pty_Fee').value)
+		{	
+			thirdAmount = numRemoveComma(document.getElementById('3rd_Pty_Fee').value);
+		} else thirdAmount = 0;
+		if(document.getElementById('3rd_Pty_Fee2').value)
+		{	
+			thirdAmount2 = numRemoveComma(document.getElementById('3rd_Pty_Fee2').value);
+		} else thirdAmount2 = 0;
+		if(document.getElementById('CWW_Referral_Fee').value)
+		{
+			reAmount = numRemoveComma(document.getElementById('CWW_Referral_Fee').value);
+		} else reAmount = 0;
+		if(document.getElementById('CWW_Referral_Fee2').value)
+		{
+			reAmount2 = numRemoveComma(document.getElementById('CWW_Referral_Fee2').value);
+		} else reAmount2 = 0;
+		if(document.getElementById('CWW_Referral_Fee3').value)
+		{
+			reAmount3 = numRemoveComma(document.getElementById('CWW_Referral_Fee3').value);
+		} else reAmount3 = 0;
+		if(document.getElementById('CSOfficeFee').value)
+		{
+			CSOfficeFee = numRemoveComma(document.getElementById('CSOfficeFee').value);
+		} else CSOfficeFee = 0;
+
+		total = parseFloat(InvAmount - cost_of_sales - thirdAmount - thirdAmount2 - reAmount2 - reAmount3 - reAmount - CSOfficeFee);
+
+		document.getElementById('Net_Fee_span').innerHTML = numAddComma(total);
+		document.getElementById('Net_Fee').value = numAddComma(total);
+		document.getElementById('Net_Fee_US').value = numAddComma(parseFloat(total * currency));
+		document.getElementById('netFeeUs').innerHTML = numAddComma(parseFloat(total * currency));
+		
+		document.getElementById('InvAmountUs').innerHTML = numAddComma(parseFloat(InvAmount * currency));
+		document.getElementById('InvAmountUsHidden').value = parseFloat(InvAmount * currency);
+
+	}
+}
+function valueOfTransactionChange(){
+	var sqft;
+	var termOfLease;
+	var oneMonthRent;
+	var currency;
+	var sqft_rate;
+	
+	currency = (document.getElementById('todayCurrency').value)?(document.getElementById('todayCurrency').value):false;	
+	sqft_rate = get_sqft_rate(document.getElementById('Country').value);
+	
+	if(!currency) window.alert('For currency is not selected,\nPlease select the Currency first!');
+	else{
+		if(document.getElementById('sqft').value != 0) sqft = numRemoveComma(document.getElementById('sqft').value);else sqft = 0;
+		if(document.getElementById('Lease_Term').value) termOfLease = document.getElementById('Lease_Term').value; else termOfLease = 0;
+		if(document.getElementById('1_Mths_rent').value) oneMonthRent = numRemoveComma(document.getElementById('1_Mths_rent').value);else oneMonthRent = 0;
+
+
+
+		document.getElementById('Transaction_Value').value = numAddComma(parseFloat(oneMonthRent * termOfLease));
+		document.getElementById('Transaction_Value_US_span').innerHTML = numAddComma(parseFloat(oneMonthRent * termOfLease * currency));
+		document.getElementById('Transaction_Value_US').value = numAddComma(parseFloat(oneMonthRent * termOfLease * currency));
+		if(document.getElementById('sqft').value){
+			
+			document.getElementById('default_sqft_us').value = numAddComma(parseFloat(sqft * sqft_rate));
+			document.getElementById('default_sqft_us_span').innerHTML = numAddComma(parseFloat(sqft * sqft_rate));
+		}
+	}
+	
+}
+function set_TSV_US(){
+	var Transaction_Value;
+	currency = (document.getElementById('todayCurrency').value)?(document.getElementById('todayCurrency').value):false;
+	if(document.getElementById('Transaction_Value').value) Transaction_Value = numRemoveComma(document.getElementById('Transaction_Value').value);else Transaction_Value = 0;
+	
+	document.getElementById('Transaction_Value_US_span').innerHTML = numAddComma(parseFloat(Transaction_Value * currency));
+	document.getElementById('Transaction_Value_US').value = parseFloat(Transaction_Value * currency);
+}
+function refreshAllCurrency(){
+	netFeeChange();
+	valueOfTransactionChange();
+}
+function whileEndSelectDate(){
+	changeCountry();
+}
+function reShowCalender(newOBJ){
+	showCalender(newOBJ);
+}
+function submit_form(){
+	var submit_f = true;
+
+
+	if(submit_f["Revenue"] == false){
+//		alert("Revenue do not equal to the Net Fee!");
+//		exit();
+	}
+	if(!getLength(document.invoiceForm,255)){
+		alert("The fields in pink has exceeded 255 words");
+		submit_f = false;
+	}	
+	
+	
+	if(submit_f)
+	document.invoiceForm.submit();
+}
+
+function fee_share(){
+	var feeAmount;
+	var fee;
+	var totalPercent;
+	var TotalRevenue;
+	var Revenue;
+	var fname;
+	feeAmount = (document.getElementById('Net_Fee').value)?numRemoveComma(document.getElementById('Net_Fee').value):0;
+	fee = new Array();
+	Revenue = new Array();
+	totalPercent = 0;
+	TotalRevenue = 0;
+	for(i=1;i<=10;i++){
+		fname = "Fee_sharing_p"+i+"_percent";
+		feeName = "Fee_sharing_p"+i+"_fee";
+		
+		if(document.getElementById(feeName).value != ""){
+			Revenue[i] = numRemoveComma(document.getElementById(feeName).value);
+		}
+		else {Revenue[i] = 0;}
+		
+		if(document.getElementById(fname).value != ""){
+			fee[i] = document.getElementById(fname).value;
+		}
+		else {fee[i] = 0;}
+
+		totalPercent = totalPercent + parseFloat(fee[i]);
+		TotalRevenue = TotalRevenue + parseFloat(Revenue[i]);
+		
+		//alert(TotalRevenue+'='+TotalRevenue+'+'+Revenue[i]);
+	}
+	if(totalPercent != 100){
+		document.getElementById('totalPercent').innerHTML = '<font color=red><b>' + totalPercent + '</b>%&nbsp;&nbsp;(should be 100 percentage)</font>';
+		submit_f["Revenue"] = false;
+	}
+	else{
+		document.getElementById('totalPercent').innerHTML = '100%';
+		submit_f["Revenue"] = true;
+	}
+	if(TotalRevenue != feeAmount){
+		document.getElementById('totalRevenue').innerHTML = '<font color=red><b>' + TotalRevenue + '</b>/'+feeAmount+'</font>';
+		submit_f["Revenue"] = false;
+	}
+	else{
+		document.getElementById('totalRevenue').innerHTML = feeAmount;
+		submit_f["Revenue"] = true;
+	}
+	 
+}
+function fee_share_percent(i){
+	var t;
+	var totalRevenue = numRemoveComma(document.getElementById('Net_Fee').value);
+	 
+	t = parseFloat((document.getElementById("Fee_sharing_p"+i+"_percent").value * totalRevenue/100 ));
+	t = Math.round(t*100)/100;
+	document.getElementById("Fee_sharing_p"+i+"_fee").value = numAddComma(t);
+	fee_share();
+}
+
+function fee_share_fee(i){
+	var totalRevenue = numRemoveComma(document.getElementById('Net_Fee').value);
+	//alert(numRemoveComma(document.getElementById("Fee_sharing_p"+i+"_fee").value)+" / "+totalRevenue+" * 100");
+	document.getElementById("Fee_sharing_p"+i+"_percent").value = parseFloat(numRemoveComma(document.getElementById("Fee_sharing_p"+i+"_fee").value) / totalRevenue * 100);
+	fee_share();	
+}
+
+
+function get_cw_ref(){
+	var CWW_refPercent;
+	CWW_refPercent = (document.getElementById('CWW_refPercent').value)?numRemoveComma((document.getElementById('CWW_refPercent').value)/100):0;
+	CWW_refPercent2 = (document.getElementById('CWW_refPercent2').value)?numRemoveComma((document.getElementById('CWW_refPercent2').value)/100):0;
+	CWW_refPercent3 = (document.getElementById('CWW_refPercent3').value)?numRemoveComma((document.getElementById('CWW_refPercent3').value)/100):0;
+	currency = (document.getElementById('todayCurrency').value)?(document.getElementById('todayCurrency').value):false;
+	if(document.getElementById('Invoice_Amount').value)
+	{	
+		InvAmount = numRemoveComma(document.getElementById('Invoice_Amount').value);
+	}else InvAmount = 0;
+	if(!currency) window.alert('For currency is not selected,\nPlease select the Currency first!');
+	document.getElementById('CWW_Referral_Fee').value = numAddComma(parseFloat(CWW_refPercent * InvAmount));
+	document.getElementById('CWW_Referral_Fee2').value = numAddComma(parseFloat(CWW_refPercent2 * InvAmount));
+	document.getElementById('CWW_Referral_Fee3').value = numAddComma(parseFloat(CWW_refPercent3 * InvAmount));
+	netFeeChange();
+}
+function get_cs_ref(){
+	var CSrefPercent;
+	CSrefPercent = (document.getElementById('CSrefPercent').value)?((document.getElementById('CSrefPercent').value)/100):0;
+	currency = (document.getElementById('todayCurrency').value)?(document.getElementById('todayCurrency').value):false;
+	if(document.getElementById('Invoice_Amount').value)
+	{	
+		InvAmount = numRemoveComma(document.getElementById('Invoice_Amount').value);
+	}else InvAmount = 0;
+	if(!currency) window.alert('For currency is not selected,\nPlease select the Currency first!');
+	document.getElementById('CSOfficeFee').value = numAddComma(parseFloat(CSrefPercent * InvAmount));
+	netFeeChange();
+}
+
+function heighLightThis(obj){
+	document.getElementById(obj.id).className="buttonColorHeight";
+}
+function unHeighLightThis(obj){
+	document.getElementById(obj.id).className="buttonColor";
+}
+var userList_div_id="";
+function show_list_div(div_id){
+	userList_div_id = div_id;
+	if(document.getElementById('user_list_div').style.display == ""){
+		document.getElementById('user_list_div').style.display = "none";
+	}
+	else{
+		document.getElementById('user_list_div').style.display = "";
+	}
+}
+//function hide_list_div(){
+//	document.getElementById('user_list_div').style.display = "none";
+//}
+function setUserThis(user_name){
+	
+	document.getElementById(userList_div_id).value = user_name;
+	//document.getElementById(userList_div_id).focus();
+	document.getElementById('user_list_div').style.display = "none";
+}
+function heighLightThis(obj){
+	document.getElementById(obj.id).className="buttonColorHeight";
+}
+function unHeighLightThis_div_button(obj){
+	document.getElementById(obj.id).className="";
+}
+
+function getTransNo(city){
+	var head = (document.getElementById('Transaction_No').value)?(document.getElementById('Transaction_No').value):false;
+	if(head){
+		xajax_get_trans_number(head,city);
+	}
+	else alert("Please input the Transaction No. head first!\n eg. \"HKGO\" , \"HKGV\" , etc.");
+}
+function getDocNo(city){
+	var doc_date = document.getElementById('date5').value;
+	var doc_type = document.getElementById('doc_type').value;
+	var head = document.getElementById('doc_type_num').value; 
+	if(city){
+		if(doc_type == 1 && head == ""){
+			alert("Please input the Invoice No. head first!\n eg. \"HKGO\" , \"HKGV\" , etc.");
+		}
+		else
+		xajax_get_Doc_No(doc_date,doc_type,head);
+	}
+	else alert("Please select the 'City' first");
+}
+function cf_check(){
+	if(document.getElementById('confidential_agreement').checked == false){
+		document.getElementById('confidential_agreement').checked = true;
+		document.getElementById('cf_div').className="confidential_agreement";
+	}
+	else{
+		document.getElementById('confidential_agreement').checked = false;
+		document.getElementById('cf_div').className="confidential_agreement_unchecked";
+	}
+}
+function dept2_select(dept){
+	var country ;
+	country = document.getElementById('Country').value;
+	xajax_dept2_select(country,dept);			
+}
+
+
+function timeout_action(){
+	document.invoiceForm.saveit.value = "Time out";
+	document.invoiceForm.saveit.disabled = "disabled";
+}
+
+</script>
+</head>
+<body onload="fee_share();check_timeout();">
+<div id="user_list_div" style="
+		display:none;
+		position:fixed !important;
+		position: absolute;
+		top:expression(eval(document.body.scrollTop)+50);
+		top:50px;
+		right:30px!important;
+		right:30px;
+		margin-top:0px !important; 
+		margin-top:-1px;
+
+
+		width:600px;
+		height:400px;
+		background-color: #fff;
+		border:3px solid #ccc;
+		padding:10px;
+		z-index:2000;">
+<span style="float:right; color:#FF0000; cursor:pointer;" onclick="document.getElementById('user_list_div').style.display = 'none';">Cancel</span><strong>Users of <{$sArray.priority_country}></strong>
+<hr />
+<table width="574" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  <{section name=user loop=$userListArray}>
+    <td width="150" height="20"><div align="left"><{$smarty.section.user.index+1}>.<span id="hiddenDiv<{$smarty.section.user.index}>" onmouseover="highLightThis(this)" onmouseout="unHeighLightThis_div_button(this)" onclick="setUserThis(this.innerHTML)"><{$userListArray[user].user_name}></span></div></td>
+	<{if ($smarty.section.user.index+1)%4 == 0}></tr><tr><{/if}>
+	
+	<{/section}>
+  </tr>
+</table>
+</div>
+<div id="invoiceFormDiv" style="width:100% !important;width:98%;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+  <tr>
+    <td>INVOICE REQUISITION FORM</td>
+    <td><span style="float:right; margin: 5px;"><img src="img/cushman_logo.JPG" /></span></td>
+  </tr>
+  <tr>
+    <td bgcolor="#0033CC" height="10" colspan="2" >
+	<div class="buttonColor" style=" text-align:right;width: auto;">Welcome, &nbsp;<strong><{$sArray.user_name}></strong></div>
+	</td>
+  </tr>
+</table>
+<div class="newContainer" id="newContainer" overclass="newContainer">
+	<form action="test_modify_invoice_ok.php" method="post" enctype="multipart/form-data" name="invoiceForm" >
+	<{section name=perRow loop=$idArray}>
+		<div align="center" style="margin:5px;">
+		<input type="button" name="saveit" id="saveit" value="Save" onclick="submit_form()" />
+		&nbsp;&nbsp;
+		<span id="time_count" style="color:#FF0000;"></span>&nbsp;minutes for relogon!
+		</div>
+
+	  <div id="cf_div" <{if $idArray[perRow].confidential_agreement eq "1"}>class="confidential_agreement"<{else}>class="confidential_agreement_unchecked"<{/if}> onclick="cf_check()"><input id="confidential_agreement" name="confidential_agreement" type="checkbox" value="1"  onclick="cf_check()"  class="confidential_agreement_check"  <{if $idArray[perRow].confidential_agreement eq "1"}>checked<{/if}> />confidential agreement</div>
+
+
+
+		<div class="DragBox" id="Item1" overclass="OverDragBox" dragclass="DragDragBox">
+     	 <div  style="width:250; position:absolute; right:10px;top:70px;" class="searchBarBox">
+            <fieldset>
+            <center>
+              <legend>Basic info</legend>
+            </center>
+            <table width="220">
+              <tr>
+                <td width="100" style="font-weight:bold">Country:</td>
+                <td><{$idArray[perRow].Country}><input type="hidden" name="Country" id="Country" value="<{$idArray[perRow].Country}>" /></td>
+              </tr>
+              <tr>
+                <td width="100" style="font-weight:bold">Currency:</td>
+                <td><span id="curr_code_span"><{$idArray[perRow].curr_code}></span>
+					
+					<input type="hidden" name="curr_code" id="todayCurrencySpanModify" value="<{$idArray[perRow].curr_code}>" />
+				</td>
+              </tr>
+              <tr>
+			  
+                <td width="100" style="font-weight:bold">Major Account Group:</td>
+                <td><input type="hidden" name="Client_Solutins_Major" id="Client_Solutins_Major" value="<{$idArray[perRow].Client_Solutins_Major}>" />
+     			 <span id="Client_Solutins_Major_show"><{$idArray[perRow].Client_Solutins_Major}></span></td>
+              </tr>
+              <tr>
+                <td width="100" style="font-weight:bold">Create By:</td>
+                <td><{$idArray[perRow].Create_by}></td>
+              </tr>
+              <tr>
+                <td width="100" style="font-weight:bold">Create Date:</td>
+                <td><{$idArray[perRow].Create_date}></td>
+              </tr>
+              <tr>
+                <td width="100" style="font-weight:bold">Modified By:</td>
+                <td><{$idArray[perRow].Modified_by}></td>
+              </tr>
+              <tr>
+                <td width="100" style="font-weight:bold">Modified Date:</td>
+                <td><{$idArray[perRow].Modified_date}></td>
+              </tr>
+            </table>
+            </fieldset>
+      </div>
+	 	 <div>
+	 	   <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+		   			<tr>
+			  <td width="200" height="30">
+			    Document date:</td>
+			  <td height="30" colspan="4">
+			    <input type='button' id='for_date5' name="for_date5" value='Select Date:' onclick="reShowCalender(this)"/>
+                <input type='text' id='date5' name='date5' style="width:70px" value="<{$idArray[perRow].Invoice_date}>"/>				</td>
+				</tr>
+		   
+		   
+             <tr>
+               <td width="200" height="30">Transaction No.</td>
+               <td height="30" colspan="4">
+			   <input type="text" name="Transaction_No" id="Transaction_No" value="<{$idArray[perRow].Transaction_No}>" />
+			   <input type="button" name="tran_button" value="Generate No." onclick="getTransNo('<{$idArray[perRow].City}>')" />
+               (For accounts use only: )
+               <input type="hidden" name="invoice_id" value="<{$idArray[perRow].ID}>">
+		   <{if $sArray.user_type eq "Account" or $sArray.user_type eq "Administrator"}>
+			status:<select name="trans_state">
+			  <option value="1" class="invoice_state1" <{if $idArray[perRow].trans_state eq 1}>selected<{/if}> >status1</option>
+			  <option value="2" class="invoice_state2" <{if $idArray[perRow].trans_state eq 2}>selected<{/if}> >status2</option>
+			  <option value="3" class="invoice_state3" <{if $idArray[perRow].trans_state eq 3}>selected<{/if}> >status3</option>
+			  <option value="4" class="invoice_state4" <{if $idArray[perRow].trans_state eq 4}>selected<{/if}> >status4</option>
+			  <option value="0" class="invoice_state0" <{if $idArray[perRow].trans_state eq 0}>selected<{/if}> >trashed</option>
+			</select>
+		  <{/if}>			   </td>
+             </tr>
+             <tr>
+               <td height="30">Original Invoice No. </td>
+               <td height="30" colspan="4"><input type="text" name="Invoice_No" id="Invoice_No" value="<{$idArray[perRow].Invoice_No}>"  /></td>
+             </tr>
+             <tr>
+               <td width="200" height="30">Doc Type / Doc No.</td>
+               <td height="30" colspan="4">
+					<select name="doc_type" id="doc_type">
+						<{foreach from=$doc_type key=key item=item}>
+						<option value="<{$key}>" <{if $key eq $idArray[perRow].doc_type}>selected<{/if}>><{$item}></option>
+						<{/foreach}>
+				  </select>
+                 </select>
+                 /
+                 <input type="text" name="doc_type_num" id="doc_type_num" value="<{$idArray[perRow].doc_type_num}>" onchange="check_inv_no(this.value)"  />
+				 <input type="button" name="doc_num_button" value="Generate No." onclick="getDocNo('<{$idArray[perRow].City}>')" />
+               (For accounts use only: )
+			   	<input name="inter_invoice" type="checkbox" value="1" <{if $idArray[perRow].inter_invoice eq 1}>checked<{/if}> />(Internal invoice)
+				<div id="inv_no_check"></div>
+				</td>
+             </tr>
+             <tr>
+               <td width="200" height="30">Country: </td>
+               <td height="30" colspan="4"><{$idArray[perRow].Country}>&nbsp;>>&nbsp;
+			   <span id="optionCity">
+			   <select name="City">
+			   <{section name=c loop=$city}>
+			   <option value="<{$city[c].City_desc}>" <{if $idArray[perRow].City eq $city[c].City_desc}>selected <{/if}>><{$city[c].City_desc}></option>
+			   <{/section}>
+			   </select>
+			   </span>			  </td>
+             </tr>
+             <tr>
+               <td width="200" height="30">
+               Invoice Currency:</td>
+               <td height="30" colspan="4"><select name="CountryCurr" id="selCountry" onchange="changeCountry()">
+                   <{html_options options=$curr_code_array selected=$curr_info_id}>
+               </select>
+			   <input type="text" name="Exchange_rate" id="todayCurrency" onchange="refreshAllCurrency()" value="<{$idArray[perRow].Exchange_rate}>">			   </td>
+             </tr>
+             <tr>
+               <td width="200" height="30">Local Department:</td>
+               <td height="30" colspan="4">
+			   
+			   	<span id="dept2_info_span">
+				<select name="Dept2_info" id="Dept2_info" onchange="dept2_select(this.value)">
+				<{section name=row loop=$deptArray}>
+				<option value="<{$deptArray[row].dept2_id}>" <{if $deptArray[row].dept2_id eq $idArray[perRow].Dept2_info}>selected<{/if}> ><{$deptArray[row].dept2_desc}></option>
+				<{/section}>
+				</select>
+				</span>
+				
+				&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;(<span id="dept_info_span" style="font-style:italic;"><{$idArray[perRow].Dept_info}></span>)
+				<input type="hidden" name="Dept_info" id="Dept_info" value="<{$idArray[perRow].Dept_info}>"/>			   </td>
+             </tr>
+             <tr>
+               <td width="200" height="30">Client: </td>
+               <td height="30" colspan="4"><input type="text" name="Client" id="Client" onchange="getMAGroup(this.value)" width="120" value="<{$idArray[perRow].Client}>" style="width:300px;"/>
+               Client Reference No.
+                 <input type="text" name="client_reference_no" id="client_reference_no" width="120" value="<{$idArray[perRow].client_reference_no}>" style="width:100px;"/></td>
+             </tr>
+             <tr>
+               <td width="200" height="30">Client Contact: </td>
+               <td height="30">Name:<br />
+               <input type="text" name="Client_name" id="Client_name" width="120" style="width:100px;" value="<{$idArray[perRow].Client_name}>"/></td>
+               <td height="30">Title:<br />
+               <input type="text" name="Client_title" id="Client_title" width="120" value="<{$idArray[perRow].Client_title}>"  style="width:200px;"/>               </td>
+               <td height="30">Phone:<br />
+               <input type="text" name="Client_phone" id="Client_phone" width="120" value="<{$idArray[perRow].Client_phone}>" style="width:100px;"/></td>
+               <td height="30">Email:<br />
+               <input type="text" name="Client_email" id="Client_email" width="120" value="<{$idArray[perRow].Client_email}>" style="width:200px;"/></td>
+             </tr>
+             <tr>
+               <td width="200" height="30">Other Party:</td>
+               <td height="30" colspan="4"><input type="text" name="Other_Party" width="240" style="width:300px;" value="<{$idArray[perRow].Other_Party}>"/>               </td>
+             </tr>
+             <tr>
+               <td width="200" height="30"> Re:(Specify client and premises) </td>
+               <td height="30" colspan="4"><textarea name="Payer" cols="50" rows="2" wrap="soft" id="ReSpecify" style="height:25px; width:650px;"><{$idArray[perRow].Payer}></textarea>               </td>
+             </tr>
+             <tr>
+               <td width="200" height="30"> To:(Specify assignment/contract ) </td>
+               <td height="30" colspan="4"><textarea name="Property_Project_Name" cols="50" rows="2" wrap="soft" id="textarea" style="height:25px; width:650px;"><{$idArray[perRow].Property_Project_Name}></textarea>               </td>
+             </tr>
+             <tr>
+               <td width="200" height="30"> At:(Specify nature of fee agreement) </td>
+               <td height="30" colspan="4"><textarea name="contact" cols="50" rows="2" id="textarea2" wrap="soft" style="height:25px; width:650px;"><{$idArray[perRow].contact}></textarea>               </td>
+             </tr>
+           </table>
+	 	 </div>
+		</div>
+        <div id="typeSelect" class="DragBox">
+		<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+			<tr>
+			  <td width="200" height="30">
+			    Transaction Type:			    </td>
+			  <td height="30">
+			    1.
+			    <select name="Trans_Type_1">
+					  <option value="unselected" <{if $idArray[perRow].Trans_Type_1 eq "unselected"}>selected<{/if}>></option>
+                      <option value="Lease" <{if $idArray[perRow].Trans_Type_1 eq "Lease"}>selected<{/if}>>Lease</option>
+                      <option value="Purchase/Sale" <{if $idArray[perRow].Trans_Type_1 eq "Purchase/Sale"}>selected<{/if}>>Purchase/Sale</option>
+                      <option value="Professional Work" <{if $idArray[perRow].Trans_Type_1 eq "Professional Work"}>selected<{/if}>>Professional Work</option>
+                </select>
+              2.
+              <select name="Trans_Type_2">
+			    <option value="unselected" <{if $idArray[perRow].Trans_Type_2 eq "unselected"}>selected<{/if}>></option>
+                <option value="Tenant Rep"  <{if $idArray[perRow].Trans_Type_2 eq "Tenant Rep"}>selected<{/if}>>Tenant</option>
+                <option value="Conventional Agency" <{if $idArray[perRow].Trans_Type_2 eq "Conventional Agency"}>selected<{/if}>>Conventional</option>
+                <option value="Sole/Joint Agency" <{if $idArray[perRow].Trans_Type_2 eq "Sole/Joint Agency"}>selected<{/if}>>Sole</option>
+                <option value="Research" <{if $idArray[perRow].Trans_Type_2 eq "Research"}>selected<{/if}>>Research</option>
+                <option value="Consultancy" <{if $idArray[perRow].Trans_Type_2 eq "Consultancy"}>selected<{/if}>>Consultancy</option>
+                <option value="Valuation" <{if $idArray[perRow].Trans_Type_2 eq "Valuation"}>selected<{/if}>>Valuation</option>
+				<option value="Property Management" <{if $idArray[perRow].Trans_Type_2 eq "Property Management"}>selected<{/if}>>Property Management</option>
+				<option value="Project Management" <{if $idArray[perRow].Trans_Type_2 eq "Project Management"}>selected<{/if}>>Project Management</option>
+				<option value="Facilities Management" <{if $idArray[perRow].Trans_Type_2 eq "Facilities Management"}>selected<{/if}>>Facilities Management</option>
+              </select></td>
+		  </tr>
+			<tr>
+			  <td width="200" height="30">
+			    Property Type:			    </td>
+			  <td height="30">
+			    &nbsp;&nbsp;&nbsp;
+                <select name="Ppty_Type">
+				  <option value="unselected" <{if $idArray[perRow].Ppty_Type eq "unselected"}>selected<{/if}>></option>
+                  <option value="Commercial" <{if $idArray[perRow].Ppty_Type eq "Commercial"}>selected<{/if}>>Commercial</option>
+                  <option value="Industrial" <{if $idArray[perRow].Ppty_Type eq "Industrial"}>selected<{/if}>>Industrial</option>
+                  <option value="Retail" <{if $idArray[perRow].Ppty_Type eq "Retail"}>selected<{/if}>>Retail</option>
+                  <option value="Residential" <{if $idArray[perRow].Ppty_Type eq "Residential"}>selected<{/if}>>Residential</option>
+                  <option value="Hotel" <{if $idArray[perRow].Ppty_Type eq "Hotel"}>selected<{/if}>>Hotel</option>
+                  <option value="Land" <{if $idArray[perRow].Ppty_Type eq "Land"}>selected<{/if}>>Land</option>
+				  <option value="Mixed use" <{if $idArray[perRow].Ppty_Type eq "Mixed use"}>selected<{/if}>>Mixed use</option>
+                  <option value="Others" <{if $idArray[perRow].Ppty_Type eq "Others"}>selected<{/if}>>Others</option>
+                </select>              </td>
+		  </tr>
+			<tr>
+			  <td width="200" height="30">Client Type: </td>
+			  <td height="30">&nbsp;&nbsp;&nbsp;
+                <select name="Client_Type">
+				  <option value="unselected" <{if $idArray[perRow].Client_Type eq "unselected"}>selected<{/if}>></option>
+                  <option value="Commerical/Investment Bank" <{if $idArray[perRow].Client_Type eq "Commerical/Investment Bank"}>selected<{/if}>>Commerical/Investment Bank</option>
+                  <option value="Corporations" <{if $idArray[perRow].Client_Type eq "Corporations"}>selected<{/if}>>Corporations</option>
+                  <option value="Pension Funds/Fund Advisiors" <{if $idArray[perRow].Client_Type eq "Pension Funds/Fund Advisiors"}>selected<{/if}>>Pension Funds/Fund Advisiors</option>
+                  <option value="Investor/Domestic &amp; Foreign" <{if $idArray[perRow].Client_Type eq "Investor/Domestic & Foreign"}>selected<{/if}>>Investor/Domestic &amp; Foreign</option>
+                  <option value="Govt. Agencies" <{if $idArray[perRow].Client_Type eq "Govt. Agencies"}>selected<{/if}>>Govt. Agencies</option>
+                  <option value="Law Firms" <{if $idArray[perRow].Client_Type eq "Law Firms"}>selected<{/if}>>Law Firms</option>
+                  <option value="Developers" <{if $idArray[perRow].Client_Type eq "Developers"}>selected<{/if}>>Developers</option>
+                  <option value="Others" <{if $idArray[perRow].Client_Type eq "Others"}>selected<{/if}>>Others</option>
+                </select></td>
+		  </tr>
+			<tr>
+			  <td width="200" height="30">Industrial Type : </td>
+			  <td height="30">&nbsp;&nbsp;&nbsp;
+                <select name="select2" disabled="disabled" style="width:80px;">
+                </select></td>
+		  </tr>
+			<tr>
+			  <td width="200" height="30">
+			    <strong><em>Transaction Statistics:			    </em></strong></td>
+			  <td height="30">&nbsp;</td>
+		  </tr>
+			<tr>
+			  <td height="30">Square footage sold or leased: </td>
+			  <td height="30">&nbsp;&nbsp;
+                <input type="text" name="sqft_local" width="30" id="sqft" value="<{$idArray[perRow].sqft_local}>"  onkeyup="valueOfTransactionChange();fields_comma(this,event.keyCode);"/>
+                <span id="default_sqft"class="searchDetailHeighlight">(<{$idArray[perRow].sqft_local_name}>)</span> &nbsp;=&nbsp;<span id="default_sqft_us_span"><{$idArray[perRow].Sq_Ft}></span><span class="searchDetailHeighlight">&nbsp;sq ft</span>
+                <input type="hidden" name="default_sqft_us" id="default_sqft_us" value="<{$idArray[perRow].Sq_Ft}>"  onkeyup="valueOfTransactionChange()"/>
+			  </td>
+		  </tr>
+			<tr>
+			  <td height="30">One month Rent </td>
+			  <td height="30">&nbsp;&nbsp;&nbsp;<input type="text" name="1_Mths_rent" width="30" id="1_Mths_rent"  value="<{$idArray[perRow].1_Mths_rent}>"  onkeyup="valueOfTransactionChange();fields_comma(this,event.keyCode);"/>			    <span id="currencyCode13"class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></td>
+		  </tr>
+			<tr>
+			  <td height="30">Term of lease: </td>
+			  <td height="30">&nbsp;&nbsp;&nbsp;<input type="text" name="Lease_Term" width="30" id="Lease_Term" value="<{$idArray[perRow].Lease_Term}>"  onkeyup="valueOfTransactionChange()"/>
+months </td>
+		  </tr>
+			<tr>
+			  <td width="200" height="30">Value of Transaction<br /></td>
+			  <td height="30">&nbsp;&nbsp;&nbsp;<span id="currencyCode18"class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span> 
+<input type="text" name="Transaction_Value" id="Transaction_Value" value="<{$idArray[perRow].Transaction_Value}>" onkeyup="set_TSV_US();fields_comma(this,event.keyCode);" />
+<span class="searchDetailHeighlight">USD</span> 
+<span id="Transaction_Value_US_span"><{$idArray[perRow].Transaction_Value_US}></span>
+<input type="hidden" name="Transaction_Value_US" id="Transaction_Value_US" value="<{$idArray[perRow].Transaction_Value_US}>" />	
+                (<em>Sale/Purchase price,Consultancy fee
+ or
+[one months rent] × [term of lease]</em>) </td></tr>
+		  </table>
+    </div>
+        <div id="details1" class="DragBox">
+<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+			<tr>
+			  <td width="200" height="30">Date of Completion: </td>
+			  <td height="30" colspan="5">
+			    <input type='button' id='for_date6' name="for_date6" value='Select Date:' onclick="reShowCalender(this)"/>
+			    <input type='text' id='date6' name='date6' style="width:70px" value="<{$idArray[perRow].complete_date}>"/>			  </td>
+	    </tr>
+			<tr>
+			  <td height="30"><ul class="ulWrap">
+			    <strong><em>Payment Receivable Date:</em></strong></ul></td>
+			  <td height="30" colspan="5">&nbsp;</td>
+	    </tr>
+			<tr>
+			  <td height="30"><ul class="ulWrap">
+			    1st Payment:
+			    </ul></td>
+			  
+			  <td><input name="button3" type='button' id='for_date1' onclick='showCalender(this)' value='Due Date:'/>
+                <input type='text' id='date1' name='date1' style="width:70px" value="<{$idArray[perRow].Payment_date1}>"  /></td>
+			  <td><input name="button" type='button' id='for_date2' onclick='showCalender(this)' value='Estimate Date:' />
+                <input type='text' id='date2' name='date2' style="width:70px" value="<{$idArray[perRow].Payment_date1_estimate}>"  /></td>
+			  <td>Amount
+                <input type="text" name="amount1" style="width:50px;" value="<{$idArray[perRow].Payment_date1_amount1}>"/></td>
+			  <td>ie:
+                <input type="text" name="amount_percent" style="width:50px;" value="<{$idArray[perRow].Payment_date1_amount1_percent}>"/>
+%</td>
+<td height="30"><input name="for_date7" type='button' id='for_date7' onclick='showCalender(this)' value='Date paid:'/>
+                <input type='text' id='date7' name='date7' style="width:70px" value="<{$idArray[perRow].date_paid1}>"  /></td>
+			</tr>
+			<tr>
+			  <td height="30">
+			    2nd Payment:(if any)			    </td>
+			  <td height="30">
+                <input name="button2" type='button' id='for_date3' onclick='showCalender(this)' value='Due Date:' />
+                <input type='text' id='date3' name='date3' style="width:70px" value="<{$idArray[perRow].Payment_date2}>"  /></td>
+			  <td height="30"><input name="button22" type='button' id='for_date4' onclick='showCalender(this)' value='Estimate Date:' />
+                <input type='text' id='date4' name='date4' style="width:70px"  value="<{$idArray[perRow].Payment_date2_estimate}>"  /></td>
+			  <td height="30">Amount
+                <input type="text" name="Payment_date2_amount"  style="width:50px;" value="<{$idArray[perRow].Payment_date2_amount}>"/></td>
+			  <td height="30"> ie:
+                <input type="text" name="Payment_date2_amount2_percent" style="width:50px;" value="<{$idArray[perRow].Payment_date2_amount2_percent}>" />
+%</td>
+			  <td height="30"><input name="for_date8" type='button' id='for_date8' onclick='showCalender(this)' value='Date paid:'/>
+                <input type='text' id='date8' name='date8' style="width:70px" value="<{$idArray[perRow].date_paid2}>"  /></td>
+			</tr>
+			<tr>
+			  <td height="30">Payment Remarks</td>
+			  <td height="30" colspan="5"><input type="text" name="payment_remarks" id="payment_remarks"  style="width:300px;" value="<{$idArray[perRow].payment_remarks}>" /></td>
+		  </tr>
+		  </table>
+      </div>
+        <div id="fee" class="DragBox">
+<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+
+			<tr>
+			  <td width="200" height="30">Invoice to: </td>
+			  <td height="30" colspan="5">
+			    <input type="text" name="invoice_to" style="width:300px;" value="<{$idArray[perRow].Invoice_to}>"/>		      </td>
+	    </tr>
+			<tr>
+			  <td width="200" rowspan="2">
+			    Invoice to
+			    address:			    </td>
+			  <td height="30" colspan="5"><ul class="ulWidth">
+			    <input type="text" name="Address" style="width:300px;" value="<{$idArray[perRow].Address}>"/>
+			    </ul>			  </td>
+	    </tr>
+			<tr>
+			  <td height="30">Address2<br /><input type="text" name="Invoice_to_address2" value="<{$idArray[perRow].Invoice_to_address2}>" /></td>
+			  <td>City<br /><input type="text" name="Invoice_to_city"  value="<{$idArray[perRow].Invoice_to_city}>" /></td>
+			  <td>State/province<br /><input type="text" name="Invoice_to_province"  value="<{$idArray[perRow].Invoice_to_province}>" /></td>
+			  <td>Country<br /><input type="text" name="Invoice_to_country"  value="<{$idArray[perRow].Invoice_to_country}>" /></td>
+			  <td>Zip Code<br /><input type="text" name="Invoice_to_zipcode"  value="<{$idArray[perRow].Invoice_to_zipcode}>" /></td>
+			</tr>
+			<tr>
+			  <td height="30">Invoice to Trading Name(retail):</td>
+			  <td height="30" colspan="5"><input type="text" name="invoice_to_trading_name" id="invoice_to_trading_name" style="width:300px;" value="<{$idArray[perRow].invoice_to_trading_name}>" /></td>
+		  </tr>
+			<tr>
+			  <td width="200" height="30">
+			    Contact Person:
+			    (A/C)			 </td>
+			  <td height="30" colspan="5">
+			    <input type="text" name="Contact_Person" style="width:300px;" value="<{$idArray[perRow].Contact_person}>" />			    </td>
+	    </tr>
+			<tr>
+			  <td width="200" height="30">Contact info: </td>
+			  <td height="30" colspan="5"><input type="text" name="Contact_info" style="width:300px;"  value="<{$idArray[perRow].Contact_info}>"/>
+(<em>phone number,fax,etc</em>) </td>
+	    </tr>
+			<tr>
+			  <td width="200" height="30">
+			    Fee basis:			    </td>
+			  <td height="30" colspan="5">
+			    <input type="text" name="Fee_basis" style="width:300px;"  value="<{$idArray[perRow].Fee_basis}>"/>			    </td>
+	    </tr>
+			<tr>
+			  <td width="200" height="30">
+			    Out of pocket Expenses to be reimbursed:			    </td>
+			  <td height="30" colspan="5">
+			    <input type="text" name="reimbursed" style="width:300px;" value="<{$idArray[perRow].Reimbursed}>"/>			    </td>
+	    </tr>
+			<tr>
+			  <td width="200" height="30">
+			    Special Invoicing Instructions:			   </td>
+			  <td height="30" colspan="5">
+			    <input type="text" name="Special_instructions" style="width:300px;" value="<{$idArray[perRow].Special_instructions}>"/>			    </td>
+	    </tr>
+		  </table>
+      </div>
+        <div class="DragBox">
+			<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+			<tr>
+			  <td width="200" height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <th width="142" height="30">Fee amount </th>
+			  <td width="120" height="30">&nbsp;</td>
+			  </tr>
+			<tr>
+			<td width="200" height="30"><div align="left">Fee amount to be invoiced: </div></td>
+			<td height="30">&nbsp;</td>
+			<td height="30">&nbsp;</td>
+			<td height="30">&nbsp;</td>
+			<td height="30"><div align="right"><span id="currencyCode2"class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></div></td>
+			<td width="142" height="30"> (a)
+			  <input type="text" name="Invoice_Amount" id="Invoice_Amount" onkeyup="netFeeChange();fields_comma(this,event.keyCode);" value="<{$idArray[perRow].Invoice_Amount}>"/></td>
+			<td width="120" height="30">
+			 <span id="InvAmountUs"><{$idArray[perRow].Invoice_Amount_US}></span>
+              <input type="hidden" name="InvAmountUsHidden" id="InvAmountUsHidden">
+			</td>
+			</tr>
+
+			<tr>
+			<td width="200" height="30"><div align="left">Cost of Sales:</div></td>
+			<td height="30"></td>
+			<td height="30">&nbsp;</td>
+			<td height="30">&nbsp;</td>
+			<td height="30"><div align="right"><span id="currencyCode15"class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></div></td>
+			<td width="142" height="30">
+			  (b)
+		      <input type="text" name="cost_of_sales" id="cost_of_sales"  value="<{$idArray[perRow].cost_of_sales}>" onkeyup="netFeeChange();fields_comma(this,event.keyCode);"/></td>
+			<td width="120" height="30">&nbsp;</td>
+			</tr>
+
+
+
+
+			<tr>
+			<td width="200" height="30" rowspan="2"><div align="left">Third Party:</div></td>
+			<td height="30">
+			  <input name="3rd_Pty" type="text" value="<{$idArray[perRow].3rd_Pty}>" />			</td>
+			<td height="30">&nbsp;</td>
+			<td height="30">&nbsp;</td>
+			<td height="30"><div align="right"><span id="currencyCode3"class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></div></td>
+			<td width="142" height="30">
+			  (c)
+		      <input type="text" name="3rd_Pty_Fee" id="3rd_Pty_Fee"  value="<{$idArray[perRow].3rd_Pty_Fee}>" onkeyup="netFeeChange();fields_comma(this,event.keyCode);"/></td>
+			<td width="120" height="30">&nbsp;</td>
+			</tr>
+
+			<tr>
+			<td height="30">
+			  <input name="3rd_Pty2" type="text" value="<{$idArray[perRow].3rd_Pty2}>" />			</td>
+			<td height="30">&nbsp;</td>
+			<td height="30">&nbsp;</td>
+			<td height="30"><div align="right"><span id="currencyCode19" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></div></td>
+			<td width="142" height="30">
+			  (d)
+		      <input type="text" name="3rd_Pty_Fee2" id="3rd_Pty_Fee2"  value="<{$idArray[perRow].3rd_Pty_Fee2}>" onkeyup="netFeeChange();fields_comma(this,event.keyCode);"/></td>
+			<td width="120" height="30">&nbsp;</td>
+			</tr>
+
+			<tr>
+			  <td width="200" rowspan="3"><div align="left">CWW Referral</div></td>
+			  <td height="30">
+			    <input type="text" name="CWWOffice" id="CWWOffice" value="<{$idArray[perRow].CWWOffice}>"/><br />
+				<span class="STYLE3">(CWW Office)</span></td>
+			  <td height="30"><input type="text" name="CWW_party_salesPerson" id="CWW_party_salesPerson" value="<{$idArray[perRow].CWW_party_salesPerson}>"/><br />
+				<span class="STYLE3">(CWW Sales Person)</span></td>
+			  <td height="30"><input type="text" name="CWW_refPercent" id="CWW_refPercent" onkeyup="get_cw_ref()" value="<{$idArray[perRow].CWW_refPercent}>"/><br />
+					<span class="STYLE3">(CWW referral %)				    </span></td>
+			  <td height="30"><div align="right"><span id="currencyCode4"class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></div></td>
+			  <td width="142" height="30">(e)
+		      <input type="text" name="CWW_Referral_Fee" id="CWW_Referral_Fee"  value="<{$idArray[perRow].CWW_Referral_Fee}>" onkeyup="netFeeChange();fields_comma(this,event.keyCode);"/></td>
+			  <td width="120" height="30">&nbsp;</td>
+			  </tr>
+
+			<tr>
+			  <td height="30">
+			    <input type="text" name="CWWOffice2" id="CWWOffice2" value="<{$idArray[perRow].CWWOffice2}>"/><br />
+				<span class="STYLE3">(CWW Office)</span></td>
+			  <td height="30"><input type="text" name="CWW_party_salesPerson2" id="CWW_party_salesPerson2" value="<{$idArray[perRow].CWW_party_salesPerson2}>"/><br />
+				<span class="STYLE3">(CWW Sales Person)</span></td>
+			  <td height="30"><input type="text" name="CWW_refPercent2" id="CWW_refPercent2" onkeyup="get_cw_ref()" value="<{$idArray[perRow].CWW_refPercent2}>"/><br />
+					<span class="STYLE3">(CWW referral %)				    </span></td>
+			  <td height="30"><div align="right"><span id="currencyCode16" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></div></td>
+			  <td width="142" height="30">(f)&nbsp;
+		      <input type="text" name="CWW_Referral_Fee2" id="CWW_Referral_Fee2"  value="<{$idArray[perRow].CWW_Referral_Fee2}>" onkeyup="netFeeChange();fields_comma(this,event.keyCode);"/></td>
+			  <td width="120" height="30">&nbsp;</td>
+			  </tr>
+
+			<tr>
+			  <td height="30">
+			    <input type="text" name="CWWOffice3" id="CWWOffice3" value="<{$idArray[perRow].CWWOffice3}>"/><br />
+				<span class="STYLE3">(CWW Office)</span></td>
+			  <td height="30"><input type="text" name="CWW_party_salesPerson3" id="CWW_party_salesPerson3" value="<{$idArray[perRow].CWW_party_salesPerson3}>"/><br />
+				<span class="STYLE3">(CWW Sales Person)</span></td>
+			  <td height="30"><input type="text" name="CWW_refPercent3" id="CWW_refPercent3" onkeyup="get_cw_ref()" value="<{$idArray[perRow].CWW_refPercent3}>"/><br />
+					<span class="STYLE3">(CWW referral %)				    </span></td>
+			  <td height="30"><div align="right"><span id="currencyCode17" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></div></td>
+			  <td width="142" height="30">(g)
+		      <input type="text" name="CWW_Referral_Fee3" id="CWW_Referral_Fee3"  value="<{$idArray[perRow].CWW_Referral_Fee3}>" onkeyup="netFeeChange();fields_comma(this,event.keyCode);"/></td>
+			  <td width="120" height="30">&nbsp;</td>
+			  </tr>
+
+
+
+			<tr>
+			  <td width="200" height="30"><div align="left">CS management Fee</div></td>
+			  <td height="30"><input type="text" name="CSOffice" id="CSOffice" value="<{$idArray[perRow].CSOffice}>"/><br>
+			    <span class="STYLE3">(CS Office)</span></td>
+			  <td height="30"><input type="text" name="CSsalesPerson" id="CSsalesPerson" value="<{$idArray[perRow].CSsalesPerson}>"/><br>			    
+			    <span class="STYLE3">(CS Sales Person)</span></td>
+			  <td height="30"><input type="text" name="CSrefPercent" id="CSrefPercent" onkeyup="get_cs_ref()" value="<{$idArray[perRow].CSrefPercent}>"/><br>
+		        <span class="STYLE3">(CS referral %) </span></td>
+			  <td height="30"><div align="right"><span id="currencyCode11"class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></div></td>
+			  <td width="142" height="30"> (h)
+			    <input type="text" name="CSOfficeFee" id="CSOfficeFee"  value="<{$idArray[perRow].CSOfficeFee}>" onkeyup="netFeeChange();fields_comma(this,event.keyCode);"/></td>
+			  <td width="120" height="30">&nbsp;</td>
+			  </tr>
+			<tr>
+			  <td width="200" height="30"><div align="left">Net Fee </div></td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30">&nbsp;</td>
+			  <td height="30"><div align="right"><span id="currencyCode5"class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span></div></td>
+			  <td width="142" height="30"> 
+<span id="Net_Fee_span"><{$idArray[perRow].Net_Fee}></span>
+<input type="hidden" name="Net_Fee" id="Net_Fee" value="<{$idArray[perRow].Net_Fee}>"/></td>
+			  <td width="120" height="30">
+			    <span class="searchDetailHeighlight">USD</span> <span id="netFeeUs"><{$idArray[perRow].Net_Fee_US}></span>
+                <input type="hidden" name="Net_Fee_US" id="Net_Fee_US" value="<{$idArray[perRow].Net_Fee_US}>" />              </td>
+			  </tr>
+			</table>
+		</div>  
+	    <div id="share" class="DragBox">
+<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+		<tr>
+		  <td height="30" colspan="2"><ul class="ulWidth">
+			Commission Split:<span class="searchDetailHeighlight">(<em class="searchDetailHeighlight">Fee sharing arrangments,% must equal to 100</em>)
+			</span>
+		  </ul></td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person1:
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p1" value="<{$idArray[perRow].Fee_sharing_p1}>"  id="Fee_sharing_p1"  onchange="check_dot(this)" />
+            <input type="button" name="select person" value="Select User" onclick="show_list_div('Fee_sharing_p1')" />
+            &nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p1_percent" id="Fee_sharing_p1_percent" onkeyup="fee_share_percent(1)"  value="<{$idArray[perRow].Fee_sharing_p1_percent}>"/>
+			% of Fee:
+			<input type="text" name="Fee_sharing_p1_fee" id="Fee_sharing_p1_fee" value="<{$idArray[perRow].Fee_sharing_p1_fee}>"  onkeyup="fee_share_fee(1);fields_comma(this)"   /><span id="currencyCode6" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person2:
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p2" id="Fee_sharing_p2" value="<{$idArray[perRow].Fee_sharing_p2}>"  onchange="check_dot(this)"/>
+			<input type="button" name="select person2" value="Select User" onclick="show_list_div('Fee_sharing_p2')" />
+&nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p2_percent" id="Fee_sharing_p2_percent"  onkeyup="fee_share_percent(2)" value="<{$idArray[perRow].Fee_sharing_p2_percent}>" />
+			% of Fee:
+			<input type="text" name="Fee_sharing_p2_fee" id="Fee_sharing_p2_fee"  value="<{$idArray[perRow].Fee_sharing_p2_fee}>" onkeyup="fee_share_fee(2);fields_comma(this)"  /><span id="currencyCode7" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person3:
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p3" id="Fee_sharing_p3"  value="<{$idArray[perRow].Fee_sharing_p3}>"   onchange="check_dot(this)"/>
+			<input type="button" name="select person3" value="Select User" onclick="show_list_div('Fee_sharing_p3')" />
+&nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p3_percent" id="Fee_sharing_p3_percent" onkeyup="fee_share_percent(3)"  value="<{$idArray[perRow].Fee_sharing_p3_percent}>"  />
+			% of Fee:
+			<input type="text" name="Fee_sharing_p3_fee" id="Fee_sharing_p3_fee"   value="<{$idArray[perRow].Fee_sharing_p3_fee}>" onkeyup="fee_share_fee(3);fields_comma(this)"  /><span id="currencyCode8" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person4:
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p4" id="Fee_sharing_p4"  value="<{$idArray[perRow].Fee_sharing_p4}>"   onchange="check_dot(this)"/>
+			<input type="button" name="select person4" value="Select User" onclick="show_list_div('Fee_sharing_p4')" />
+&nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p4_percent" id="Fee_sharing_p4_percent"  onkeyup="fee_share_percent(4)" value="<{$idArray[perRow].Fee_sharing_p4_percent}>"  />
+			% of Fee:
+			<input type="text" name="Fee_sharing_p4_fee" id="Fee_sharing_p4_fee"  value="<{$idArray[perRow].Fee_sharing_p4_fee}>" onkeyup="fee_share_fee(4);fields_comma(this)"  /><span id="currencyCode9" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30">
+			Sales Person5:
+			</td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p5"  id="Fee_sharing_p5" value="<{$idArray[perRow].Fee_sharing_p5}>"  onchange="check_dot(this)"/>
+			<input type="button" name="select person5" value="Select User" onclick="show_list_div('Fee_sharing_p5')" />
+&nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p5_percent" id="Fee_sharing_p5_percent"  onkeyup="fee_share_percent(5)" value="<{$idArray[perRow].Fee_sharing_p5_percent}>" />
+			% of Fee:
+			<input type="text" name="Fee_sharing_p5_fee" id="Fee_sharing_p5_fee"  value="<{$idArray[perRow].Fee_sharing_p5_fee}>"  onkeyup="fee_share_fee(5);fields_comma(this)" /><span id="currencyCode10" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person6:
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p6" id="Fee_sharing_p6" value="<{$idArray[perRow].Fee_sharing_p6}>"  onchange="check_dot(this)"/>
+			<input type="button" name="select person6"  value="Select User" onclick="show_list_div('Fee_sharing_p6')" />
+&nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p6_percent" id="Fee_sharing_p6_percent" value="<{$idArray[perRow].Fee_sharing_p6_percent}>"  onkeyup="fee_share_percent(6)" />
+			% of Fee:
+			<input type="text" name="Fee_sharing_p6_fee"  id="Fee_sharing_p6_fee"  value="<{$idArray[perRow].Fee_sharing_p6_fee}>" onkeyup="fee_share_fee(6);fields_comma(this)"  /><span id="currencyCode12" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person7:
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p7"  id="Fee_sharing_p7" value="<{$idArray[perRow].Fee_sharing_p7}>"  onchange="check_dot(this)"/>
+			<input type="button" name="select person7" value="Select User" onclick="show_list_div('Fee_sharing_p7')" />
+&nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p7_percent" id="Fee_sharing_p7_percent" value="<{$idArray[perRow].Fee_sharing_p7_percent}>" onkeyup="fee_share_percent(7)" />
+			% of Fee:
+			<input type="text" name="Fee_sharing_p7_fee" id="Fee_sharing_p7_fee"  value="<{$idArray[perRow].Fee_sharing_p7_fee}>" onkeyup="fee_share_fee(7);fields_comma(this)" /><span id="currencyCode14" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person8:
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p8"  id="Fee_sharing_p8" value="<{$idArray[perRow].Fee_sharing_p8}>"  onchange="check_dot(this)"/>
+			<input type="button" name="select person8" value="Select User" onclick="show_list_div('Fee_sharing_p8')" />
+&nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p8_percent" id="Fee_sharing_p8_percent" value="<{$idArray[perRow].Fee_sharing_p8_percent}>" onkeyup="fee_share_percent(8)" />
+			% of Fee:
+			<input type="text" name="Fee_sharing_p8_fee" id="Fee_sharing_p8_fee"  value="<{$idArray[perRow].Fee_sharing_p8_fee}>" onkeyup="fee_share_fee(8);fields_comma(this)" /><span id="currencyCode14" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person9:
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p9"  id="Fee_sharing_p9" value="<{$idArray[perRow].Fee_sharing_p9}>"  onchange="check_dot(this)"/>
+			<input type="button" name="select person9" value="Select User" onclick="show_list_div('Fee_sharing_p9')" />
+&nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p9_percent" id="Fee_sharing_p9_percent" value="<{$idArray[perRow].Fee_sharing_p9_percent}>" onkeyup="fee_share_percent(9)" />
+			% of Fee:
+			<input type="text" name="Fee_sharing_p9_fee" id="Fee_sharing_p9_fee"  value="<{$idArray[perRow].Fee_sharing_p9_fee}>" onkeyup="fee_share_fee(9);fields_comma(this)" /><span id="currencyCode14" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Sales Person10:
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input type="text" name="Fee_sharing_p10"  id="Fee_sharing_p10" value="<{$idArray[perRow].Fee_sharing_p10}>"  onchange="check_dot(this)"/>
+			<input type="button" name="select person10" value="Select User" onclick="show_list_div('Fee_sharing_p10')" />
+&nbsp;&nbsp;
+
+			<input type="text" name="Fee_sharing_p10_percent" id="Fee_sharing_p10_percent" value="<{$idArray[perRow].Fee_sharing_p10_percent}>" onkeyup="fee_share_percent(10)" />
+			% of Fee:
+			<input type="text" name="Fee_sharing_p10_fee" id="Fee_sharing_p10_fee"  value="<{$idArray[perRow].Fee_sharing_p10_fee}>" onkeyup="fee_share_fee(10);fields_comma(this)" /><span id="currencyCode14" class="searchDetailHeighlight"><{$idArray[perRow].curr_code}></span>
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30">Total%</td>
+		  <td height="30">
+		  <span id="totalPercent">%</span>
+		  &nbsp;&nbsp;
+		  Total Revenue:
+		  &nbsp;&nbsp;
+		  <span id="totalRevenue"></span>
+		  </td>
+	    </tr>
+		</table>
+	  </div>
+	    <div id="signPart" class="DragBox">
+<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+		<tr>
+		  <td height="30" colspan="2"><ul class="ulWidth">
+			To be agreed in conjunction with Department Head:
+			</ul></td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Client Survey to be sent?
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input name="clientSurveySent" type="radio" value="1" id="clientSurveySent1" <{if $idArray[perRow].clientSurveySent eq 1}>checked<{/if}> />
+			Yes
+			<input name="clientSurveySent" type="radio" value="0" id="clientSurveySent2" <{if $idArray[perRow].clientSurveySent eq 0}>checked<{/if}>/>
+			No&nbsp;&nbsp;Please tick one box
+			</ul>			  </td>
+	    </tr>
+		<tr>
+		  <td height="30">&nbsp;</td>
+		  <td height="30">
+		  <input type="checkbox" name="Online" value="1" <{if $idArray[perRow].Online eq 1}>checked<{/if}> />
+			On-line
+			&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="Telephone" value="1" <{if $idArray[perRow].Telephone eq 1}>checked<{/if}> />
+			Telephone
+			&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="Inperson" value="1"  <{if $idArray[perRow].Inperson eq 1}>checked<{/if}>/>
+			In person 
+		  
+		  </td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Reference Letter to be obtained?
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input name="referenceLetter" type="radio" value="1" id="referenceLetter1" <{if $idArray[perRow].referenceLetter eq 1}>checked<{/if}> />
+			Yes
+			<input name="referenceLetter" type="radio" value="0" id="referenceLetter2" <{if $idArray[perRow].referenceLetter eq 0}>checked<{/if}> />
+			No&nbsp;&nbsp;Please tick one box
+			</ul></td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Major Case Study?
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input name="MajorCaseStudy" type="radio" value="1" id="MajorCaseStudy1" <{if $idArray[perRow].MajorCaseStudy eq 1}>checked<{/if}>/>
+			Yes
+			<input name="MajorCaseStudy" type="radio" value="0" id="MajorCaseStudy2" <{if $idArray[perRow].MajorCaseStudy eq 0}>checked<{/if}>/>
+			No&nbsp;&nbsp;Please tick one box
+			</ul></td>
+	    </tr>
+		<tr>
+		  <td width="200" height="30"><ul class="ulWrap">
+			Minor Case Study?
+			</ul></td>
+		  <td height="30"><ul class="ulWidth">
+			<input name="MinorCaseStudy" type="radio" value="1" id="MinorCaseStudy1" <{if $idArray[perRow].MinorCaseStudy eq 1}>checked<{/if}>/>
+			Yes
+			<input name="MinorCaseStudy" type="radio" value="0" id="MinorCaseStudy2" <{if $idArray[perRow].MinorCaseStudy eq 0}>checked<{/if}>/>
+			No&nbsp;&nbsp;Please tick one box
+			</ul>			  </td>
+	    </tr>
+
+		</table>
+	  </div>
+	    <div id="footerSign" class="DragBox">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style=" border-collapse:collapse ">
+
+		<tr>
+		  <td height="30" colspan="3"><ul class="ulWidth">
+			(<em>The original of this form should be given to Accounts
+			and a copy to local Admin <br />
+			if a Client Survey is to be sent. A copy should be kept by the Head of Department and one placed in the transaction file</em>)
+			<br />
+		  </ul></td>
+	    </tr>
+		<tr>
+		  <td width="30%">
+			<div align="center"><br />
+			  Preparers Initials:<br />
+			  <br />
+			  <br />
+			  
+			______________________________		        <br />&nbsp;
+			</div></td>
+		  <td width="30%">
+			<div align="center"><br />
+			  Approved by:(<em>Department Head</em>)<br />
+			  <br />
+			  <br />
+			  ______________________________<br />&nbsp; </div></td>
+		  <td width="30%" height="30">
+			<div align="center"><br />
+			  Approved by:(<em>Executive Directors</em>)<br />
+			  <br />
+			  <br />
+			  ______________________________ <br />&nbsp;</div></td>
+	    </tr>
+		</table>
+	  </div>
+	  
+	 <{/section}>
+  </form> 
+</div>
+</div>
+</body>
+</html>
