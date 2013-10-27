@@ -94,6 +94,9 @@ function select_submit(){
 		case "s_tax":
             loc = "print_invr.php?ID=<?php echo $_GET["ID"];?>&type=s_tax";
             break;
+		case "s_debit":
+            loc = "print_invr.php?ID=<?php echo $_GET["ID"];?>&type=s_debit";
+            break;
 		default:
 			loc = "";
 	}
@@ -126,7 +129,8 @@ Please selection your print style:
     <option value="indonesia">Invoice Format - Indonesia</option>
     <option value="vietnam">Invoice Format - Vietnam</option>
 	<option value="s_creditnote">Invoice Format - Singapore - Credit Note</option> 
-	<option value="s_tax">Invoice Format - Singapore - Tax</option>
+	<option value="s_tax">Invoice Format - Singapore - Tax Invoice</option>
+	<option value="s_debit">Invoice Format - Singapore - Debit Note</option>
   </select>
   <span style="margin-top:5px;">
   <input name="button" type="button" onClick="select_submit()" value="Preview">

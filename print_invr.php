@@ -168,6 +168,13 @@ switch($print_type){
 		$idArray[0]["TOTAL"] = addComma($idArray[0]["Invoice_Amount"]  +  $idArray[0]["GST"]);
         $display_URL = "invoice_print_singa_tax.htm";
 		break;  
+   
+    case "s_debit":
+        $idArray[0]["VAT"] = addComma($idArray[0]["Invoice_Amount"] * 0.1);
+        $idArray[0]["GST"] = addComma(sprintf("%.2f", $idArray[0]["Invoice_Amount"] * 0.07));
+		$idArray[0]["TOTAL"] = addComma($idArray[0]["Invoice_Amount"]  +  $idArray[0]["GST"]);
+        $display_URL = "invoice_print_singa_debit.htm";
+		break; 
 
     default:
         $display_URL = "print_preview_invr.htm";
