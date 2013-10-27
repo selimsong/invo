@@ -113,11 +113,13 @@ border-right:solid windowtext 1.0pt;
 <div   class="content">
    <div class="leftContent">
      <p><span>Customer:</span>   <{$idArray.Client}></p>
-     <p><span>Address:</span>   <p><b><span lang=EN-US><{$idArray.Invoice_to_address2}></span></b></p>
-                  <p class=MsoNormal><b><span lang=EN-US><{$idArray.Invoice_to_zipcode}></span></b></p>
-                  <p class=MsoNormal><b><span lang=EN-US><{$idArray.Invoice_to_city}></span></b></p>
-                  <p class=MsoNormal><b><span lang=EN-US><{$idArray.Invoice_to_province}></span></b></p>
-                  <p class=MsoNormal><b><span lang=EN-US><{$idArray.Invoice_to_country}></span></b></p>
+     <p><span>Address:</span>  
+                  <p><b><{$idArray.Address}></b></p> 
+                  <p><b><{$idArray.Invoice_to_address2}></b></p>
+                  <p class=MsoNormal><b><{$idArray.Invoice_to_zipcode}></b></p>
+                  <p class=MsoNormal><b><{$idArray.Invoice_to_city}></b></p>
+                  <p class=MsoNormal><b><{$idArray.Invoice_to_province}></b></p>
+                  <p class=MsoNormal><b><{$idArray.Invoice_to_country}></b></p>
       </p>
       
       <p><span>Attention:</span> <{$idArray.Contact_person}>  </p>
