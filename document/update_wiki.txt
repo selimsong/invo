@@ -1,0 +1,2 @@
+1.add gst column to `ap_07`  table.
+ALTER TABLE  `ap_07` ADD  `gst` VARCHAR( 20 ) NOT NULL AFTER  `client_reference_no` ;

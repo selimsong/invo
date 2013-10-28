@@ -159,6 +159,7 @@ $upArray["confidential_agreement"] = $_POST["confidential_agreement"];
 $upArray["cost_of_sales"] = str_replace(",","",$_POST["cost_of_sales"]);
 $upArray["client_reference_no"] = $_POST["client_reference_no"];
 $upArray["key_client"] = $_POST["key_client"];
+$upArray["gst"] = $_POST["gst"];
 if($countryArray = $db->insert(INVLIST,$upArray)){
 	echo "<script language='javascript'>
 			window.alert('New invoice added, back to invoice list');
