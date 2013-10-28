@@ -155,7 +155,7 @@ $upArray["Invoice_to_province"] = $_POST["Invoice_to_province"];
 $upArray["Invoice_to_country"] = $_POST["Invoice_to_country"];
 $upArray["Invoice_to_zipcode"] = $_POST["Invoice_to_zipcode"];
 $upArray["client_reference_no"] = $_POST["client_reference_no"];
-
+$upArray["gst"] = $_POST["gst"];
 
 //Array
 //(
