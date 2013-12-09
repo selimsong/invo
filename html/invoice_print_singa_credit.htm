@@ -69,7 +69,7 @@ text-align:left;
 
 .leftContent{
 margin:0px 0px 0px 5px;
-width:400px; float:left; 
+width:480px; float:left; 
 border-bottom-width:0pt; 
 border-left-width:0pt; 
 border-top-width:0pt; 
@@ -112,7 +112,7 @@ border-right:solid windowtext 1.0pt;
 <p style="text-align:right;">GST Registration No. 199704518G</p>
 <div   class="content">
    <div class="leftContent">
-     <p><span>Customer:</span>   <{$idArray.Client}></p>
+     <p><span>Customer:</span>   <{$idArray.Invoice_to}></p>
      <p><span>Address:</span>  
                   <p><b><{$idArray.Address}></b></p> 
                   <p><b><{$idArray.Invoice_to_address2}></b></p>
@@ -127,7 +127,7 @@ border-right:solid windowtext 1.0pt;
       
    </div>
    
-   <div style="margin:0px 0px 0px 5px; width:380px; float:right;">
+   <div style="margin:0px 0px 0px 5px; width:300px; float:right;">
        <p><span>Date:</span>   <{$idArray.complete_date}></p>
        <p><span>Invoice No.:</span> <{$idArray.Transaction_No}> </p>
         
@@ -139,9 +139,9 @@ border-right:solid windowtext 1.0pt;
    <div style="margin-top:20px;">
        <table  class="subtable"  cellspacing="0" cellpadding="0"  >
   <tr>
-    <td style="width:480px;">Description</td>
-    <td>Currency</td>
-    <td  class="lastItem">Amount</td>
+    <td style="width:470px; border-bottom:solid windowtext 1.0pt">Description</td>
+    <td style="border-bottom:solid windowtext 1.0pt">Currency</td>
+    <td style="border-bottom:solid windowtext 1.0pt"  class="lastItem">Amount</td>
   </tr>
   <tr>
     <td>&nbsp;</td>
