@@ -58,8 +58,9 @@ div.Section1
 	border-right-style: none;
 	border-top-style: none;
 }
-span {width:80px; text-align:left;  display:inline-block;}
-
+.leftContent span {width:58px; text-align:left;  display:inline-block;}
+p span {width:76px; text-align:left;  display:inline-block;}
+span {text-align:left;  }
 .content{
 margin:10px 0px 0px 0px;
 border:1px solid #000000;
@@ -106,6 +107,10 @@ border-right:solid windowtext 1.0pt;
 .pleft{
 	margin:0px 0px 0px 83px;
 }
+body {
+font-size: 12px;
+font-family: "Times New Roman";	
+}
 </style>
 </head>
 <body>
@@ -143,7 +148,7 @@ border-right:solid windowtext 1.0pt;
        <table  class="subtable"  cellspacing="0" cellpadding="0"  >
   <tr>
     <td style="width:530px; border-bottom:solid windowtext 1.0pt">Description</td>
-    <td style="border-bottom:solid windowtext 1.0pt">Currency</td>
+    <td style="border-bottom:solid windowtext 1.0pt; width:80px;">Currency</td>
     <td style="border-bottom:solid windowtext 1.0pt"  class="lastItem">Amount</td>
   </tr>
   <tr>
@@ -153,7 +158,7 @@ border-right:solid windowtext 1.0pt;
   </tr>
   <tr>
     <td>Re:  &nbsp;&nbsp;&nbsp;  <{$idArray.Payer}></td>
-    <td><{$idArray.curr_code}></td>
+    <td style="text-align:center;"><{$idArray.curr_code}></td>
     <td class="lastItem"><{$idArray.Invoice_Amount}></td>
   </tr>
   <tr>
@@ -194,18 +199,18 @@ border-right:solid windowtext 1.0pt;
   </tr>
   
     <tr>
-    <td  class="noBorder">&nbsp;</td>
-    <td class="noBorder" style="text-align:right;">Subtotal</td>
+    <td  class="noBorder"><span  style="text-align:right; float:right;" >Subtotal</span></td>
+    <td  style="text-align:center; border-bottom:solid windowtext 1.0pt;"><{$idArray.curr_code}></td>
     <td class="lastItem buttonBorder"><{$idArray.Invoice_Amount}></td>
   </tr>
     <tr>
-    <td   class="noBorder">Note: Interest at 1.5% per month will be charged on overdue amount.</td>
-    <td class="noBorder" style="text-align:right;">GST @ <{$idArray.gst}>%</td>
+    <td   class="noBorder">Note:<span style="font-style:oblique"> Interest at 1.5% per month will be charged on overdue amount.</span><span  style="text-align:right; float:right;" >GST @ <{$idArray.gst}>%</span></td>
+    <td style="text-align:center;border-bottom:solid windowtext 1.0pt; "><{$idArray.curr_code}></td>
     <td class="lastItem buttonBorder"><{$idArray.GST_VAL}></td>
   </tr>
       <tr>
-    <td  class="noBorder">&nbsp;</td>
-    <td class="noBorder" style="text-align:right;">Total</td>
+    <td  class="noBorder"><span  style="text-align:right; float:right" >Total</span></td>
+    <td  style="text-align:center;border-bottom:solid windowtext 1.0pt;"><{$idArray.curr_code}></td>
     <td class="lastItem buttonBorder"><{$idArray.TOTAL}></td>
   </tr>
 </table>
@@ -213,7 +218,7 @@ border-right:solid windowtext 1.0pt;
 <table  width="800" style="margin:30px 0px 0px 0px;"  border="0">
   <tr>
     <td style="width:460px;">&nbsp;</td>
-    <td>Bank Details:</td>
+    <td><span style="font-size:16px; text-decoration:underline;">Bank Details:</span></td>
   </tr>
   <tr>
     <td>&nbsp;</td>
@@ -258,7 +263,7 @@ border-right:solid windowtext 1.0pt;
   <tr>
     <td>&nbsp;</td>
     <td rowspan="2">Please pay in invoice currency and indicate your 
-      invoice number as reference.</td>
+      <span style=" text-decoration:underline;">invoice number</span> as reference.</td>
   </tr>
   <tr>
     <td>&nbsp;</td>

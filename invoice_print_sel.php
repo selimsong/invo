@@ -130,7 +130,6 @@ Please selection your print style:
     <option value="vietnam">Invoice Format - Vietnam</option>
 	<option value="s_creditnote">Invoice Format - Singapore - Credit Note</option> 
 	<option value="s_tax">Invoice Format - Singapore - Tax Invoice</option>
-	<option value="s_debit">Invoice Format - Singapore - Debit Note</option>
   </select>
   <span style="margin-top:5px;">
   <input name="button" type="button" onClick="select_submit()" value="Preview">
