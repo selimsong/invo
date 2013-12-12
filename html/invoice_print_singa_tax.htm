@@ -58,8 +58,9 @@ div.Section1
 	border-right-style: none;
 	border-top-style: none;
 }
-span {width:80px; text-align:left;  display:inline-block;}
-
+.leftContent span {width:58px; text-align:left;  display:inline-block;}
+p span {width:76px; text-align:left;  display:inline-block;}
+span {text-align:left;  }
 .content{
 margin:10px 0px 0px 0px;
 border:1px solid #000000;
@@ -69,7 +70,7 @@ text-align:left;
 
 .leftContent{
 margin:0px 0px 0px 5px;
-width:400px; float:left; 
+width:540px; float:left; 
 border-bottom-width:0pt; 
 border-left-width:0pt; 
 border-top-width:0pt; 
@@ -103,6 +104,13 @@ border-top:solid windowtext 1.0pt;
 td.lastItem {
 border-right:solid windowtext 1.0pt;
 }
+.pleft{
+	margin:0px 0px 0px 83px;
+}
+body {
+font-size: 12px;
+font-family: "Times New Roman";	
+}
 </style>
 </head>
 <body>
@@ -112,24 +120,26 @@ border-right:solid windowtext 1.0pt;
 <p style="text-align:right;">GST Registration No. 199704518G</p>
 <div   class="content">
    <div class="leftContent">
-     <p><span>Customer:</span>   <{$idArray.Client}></p>
-     <p><span>Address:</span>   <p><b><span lang=EN-US><{$idArray.Invoice_to_address2}></span></b></p>
-                  <p class=MsoNormal><b><span lang=EN-US><{$idArray.Invoice_to_zipcode}></span></b></p>
-                  <p class=MsoNormal><b><span lang=EN-US><{$idArray.Invoice_to_city}></span></b></p>
-                  <p class=MsoNormal><b><span lang=EN-US><{$idArray.Invoice_to_province}></span></b></p>
-                  <p class=MsoNormal><b><span lang=EN-US><{$idArray.Invoice_to_country}></span></b></p>
-      </p>
+     <p><span>Customer:</span>   <{$idArray.Invoice_to}></p>
+     <p style="margin-bottom:0px;"><span>Address:</span>
+<{$idArray.Address}></p>
+                  <p class="pleft"><{$idArray.Invoice_to_address2}></p>
+                  <p class="pleft"><{$idArray.Invoice_to_zipcode}></p>
+                  <p class="pleft"><{$idArray.Invoice_to_city}></p>
+                  <p class="pleft"><{$idArray.Invoice_to_province}></p>
+                  <p class="pleft"><{$idArray.Invoice_to_country}></p>
+      
       
       <p><span>Attention:</span> <{$idArray.Contact_person}>  </p>
       
       
    </div>
    
-   <div style="margin:0px 0px 0px 5px; width:380px; float:right;">
+   <div style="margin:0px 0px 0px 5px; width:240px; float:right;">
        <p><span>Date:</span>   <{$idArray.complete_date}></p>
        <p><span>Invoice No.:</span> <{$idArray.Transaction_No}> </p>
         
-       <p style="margin:135px 0px 0px 0px;"><span>Payment Term:</span>   <{$idArray.payment_remarks}></p>
+       <p style="margin:0px;"><span>Payment Term:</span>   <{$idArray.payment_remarks}></p>
        <p><span>Our Contact:</span>  <{$idArray.Fee_sharing_p1}></p>
    </div>
    <div  style="clear:both;"></div>
@@ -137,9 +147,10 @@ border-right:solid windowtext 1.0pt;
    <div style="margin-top:20px;">
        <table  class="subtable"  cellspacing="0" cellpadding="0"  >
   <tr>
-    <td style="width:480px;">Description</td>
-    <td>Currency</td>
-    <td  class="lastItem">Amount</td>
+    <td style="width:530px; border-bottom:solid windowtext 1.0pt">Description</td>
+    <td style="border-bottom:solid windowtext 1.0pt; width:80px;">Currency</td>
+
+    <td style="border-bottom:solid windowtext 1.0pt"  class="lastItem">Amount</td>
   </tr>
   <tr>
     <td>&nbsp;</td>
@@ -148,7 +159,7 @@ border-right:solid windowtext 1.0pt;
   </tr>
   <tr>
     <td>Re:  &nbsp;&nbsp;&nbsp;  <{$idArray.Payer}></td>
-    <td><{$idArray.curr_code}></td>
+    <td style="text-align:center;"><{$idArray.curr_code}></td>
     <td class="lastItem"><{$idArray.Invoice_Amount}></td>
   </tr>
   <tr>
@@ -189,18 +200,18 @@ border-right:solid windowtext 1.0pt;
   </tr>
   
     <tr>
-    <td  class="noBorder">&nbsp;</td>
-    <td class="noBorder" style="text-align:right;">Subtotal</td>
+    <td  class="noBorder"><span  style="text-align:right; float:right;" >Subtotal</span></td>
+    <td  style="text-align:center; border-bottom:solid windowtext 1.0pt;"><{$idArray.curr_code}></td>
     <td class="lastItem buttonBorder"><{$idArray.Invoice_Amount}></td>
   </tr>
     <tr>
-    <td   class="noBorder">Note: Interest at 1.5% per month will be charged on overdue amount.</td>
-    <td class="noBorder" style="text-align:right;">GST @ <{$idArray.gst}>%</td>
+    <td   class="noBorder">Note:<span style="font-style:oblique"> Interest at 1.5% per month will be charged on overdue amount.</span><span  style="text-align:right; float:right;" >GST @ <{$idArray.gst}>%</span></td>
+    <td style="text-align:center;border-bottom:solid windowtext 1.0pt; "><{$idArray.curr_code}></td>
     <td class="lastItem buttonBorder"><{$idArray.GST_VAL}></td>
   </tr>
       <tr>
-    <td  class="noBorder">&nbsp;</td>
-    <td class="noBorder" style="text-align:right;">Total</td>
+    <td  class="noBorder"><span  style="text-align:right; float:right" >Total</span></td>
+    <td  style="text-align:center;border-bottom:solid windowtext 1.0pt;"><{$idArray.curr_code}></td>
     <td class="lastItem buttonBorder"><{$idArray.TOTAL}></td>
   </tr>
 </table>
@@ -208,7 +219,7 @@ border-right:solid windowtext 1.0pt;
 <table  width="800" style="margin:30px 0px 0px 0px;"  border="0">
   <tr>
     <td style="width:460px;">&nbsp;</td>
-    <td>Bank Details:</td>
+    <td><span style="font-size:16px; text-decoration:underline;">Bank Details:</span></td>
   </tr>
   <tr>
     <td>&nbsp;</td>
@@ -253,7 +264,7 @@ border-right:solid windowtext 1.0pt;
   <tr>
     <td>&nbsp;</td>
     <td rowspan="2">Please pay in invoice currency and indicate your 
-      invoice number as reference.</td>
+      <span style=" text-decoration:underline;">invoice number</span> as reference.</td>
   </tr>
   <tr>
     <td>&nbsp;</td>
