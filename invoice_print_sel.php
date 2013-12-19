@@ -128,8 +128,10 @@ Please selection your print style:
     <option value="jp_as">Invoice Format - Japan - CWAM</option>
     <option value="indonesia">Invoice Format - Indonesia</option>
     <option value="vietnam">Invoice Format - Vietnam</option>
-	<option value="s_creditnote">Invoice Format - Singapore - Credit Note</option> 
-	<option value="s_tax">Invoice Format - Singapore - Tax Invoice</option>
+    <option value="s_tax">SG – CWS (Invoice)</option>
+	<option value="s_creditnote">SG – CWS (Credit note)</option>
+    <option value="s_tax">SG – VHS (Invoice)</option>
+	<option value="s_creditnote">SG – VHS (Credit note)</option> 
   </select>
   <span style="margin-top:5px;">
   <input name="button" type="button" onClick="select_submit()" value="Preview">
