@@ -170,6 +170,22 @@ switch($print_type){
 		$idArray[0]["TOTAL"] = addComma($idArray[0]["Invoice_Amount"]  +  $idArray[0]["GST_VAL"]);
         $display_URL = "invoice_print_singa_tax.htm";
 		break;  
+	
+	case "sv_creditnote":
+        $idArray[0]["VAT"] = addComma($idArray[0]["Invoice_Amount"] * 0.1);
+	    $gst_percent       = $idArray[0]["gst"] * 0.01;
+        $idArray[0]["GST_VAL"] = addComma(sprintf("%.2f", $idArray[0]["Invoice_Amount"] * $gst_percent ));
+		$idArray[0]["TOTAL"] = addComma($idArray[0]["Invoice_Amount"]  +  $idArray[0]["GST_VAL"]);
+        $display_URL = "invoice_print_singav_credit.htm";
+		break;    
+	
+	case "sv_tax":
+        $idArray[0]["VAT"] = addComma($idArray[0]["Invoice_Amount"] * 0.1);
+	    $gst_percent       = $idArray[0]["gst"] * 0.01;
+        $idArray[0]["GST_VAL"] = addComma(sprintf("%.2f", $idArray[0]["Invoice_Amount"] * $gst_percent));
+		$idArray[0]["TOTAL"] = addComma($idArray[0]["Invoice_Amount"]  +  $idArray[0]["GST_VAL"]);
+        $display_URL = "invoice_print_singav_tax.htm";
+		break; 
    
     case "s_debit":
         $idArray[0]["VAT"] = addComma($idArray[0]["Invoice_Amount"] * 0.1);
