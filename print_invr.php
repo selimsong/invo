@@ -168,7 +168,14 @@ switch($print_type){
 	    $gst_percent       = $idArray[0]["gst"] * 0.01;
         $idArray[0]["GST_VAL"] = addComma(sprintf("%.2f", $idArray[0]["Invoice_Amount"] * $gst_percent));
 		$idArray[0]["TOTAL"] = addComma($idArray[0]["Invoice_Amount"]  +  $idArray[0]["GST_VAL"]);
-        $display_URL = "invoice_print_singa_tax.htm";
+		$idArray[0]["Saddress"] = explode(',', $idArray[0]["Address"]);
+		$Scomplete_date = explode('-', $idArray[0]["complete_date"]);
+		$idArray[0]["Scomplete_date"] = $Scomplete_date[2].'-'.$Scomplete_date[1].'-'.$Scomplete_date[0];
+		$idArray[0]["STransaction_No"] = str_replace('I', 'N', $idArray[0]["Transaction_No"]);
+		$sales = explode('.', $idArray[0]["Fee_sharing_p1"]);
+		$idArray[0]["SFee_sharing_p1"] = ucfirst($sales[0]).'. '.ucfirst($sales[1]);
+		 
+		$display_URL = "invoice_print_singa_tax.htm";
 		break;  
 	
 	case "sv_creditnote":
