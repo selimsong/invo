@@ -25,7 +25,8 @@ class ldap_invoice{
     var $info_array;
     function ldap_invoice(){
         //$this->server_address = "10.200.1.33";
-		$this->server_address = "10.200.3.23";
+		//$this->server_address = "10.200.3.23";
+		$this->server_address = "10.200.3.45";
         $this->dn = "OU=Asia Pacific,DC=ap,DC=cushwake,DC=gbl";
         
         $this->justthese = array();
