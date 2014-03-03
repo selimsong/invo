@@ -225,8 +225,8 @@ foreach ($globalDept as $value){
 	}
 }
 
-
-if(checkPriority($idArray,'1') || $t_access == true){
+if(1){
+//if(checkPriority($idArray,'1') || $t_access == true){
     reset($idArray);
     $idArray = patternNumToString($idArray); 
     $invoiceTpl->assign("sArray", $_SESSION);
