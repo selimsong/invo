@@ -55,6 +55,9 @@ function select_submit(){
         case "korea":
             loc = "print_invr.php?ID=<?php echo $_GET["ID"];?>&type=korea";
             break;
+        case "korea_master":
+            loc = "print_invr.php?ID=<?php echo $_GET["ID"];?>&type=korea_master";
+            break;
 		case "korea_y":
             loc = "print_invr.php?ID=<?php echo $_GET["ID"];?>&type=korea_y";
             break;
@@ -123,6 +126,7 @@ Please selection your print style:
     <option value="india_3">Invoice Format - PMSI - Standard</option>
     <option value="india_4">Invoice Format - PMSI - Tax</option>
     <option value="korea">Invoice Format - Korea</option>
+    <option value="korea_master">Invoice Format - Korea - MasterCard</option>
 	<option value="korea_y">Invoice Format - Korea - Yahoo</option>
 	<option value="korea_a">Invoice Format - Korea - Apple</option>
     <option value="hk_hk">Invoice Format - HK - HK</option>

@@ -67,6 +67,11 @@ switch($print_type){
         $idArray[0]["VAT_total"] = addComma($idArray[0]["Invoice_Amount"] * 1.1);
         $display_URL = "invoice_print_korea.htm";
         break;
+    case "korea_master":
+        	$idArray[0]["VAT"] = addComma($idArray[0]["Invoice_Amount"] * 0.1);
+        	$idArray[0]["VAT_total"] = addComma($idArray[0]["Invoice_Amount"] * 1.1);
+        	$display_URL = "invoice_print_korea_m.htm";
+        	break;
 	case "korea_y":
         $idArray[0]["VAT"] = addComma($idArray[0]["Invoice_Amount"] * 0.1);
         $idArray[0]["VAT_total"] = addComma($idArray[0]["Invoice_Amount"] * 1.1);
